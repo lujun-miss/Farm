@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品详情 - 农资商城</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 产品图片 */
+        .product-image {
+            transition: transform 0.3s ease;
+        }
+        .product-image:hover {
+            transform: scale(1.02);
+        }
+        
+        /* 缩略图 */
+        .thumbnail {
+            transition: all 0.3s ease;
+        }
+        .thumbnail.active {
+            border-color: #10b981;
+            box-shadow: 0 0 0 2px #10b981;
+            transform: translateY(-2px);
+        }
+        
+        /* 按钮样式 */
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+        }
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+        }
+        
+        /* 代理政策卡片 */
+        .policy-card {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 2px solid #10b981;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
+            transition: all 0.3s ease;
+        }
+        .policy-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.15);
+        }
+        
+        /* 数量控制按钮 */
+        .quantity-btn {
+            transition: all 0.2s ease;
+        }
+        .quantity-btn:hover {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        /* 规格选择按钮 */
+        .spec-btn {
+            transition: all 0.3s ease;
+        }
+        .spec-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* 卡片阴影效果 */
+        .shadow-md {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .shadow-lg {
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        /* 表格样式 */
+        table {
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 标签页过渡效果 */
+        .tab-content {
+            transition: all 0.3s ease;
+        }
+        
+        /* 区域限制模态框样式 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-close:hover {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        
+        .modal-body {
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        .modal-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        /* 本地推荐卡片 */
+        .local-recommendation {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .local-recommendation:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+        
+        .recommendation-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .recommendation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .recommendation-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .recommendation-info {
+            flex: 1;
+        }
+        
+        .recommendation-name {
+            font-weight: 500;
+            color: #1f2937;
+        }
+        
+        .recommendation-area {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="flex flex-col min-h-screen">
+        <header class="bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-lg relative">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between py-4">
+                    <div class="flex items-center space-x-3">
+                        <button id="mobile-menu-btn" class="md:hidden text-white hover:text-emerald-200 transition">
+                            <i class="fas fa-bars text-2xl"></i>
+                        </button>
+                        <i class="fas fa-leaf text-2xl md:text-3xl"></i>
+                        <div class="cursor-pointer" onclick="window.location.href='index.html'">
+                            <h1 class="text-xl md:text-2xl font-bold">农资商城</h1>
+                            <p class="text-xs text-emerald-100 hidden sm:block">专业农资电商平台</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3 md:space-x-6">
+                        <!-- 地址选择 -->
+                        <div class="dropdown">
+                            <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                                <i class="fas fa-map-marker-alt text-lg"></i>
+                                <span class="hidden sm:inline">山东省菏泽市</span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="px-4 py-3 bg-gray-50 border-b">
+                                    <span class="text-sm font-medium text-gray-700">当前地址</span>
+                                </div>
+                                <div class="p-2">
+                                    <div class="flex items-center justify-between px-3 py-2 hover:bg-emerald-50 rounded-lg cursor-pointer">
+                                        <span class="text-sm">山东省菏泽市</span>
+                                        <i class="fas fa-check text-emerald-600"></i>
+                                    </div>
+                                    <div class="flex items-center justify-between px-3 py-2 hover:bg-emerald-50 rounded-lg cursor-pointer">
+                                        <span class="text-sm">山东省济南市</span>
+                                    </div>
+                                    <div class="flex items-center justify-between px-3 py-2 hover:bg-emerald-50 rounded-lg cursor-pointer">
+                                        <span class="text-sm">江苏省南京市</span>
+                                    </div>
+                                </div>
+                                <div class="border-t p-3">
+                                    <button class="w-full text-sm text-emerald-600 font-medium hover:text-emerald-800">
+                                        <i class="fas fa-plus mr-2"></i>添加新地址
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                            <i class="fas fa-shopping-cart text-lg"></i>
+                            <span class="hidden sm:inline">购物车</span>
+                            <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">3</span>
+                        </a>
+                        <!-- 我的农资下拉菜单 -->
+                        <div class="dropdown">
+                            <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                                <i class="fas fa-user text-lg"></i>
+                                <span class="hidden sm:inline">我的农资</span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="user-center.html" class="block py-1 px-4 text-sm">买家中心</a>
+                                <a href="seller-choice.html" class="block py-1 px-4 text-sm">卖家中心</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 登录按钮 -->
+                        <a href="login.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                            <i class="fas fa-sign-in-alt text-lg"></i>
+                            <span class="hidden sm:inline">登录</span>
+                        </a>
+                        
+                        <!-- 免费注册按钮 -->
+                        <a href="register.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                            <i class="fas fa-user-plus text-lg"></i>
+                            <span class="hidden sm:inline">注册</span>
+                        </a>
+                    </div>
+                </div>
+                <style>
+                    /* 确保导航栏容器不会限制下拉菜单显示 */
+                    header {
+                        overflow: visible !important;
+                        position: relative;
+                        z-index: 9999;
+                    }
+                    
+                    nav {
+                        overflow: visible !important;
+                        z-index: 9999;
+                    }
+                    
+                    .container {
+                        overflow: visible !important;
+                    }
+                    
+                    .dropdown {
+                        position: relative;
+                        z-index: 9999;
+                        display: inline-block;
+                    }
+                    
+                    .dropdown-menu {
+                        display: none;
+                        background: white;
+                        border-radius: 0.5rem;
+                        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                        padding: 0.5rem 0;
+                        margin: 0;
+                        min-width: 150px;
+                        z-index: 9999;
+                        /* 关键：使用fixed定位完全脱离文档流 */
+                        position: fixed;
+                    }
+                    
+                    /* 二级下拉菜单样式 */
+                    .group .dropdown-menu {
+                        position: absolute;
+                        left: 100%;
+                        top: 0;
+                        margin-left: 0.5rem;
+                    }
+                    
+                    .group:hover .dropdown-menu {
+                        display: block;
+                    }
+                    
+                    .dropdown:hover .dropdown-menu {
+                        display: block;
+                    }
+                    
+                    .dropdown-menu a {
+                        display: block;
+                        padding: 0.5rem 1rem;
+                        color: gray;
+                        text-decoration: none;
+                        white-space: nowrap;
+                    }
+                    
+                    .dropdown-menu a:hover {
+                        background-color: #f0fdf4;
+                        color: #15803d;
+                    }
+                </style>
+            </div>
+        </header>
+
+        <main class="flex-1 container mx-auto px-4 py-8">
+            <!-- 店铺信息展示 -->
+            <div class="bg-white rounded-lg shadow-md p-4 md:p-6 mb-8">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between">
+                    <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-industry text-2xl text-emerald-600"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg md:text-xl font-bold text-gray-900">山东农化科技有限公司</h2>
+                            <div class="flex items-center space-x-4 mt-1">
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <span class="text-sm text-gray-600 ml-1">4.9</span>
+                                    <span class="text-xs text-gray-500 ml-1">(综合评分)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-truck text-blue-400 text-xs"></i>
+                                    <span class="text-sm text-gray-600 ml-1">4.8</span>
+                                    <span class="text-xs text-gray-500 ml-1">(物流评分)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-headset text-green-400 text-xs"></i>
+                                    <span class="text-sm text-gray-600 ml-1">4.9</span>
+                                    <span class="text-xs text-gray-500 ml-1">(服务评分)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="flex flex-col items-center">
+                            <span class="text-emerald-600 text-sm font-medium">厂家直销</span>
+                            <span class="text-xs text-gray-500 mt-1">官方认证</span>
+                        </div>
+                        <button onclick="window.location.href='shop.html'" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition text-sm font-medium cursor-pointer">
+                            <i class="fas fa-store mr-2"></i>进入店铺
+                        </button>
+                    </div>
+                </div>
+                <div class="border-t border-gray-200 mt-4 pt-4">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-emerald-600 mr-2"></i>
+                            <span class="text-sm text-gray-600">7天无理由退换</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-truck-fast text-emerald-600 mr-2"></i>
+                            <span class="text-sm text-gray-600">24小时发货</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-shield-alt text-emerald-600 mr-2"></i>
+                            <span class="text-sm text-gray-600">正品保障</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone-alt text-emerald-600 mr-2"></i>
+                            <span class="text-sm text-gray-600">400-123-4567</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- 左侧垂直缩略图 - 在移动端转为水平布局 -->
+                <div class="hidden lg:block lg:col-span-1 space-y-3">
+                    <div class="thumbnail active bg-white rounded-lg p-2 cursor-pointer border-2 border-transparent">
+                        <img src="https://picsum.photos/150/150?seed=20" alt="正面" class="w-full h-20 object-cover">
+                    </div>
+                    <div class="thumbnail bg-white rounded-lg p-2 cursor-pointer border-2 border-transparent hover:border-emerald-300">
+                        <img src="https://picsum.photos/150/150?seed=21" alt="侧面" class="w-full h-20 object-cover">
+                    </div>
+                    <div class="thumbnail bg-white rounded-lg p-2 cursor-pointer border-2 border-transparent hover:border-emerald-300">
+                        <img src="https://picsum.photos/150/150?seed=22" alt="细节" class="w-full h-20 object-cover">
+                    </div>
+                    <div class="thumbnail bg-white rounded-lg p-2 cursor-pointer border-2 border-transparent hover:border-emerald-300">
+                        <img src="https://picsum.photos/150/150?seed=23" alt="包装" class="w-full h-20 object-cover">
+                    </div>
+                </div>
+                <!-- 移动端水平缩略图 -->
+                <div class="lg:hidden col-span-1 space-y-3 md:space-y-0 md:flex md:flex-row md:overflow-x-auto md:gap-3">
+                    <div class="thumbnail active bg-white rounded-lg p-2 cursor-pointer border-2 border-transparent flex-shrink-0">
+                        <img src="https://picsum.photos/150/150?seed=20" alt="正面" class="w-full h-20 object-cover">
+                    </div>
+                    <div class="thumbnail bg-white rounded-lg p-2 cursor-pointer border-2 border-transparent hover:border-emerald-300 flex-shrink-0">
+                        <img src="https://picsum.photos/150/150?seed=21" alt="侧面" class="w-full h-20 object-cover">
+                    </div>
+                    <div class="thumbnail bg-white rounded-lg p-2 cursor-pointer border-2 border-transparent hover:border-emerald-300 flex-shrink-0">
+                        <img src="https://picsum.photos/150/150?seed=22" alt="细节" class="w-full h-20 object-cover">
+                    </div>
+                    <div class="thumbnail bg-white rounded-lg p-2 cursor-pointer border-2 border-transparent hover:border-emerald-300 flex-shrink-0">
+                        <img src="https://picsum.photos/150/150?seed=23" alt="包装" class="w-full h-20 object-cover">
+                    </div>
+                </div>
+                <!-- 中间大图 -->
+                <div class="col-span-1 lg:col-span-7">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://picsum.photos/800/600?seed=19" alt="有机复合肥" class="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] object-cover product-image">
+                    </div>
+                </div>
+
+                <!-- 右侧商品信息 -->
+                <div class="col-span-1 lg:col-span-4 space-y-6">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center space-x-2 mb-3 flex-wrap">
+                            <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2 py-1 rounded">区域保护</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">快速配送</span>
+                            <span class="bg-orange-100 text-orange-800 text-xs font-medium px-2 py-1 rounded">厂家直供</span>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded flex items-center">
+                                <i class="fas fa-map-marker-alt mr-1"></i>代理区域：福建省福州市
+                            </span>
+                        </div>
+                        
+                        <h1 class="text-2xl font-bold text-gray-900 mb-3">有机复合肥</h1>
+                        
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star-half-alt text-yellow-400"></i>
+                                <span class="text-sm text-gray-600 ml-1">4.5</span>
+                            </div>
+                            <span class="text-sm text-gray-600">销量：1,234</span>
+                        </div>
+
+                        <div class="flex items-baseline space-x-2 mb-6">
+                            <span class="text-3xl font-bold text-red-600">¥299.00</span>
+                            <span class="text-lg text-gray-500 line-through">¥359.00</span>
+                            <span class="bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded">限时优惠</span>
+                        </div>
+
+                        <!-- 多规格选择 -->
+                        <div class="mb-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm text-gray-700">规格选择：</span>
+                                <span class="text-sm text-gray-500">库存：充足</span>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <button class="spec-btn border-2 border-emerald-600 bg-emerald-50 text-emerald-800 py-2 px-3 sm:px-4 rounded-lg text-sm font-medium hover:bg-emerald-100 transition">50kg/包</button>
+                                <button class="spec-btn border-2 border-gray-300 text-gray-700 py-2 px-3 sm:px-4 rounded-lg text-sm font-medium hover:border-emerald-300 hover:bg-emerald-50 transition">25kg/包</button>
+                                <button class="spec-btn border-2 border-gray-300 text-gray-700 py-2 px-3 sm:px-4 rounded-lg text-sm font-medium hover:border-emerald-300 hover:bg-emerald-50 transition">10kg/包</button>
+                            </div>
+                        </div>
+
+                        <!-- 数量选择 -->
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-sm text-gray-700">购买数量：</span>
+                            <div class="flex items-center border border-gray-300 rounded-lg">
+                                <button type="button" class="quantity-btn px-3 py-2 text-gray-600 hover:bg-emerald-50">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input type="number" value="1" min="1" class="w-16 text-center border-0 focus:outline-none">
+                                <button type="button" class="quantity-btn px-3 py-2 text-gray-600 hover:bg-emerald-50">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 联系客服和分享 -->
+                        <div class="flex items-center space-x-4 mb-6">
+                            <button class="flex items-center py-2 px-4 border border-gray-300 rounded-lg text-sm text-gray-700 hover:border-emerald-500 hover:text-emerald-600 transition">
+                                <i class="fas fa-headset mr-2"></i>联系客服
+                            </button>
+                            <button class="flex items-center py-2 px-4 border border-gray-300 rounded-lg text-sm text-gray-700 hover:border-emerald-500 hover:text-emerald-600 transition">
+                                <i class="fas fa-share-alt mr-2"></i>分享
+                            </button>
+                        </div>
+
+                        <!-- 操作按钮 -->
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <button class="btn-primary py-3 text-white font-semibold rounded-lg shadow-md" onclick="window.location.href='cart.html'">
+                                <i class="fas fa-shopping-cart mr-2"></i>加入购物车
+                            </button>
+                            <button class="btn-primary py-3 text-white font-semibold rounded-lg shadow-md" onclick="showOrderAssignmentModal()">
+                                <i class="fas fa-bolt mr-2"></i>立即购买
+                            </button>
+                        </div>
+
+                        <!-- 代理和经销商申请按钮 -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <button onclick="showAreaRestrictionModal()" class="btn-secondary py-3 text-white font-semibold rounded-lg shadow-md">
+                                <i class="fas fa-handshake mr-2"></i>申请代理
+                            </button>
+                            <button onclick="window.location.href='agent-apply.html'" class="btn-secondary py-3 text-white font-semibold rounded-lg shadow-md">
+                                <i class="fas fa-store mr-2"></i>申请经销商
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="mt-8 bg-white rounded-lg shadow-md">
+                <!-- 标签页导航 - 移动端可滚动 -->
+                <div class="border-b overflow-x-auto">
+                    <div class="flex flex-nowrap min-w-max">
+                        <button class="tab-btn px-6 py-3 text-emerald-600 border-b-2 border-emerald-600 font-medium whitespace-nowrap" data-tab="1">商品详情</button>
+                        <button class="tab-btn px-6 py-3 text-gray-600 hover:text-emerald-600 font-medium whitespace-nowrap" data-tab="2">买家评价</button>
+                        <button class="tab-btn px-6 py-3 text-gray-600 hover:text-emerald-600 font-medium whitespace-nowrap" data-tab="3">商品属性</button>
+                        <button class="tab-btn px-6 py-3 text-gray-600 hover:text-emerald-600 font-medium whitespace-nowrap" data-tab="4">商品资质</button>
+                        <button class="tab-btn px-6 py-3 text-gray-600 hover:text-emerald-600 font-medium whitespace-nowrap" data-tab="5">商品描述</button>
+                    </div>
+                </div>
+                
+                <!-- 商品详情标签页 -->
+                <div class="tab-content p-6" id="tab-1">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">商品详情</h3>
+                    <div class="prose max-w-none text-gray-700">
+                        <p class="mb-4">有机复合肥是一种高效、环保的肥料产品，采用先进的生产工艺，将有机质与无机营养元素科学配比，为作物提供全面的营养支持。</p>
+                        <div class="space-y-4 my-6">
+                            <img src="https://picsum.photos/800/600?seed=28" alt="产品使用场景" class="w-full h-72 md:h-96 object-cover rounded-lg">
+                            <img src="https://picsum.photos/800/600?seed=29" alt="产品成分分析" class="w-full h-72 md:h-96 object-cover rounded-lg">
+                        </div>
+                        <p class="mb-4">本产品适用于各种农作物，包括小麦、玉米、水稻、蔬菜、果树等，能够显著提高作物产量和品质，改善土壤结构，增强作物抗病能力。</p>
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">产品特点：</h4>
+                        <ul class="list-disc list-inside space-y-2 mb-4">
+                            <li>营养全面，含有作物所需的多种营养元素</li>
+                            <li>肥效持久，能够持续为作物提供营养</li>
+                            <li>改善土壤，增加土壤有机质含量</li>
+                            <li>提高作物品质，增加产量</li>
+                            <li>环保安全，无有害物质残留</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 买家评价标签页 -->
+                <div class="tab-content p-6 hidden" id="tab-2">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">买家评价 (128)</h3>
+                    <div class="space-y-6">
+                        <div class="border-b pb-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-user text-gray-600"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-gray-900">张先生</div>
+                                        <div class="text-sm text-gray-500">2024-03-15</div>
+                                    </div>
+                                </div>
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="text-gray-700">肥料效果很好，使用后作物生长明显改善，产量有所提高，推荐购买。</p>
+                        </div>
+                        <div class="border-b pb-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-user text-gray-600"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-gray-900">李女士</div>
+                                        <div class="text-sm text-gray-500">2024-03-10</div>
+                                    </div>
+                                </div>
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                            <p class="text-gray-700">产品质量不错，包装完好，物流速度快，客服态度好，会继续购买。</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-user text-gray-600"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-gray-900">王先生</div>
+                                        <div class="text-sm text-gray-500">2024-03-05</div>
+                                    </div>
+                                </div>
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="text-gray-700">效果还可以，就是价格有点贵，希望能有更多优惠活动。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 商品属性标签页 -->
+                <div class="tab-content p-6 hidden" id="tab-3">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">商品属性</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- 第一行 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">品牌</div>
+                            <div class="py-3 px-4 text-gray-900">曹州农化</div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">类别</div>
+                            <div class="py-3 px-4 text-gray-900">有机复合肥</div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">规格</div>
+                            <div class="py-3 px-4 text-gray-900">50kg/包</div>
+                        </div>
+                        
+                        <!-- 第二行 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">产地</div>
+                            <div class="py-3 px-4 text-gray-900">山东省菏泽市</div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">农药登记证</div>
+                            <div class="py-3 px-4 text-gray-900">PD20201234</div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">毒性</div>
+                            <div class="py-3 px-4 text-gray-900">低毒</div>
+                        </div>
+                        
+                        <!-- 第三行 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">剂型</div>
+                            <div class="py-3 px-4 text-gray-900">颗粒剂</div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">保质期</div>
+                            <div class="py-3 px-4 text-gray-900">24个月</div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">有效成分</div>
+                            <div class="py-3 px-4 text-gray-900">有机质≥45%，N+P2O5+K2O≥15%</div>
+                        </div>
+                        
+                        <!-- 第四行 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">含量</div>
+                            <div class="py-3 px-4 text-gray-900">50kg/包</div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">使用作物</div>
+                            <div class="py-3 px-4 text-gray-900">小麦、玉米、水稻、蔬菜、果树</div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">防治对象</div>
+                            <div class="py-3 px-4 text-gray-900">土壤改良，作物营养补充</div>
+                        </div>
+                        
+                        <!-- 第五行 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">使用方法</div>
+                            <div class="py-3 px-4 text-gray-900">基肥、追肥均可</div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">注意事项</div>
+                            <div class="py-3 px-4 text-gray-900">避免与碱性物质混用</div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">解毒方法</div>
+                            <div class="py-3 px-4 text-gray-900">清水冲洗</div>
+                        </div>
+                        
+                        <!-- 第六行 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">储藏条件</div>
+                            <div class="py-3 px-4 text-gray-900">阴凉干燥处</div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">备注</div>
+                            <div class="py-3 px-4 text-gray-900">符合国家标准</div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 py-3 px-4 font-medium text-gray-700">生产许可证</div>
+                            <div class="py-3 px-4 text-gray-900">XK13-001-00123</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 商品资质标签页 -->
+                <div class="tab-content p-6 hidden" id="tab-4">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">商品资质</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="border rounded-lg p-4">
+                            <div class="flex items-center mb-3">
+                                <i class="fas fa-certificate text-emerald-600 text-2xl mr-3"></i>
+                                <h4 class="text-lg font-medium text-gray-900">农药登记证</h4>
+                            </div>
+                            <p class="text-gray-700 mb-2">登记证号：PD20201234</p>
+                            <p class="text-gray-700">有效期：2020-05-01 至 2025-04-30</p>
+                            <img src="https://picsum.photos/400/300?seed=30" alt="农药登记证" class="w-full h-48 object-cover rounded mt-4">
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <div class="flex items-center mb-3">
+                                <i class="fas fa-industry text-emerald-600 text-2xl mr-3"></i>
+                                <h4 class="text-lg font-medium text-gray-900">生产许可证</h4>
+                            </div>
+                            <p class="text-gray-700 mb-2">许可证号：XK13-001-00123</p>
+                            <p class="text-gray-700">有效期：2021-06-01 至 2026-05-31</p>
+                            <img src="https://picsum.photos/400/300?seed=31" alt="生产许可证" class="w-full h-48 object-cover rounded mt-4">
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <div class="flex items-center mb-3">
+                                <i class="fas fa-check-circle text-emerald-600 text-2xl mr-3"></i>
+                                <h4 class="text-lg font-medium text-gray-900">产品标准证</h4>
+                            </div>
+                            <p class="text-gray-700 mb-2">标准号：GB/T 15063-2020</p>
+                            <p class="text-gray-700">适用范围：复合肥料</p>
+                            <img src="https://picsum.photos/400/300?seed=32" alt="产品标准证" class="w-full h-48 object-cover rounded mt-4">
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <div class="flex items-center mb-3">
+                                <i class="fas fa-shield-alt text-emerald-600 text-2xl mr-3"></i>
+                                <h4 class="text-lg font-medium text-gray-900">质量认证</h4>
+                            </div>
+                            <p class="text-gray-700 mb-2">认证类型：ISO9001质量管理体系</p>
+                            <p class="text-gray-700">认证机构：中国质量认证中心</p>
+                            <img src="https://picsum.photos/400/300?seed=33" alt="质量认证" class="w-full h-48 object-cover rounded mt-4">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 商品描述标签页 -->
+                <div class="tab-content p-6 hidden" id="tab-5">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">商品描述</h3>
+                    <div class="prose max-w-none text-gray-700">
+                        <p class="mb-4">有机复合肥是我公司采用先进技术研发的新一代环保肥料产品，通过有机质与无机营养元素的科学配比，实现了养分的均衡供应。</p>
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">产品优势：</h4>
+                        <ul class="list-disc list-inside space-y-2 mb-4">
+                            <li>采用优质原料，经过严格的质量控制</li>
+                            <li>独特的生产工艺，确保养分的有效性</li>
+                            <li>适用于各种土壤类型和作物</li>
+                            <li>减少化肥使用量，降低农业生产成本</li>
+                            <li>提高农产品品质，增加农民收入</li>
+                        </ul>
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">使用建议：</h4>
+                        <p class="mb-4">作为基肥使用时，每亩用量为50-80公斤；作为追肥使用时，每亩用量为30-50公斤。具体用量可根据土壤肥力和作物品种进行调整。</p>
+                        <div class="space-y-4 my-6">
+                            <img src="https://picsum.photos/800/600?seed=34" alt="使用场景1" class="w-full h-72 md:h-96 object-cover rounded-lg">
+                            <img src="https://picsum.photos/800/600?seed=35" alt="使用场景2" class="w-full h-72 md:h-96 object-cover rounded-lg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">相关商品推荐</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition cursor-pointer">
+                        <img src="https://picsum.photos/200/200?seed=24" alt="高氮复合肥" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h4 class="font-medium text-gray-900 mb-2">高氮复合肥 40kg</h4>
+                            <div class="flex items-center justify-between">
+                                <span class="text-red-600 font-semibold">¥259.00</span>
+                                <span class="text-xs text-gray-500">销量：856</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition cursor-pointer">
+                        <img src="https://picsum.photos/200/200?seed=25" alt="磷钾肥" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h4 class="font-medium text-gray-900 mb-2">磷钾肥 50kg</h4>
+                            <div class="flex items-center justify-between">
+                                <span class="text-red-600 font-semibold">¥289.00</span>
+                                <span class="text-xs text-gray-500">销量：723</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition cursor-pointer">
+                        <img src="https://picsum.photos/200/200?seed=26" alt="生物有机肥" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h4 class="font-medium text-gray-900 mb-2">生物有机肥 40kg</h4>
+                            <div class="flex items-center justify-between">
+                                <span class="text-red-600 font-semibold">¥319.00</span>
+                                <span class="text-xs text-gray-500">销量：645</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition cursor-pointer">
+                        <img src="https://picsum.photos/200/200?seed=27" alt="微生物菌剂" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h4 class="font-medium text-gray-900 mb-2">微生物菌剂 10kg</h4>
+                            <div class="flex items-center justify-between">
+                                <span class="text-red-600 font-semibold">¥189.00</span>
+                                <span class="text-xs text-gray-500">销量：512</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-white border-t mt-8">
+            <div class="container mx-auto px-4 py-6">
+                <div class="text-center text-sm text-gray-600">
+                    <p>© 2024 曹州农化 版权所有 | 联系我们：400-123-4567</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 区域保护提示模态框 -->
+    <div class="modal-overlay" id="areaRestrictionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-map-marker-alt text-emerald-600 mr-2"></i>
+                    区域保护提示
+                </h3>
+                <button class="modal-close" onclick="hideAreaRestrictionModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-4">
+                    <i class="fas fa-info-circle text-yellow-600 mr-2"></i>
+                    非常抱歉，该产品在您所在的 <strong>山东省菏泽市</strong> 区域已有授权代理商。
+                </p>
+                <p>根据我公司的区域保护政策，为了保障代理商的权益，同一区域内不再发展新的代理商/经销商。</p>
+                
+                <!-- 本地推荐 -->
+                <div class="local-recommendation mt-6">
+                    <div class="recommendation-title">
+                        <i class="fas fa-store text-emerald-600 mr-2"></i>
+                        本地代理商推荐
+                    </div>
+                    <div class="recommendation-list">
+                        <div class="recommendation-item">
+                            <div class="recommendation-info">
+                                <div class="recommendation-name">菏泽市农业物资有限公司</div>
+                                <div class="text-sm text-gray-500">联系人：张经理</div>
+                            </div>
+                            <button class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition text-sm">
+                                <i class="fas fa-phone mr-1"></i>联系
+                            </button>
+                        </div>
+                        <div class="recommendation-item">
+                            <div class="recommendation-info">
+                                <div class="recommendation-name">曹州农资经销商</div>
+                                <div class="text-sm text-gray-500">联系人：李经理</div>
+                            </div>
+                            <button class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition text-sm">
+                                <i class="fas fa-phone mr-1"></i>联系
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="hideAreaRestrictionModal()" class="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium">
+                    我知道了
+                </button>
+                <button class="px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition font-medium">
+                    <i class="fas fa-arrow-right mr-2"></i>查看更多代理产品
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 订单分配确认模态框 -->
+    <div class="modal-overlay" id="orderAssignmentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-map-marker-alt text-emerald-600 mr-2"></i>
+                    订单分配确认
+                </h3>
+                <button class="modal-close" onclick="hideOrderAssignmentModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="flex items-center justify-center mb-4">
+                    <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-check text-emerald-600 text-3xl"></i>
+                    </div>
+                </div>
+                <p class="text-center text-lg font-medium mb-4">
+                    根据您的位置，您的订单已由本地服务商为您服务
+                </p>
+                <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-600">服务商名称</span>
+                        <span class="text-sm font-medium text-gray-900">菏泽市农业物资有限公司</span>
+                    </div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-600">服务区域</span>
+                        <span class="text-sm font-medium text-gray-900">山东省菏泽市</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-600">联系电话</span>
+                        <span class="text-sm font-medium text-gray-900">400-123-4567</span>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600">
+                    为了保障您的权益，我们将优先为您分配本地服务商提供服务。
+                    本地服务商可以为您提供更快速的配送和更专业的本地化服务。
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button onclick="hideOrderAssignmentModal()" class="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium">
+                    取消
+                </button>
+                <a href="#" class="text-sm text-emerald-600 hover:text-emerald-700 transition mb-3 block text-center">
+                    <i class="fas fa-store mr-1"></i>查看服务商商品
+                </a>
+                <button onclick="proceedToOrderConfirmation()" class="px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition font-medium">
+                    <i class="fas fa-check mr-2"></i>确认并支付
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 缩略图切换主图
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const mainImage = document.querySelector('.product-image');
+
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function() {
+                thumbnails.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                const img = this.querySelector('img');
+                mainImage.src = img.src.replace('150x150', '800x600');
+            });
+        });
+
+        // 数量控制
+        const quantityBtns = document.querySelectorAll('.quantity-btn');
+        const quantityInput = document.querySelector('input[type="number"]');
+
+        quantityBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const currentValue = parseInt(quantityInput.value);
+                if (this.querySelector('.fa-minus')) {
+                    if (currentValue > 1) {
+                        quantityInput.value = currentValue - 1;
+                    }
+                } else {
+                    quantityInput.value = currentValue + 1;
+                }
+            });
+        });
+
+        // 标签页切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // 更新标签按钮状态
+                tabBtns.forEach(b => {
+                    b.classList.remove('text-emerald-600', 'border-b-2', 'border-emerald-600');
+                    b.classList.add('text-gray-600');
+                });
+                this.classList.remove('text-gray-600');
+                this.classList.add('text-emerald-600', 'border-b-2', 'border-emerald-600');
+                
+                // 切换标签内容
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            });
+        });
+
+        // 规格选择
+        const specBtns = document.querySelectorAll('.spec-btn');
+        specBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                specBtns.forEach(b => {
+                    b.classList.remove('border-emerald-600', 'bg-emerald-50', 'text-emerald-800');
+                    b.classList.add('border-gray-300', 'text-gray-700');
+                });
+                this.classList.remove('border-gray-300', 'text-gray-700');
+                this.classList.add('border-emerald-600', 'bg-emerald-50', 'text-emerald-800');
+            });
+        });
+        
+        // 地址切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const addressDropdown = document.querySelector('.dropdown:has(.fa-map-marker-alt)');
+            const addressItems = addressDropdown.querySelectorAll('.dropdown-menu .cursor-pointer');
+            const currentAddressDisplay = addressDropdown.querySelector('span.hidden.sm\:inline');
+            
+            addressItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 更新当前地址显示
+                    const newAddress = this.querySelector('span').textContent;
+                    currentAddressDisplay.textContent = newAddress;
+                    
+                    // 更新选择状态
+                    addressItems.forEach(i => {
+                        i.querySelector('.fa-check')?.remove();
+                    });
+                    
+                    if (!this.querySelector('.fa-check')) {
+                        const checkIcon = document.createElement('i');
+                        checkIcon.className = 'fas fa-check text-emerald-600';
+                        this.appendChild(checkIcon);
+                    }
+                });
+            });
+        });
+        
+        // 区域保护提示模态框
+        function showAreaRestrictionModal() {
+            document.getElementById('areaRestrictionModal').style.display = 'flex';
+        }
+        
+        function hideAreaRestrictionModal() {
+            document.getElementById('areaRestrictionModal').style.display = 'none';
+        }
+        
+        // 订单分配确认模态框
+        function showOrderAssignmentModal() {
+            document.getElementById('orderAssignmentModal').style.display = 'flex';
+        }
+        
+        function hideOrderAssignmentModal() {
+            document.getElementById('orderAssignmentModal').style.display = 'none';
+        }
+        
+        // 继续到订单确认页面
+        function proceedToOrderConfirmation() {
+            window.location.href = 'cart.html';
+        }
+    </script>
+</body>
+</html>

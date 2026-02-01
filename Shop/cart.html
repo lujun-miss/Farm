@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购物车 - 农资商城</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <header class="bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-lg relative">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center space-x-3">
+                    <button id="mobile-menu-btn" class="md:hidden text-white hover:text-emerald-200 transition">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                    <i class="fas fa-leaf text-2xl md:text-3xl"></i>
+                    <div class="cursor-pointer" onclick="window.location.href='index.html'">
+                        <h1 class="text-xl md:text-2xl font-bold">农资商城</h1>
+                        <p class="text-xs text-emerald-100 hidden sm:block">专业农资电商平台</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3 md:space-x-6">
+                    <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span class="hidden sm:inline">购物车</span>
+                        <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">3</span>
+                    </a>
+                    <!-- 我的农资下拉菜单 -->
+                    <div class="dropdown">
+                        <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                            <i class="fas fa-user text-lg"></i>
+                            <span class="hidden sm:inline">我的农资</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="block py-1 px-4 text-sm" onclick="window.location.href='user-center.html'">买家中心</a>
+                            <a href="#" class="block py-1 px-4 text-sm" onclick="window.location.href='seller-choice.html'">卖家中心</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 登录按钮 -->
+                    <a href="login.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-sign-in-alt text-lg"></i>
+                        <span class="hidden sm:inline">登录</span>
+                    </a>
+                    
+                    <!-- 免费注册按钮 -->
+                    <a href="register.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-user-plus text-lg"></i>
+                        <span class="hidden sm:inline">注册</span>
+                    </a>
+                </div>
+            </div>
+            <style>
+                /* 确保导航栏容器不会限制下拉菜单显示 */
+                header {
+                    overflow: visible !important;
+                    position: relative;
+                    z-index: 9999;
+                }
+                
+                nav {
+                    overflow: visible !important;
+                    z-index: 9999;
+                }
+                
+                .container {
+                    overflow: visible !important;
+                }
+                
+                .dropdown {
+                    position: relative;
+                    z-index: 9999;
+                    display: inline-block;
+                }
+                
+                .dropdown-menu {
+                    display: none;
+                    background: white;
+                    border-radius: 0.5rem;
+                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                    padding: 0.5rem 0;
+                    margin: 0;
+                    min-width: 150px;
+                    z-index: 9999;
+                    /* 关键：使用fixed定位完全脱离文档流 */
+                    position: fixed;
+                }
+                
+                /* 二级下拉菜单样式 */
+                .group .dropdown-menu {
+                    position: absolute;
+                    left: 100%;
+                    top: 0;
+                    margin-left: 0.5rem;
+                }
+                
+                .group:hover .dropdown-menu {
+                    display: block;
+                }
+                
+                .dropdown:hover .dropdown-menu {
+                    display: block;
+                }
+                
+                .dropdown-menu a {
+                    display: block;
+                    padding: 0.5rem 1rem;
+                    color: gray;
+                    text-decoration: none;
+                    white-space: nowrap;
+                }
+                
+                .dropdown-menu a:hover {
+                    background-color: #f0fdf4;
+                    color: #15803d;
+                }
+            </style>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <div class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
+            <a href="#" class="hover:text-emerald-600">首页</a>
+            <i class="fas fa-chevron-right text-xs"></i>
+            <span class="text-gray-800 font-medium">购物车</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">购物车</h2>
+                        <span class="text-sm text-gray-600">共 3 件商品</span>
+                    </div>
+
+                    <!-- 店铺1：山东农化科技有限公司 -->
+                    <div class="border rounded-lg overflow-hidden">
+                        <!-- 店铺信息条 -->
+                        <div class="flex items-center justify-between p-4 bg-gray-50 border-b">
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" checked class="w-5 h-5 text-emerald-600 rounded">
+                                <i class="fas fa-store text-emerald-600 mr-2"></i>
+                                <a href="shop.html" class="text-sm font-medium text-emerald-600 hover:text-emerald-700">山东农化科技有限公司</a>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <span class="text-xs text-gray-500">4.9分 | 24小时发货</span>
+                                <button class="text-xs text-gray-600 hover:text-red-500">
+                                    <i class="fas fa-trash-alt mr-1"></i>清空该店商品
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 店铺商品列表 -->
+                        <div class="space-y-0">
+                            <div class="border-b last:border-b-0 p-4 hover:bg-gray-50 transition">
+                                <div class="flex items-start space-x-4">
+                                    <input type="checkbox" checked class="mt-4 w-5 h-5 text-emerald-600 rounded">
+                                    <div class="w-24 h-24 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-seedling text-3xl text-gray-400"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-800 mb-2">优质玉米种子 高产抗病 适应性广</h4>
+                                        <p class="text-sm text-gray-500 mb-2">规格：1kg装</p>
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <span class="bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded">区域保护</span>
+                                            <span class="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded">快速配送</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center border rounded">
+                                                <button class="px-3 py-1 hover:bg-gray-100">-</button>
+                                                <input type="number" value="2" class="w-12 text-center border-x py-1 focus:outline-none text-sm">
+                                                <button class="px-3 py-1 hover:bg-gray-100">+</button>
+                                            </div>
+                                            <div class="flex items-center space-x-4">
+                                                <span class="text-red-500 font-bold">¥90.00</span>
+                                                <button class="text-gray-400 hover:text-red-500">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border-b last:border-b-0 p-4 hover:bg-gray-50 transition">
+                                <div class="flex items-start space-x-4">
+                                    <input type="checkbox" checked class="mt-4 w-5 h-5 text-emerald-600 rounded">
+                                    <div class="w-24 h-24 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-flask text-3xl text-gray-400"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-800 mb-2">复合肥料 15-15-15</h4>
+                                        <p class="text-sm text-gray-500 mb-2">规格：50kg/袋</p>
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <span class="bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded">区域保护</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center border rounded">
+                                                <button class="px-3 py-1 hover:bg-gray-100">-</button>
+                                                <input type="number" value="1" class="w-12 text-center border-x py-1 focus:outline-none text-sm">
+                                                <button class="px-3 py-1 hover:bg-gray-100">+</button>
+                                            </div>
+                                            <div class="flex items-center space-x-4">
+                                                <span class="text-red-500 font-bold">¥128.00</span>
+                                                <button class="text-gray-400 hover:text-red-500">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 店铺商品总计 -->
+                        <div class="flex items-center justify-end p-4 bg-gray-50 border-t">
+                            <div class="flex items-center space-x-4">
+                                <span class="text-sm text-gray-600">商品总价：</span>
+                                <span class="text-sm font-medium text-gray-900">¥308.00</span>
+                                <span class="text-xs text-gray-500">（已选2件）</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 店铺2：北京农资有限公司 -->
+                    <div class="border rounded-lg overflow-hidden mt-4">
+                        <!-- 店铺信息条 -->
+                        <div class="flex items-center justify-between p-4 bg-gray-50 border-b">
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" class="w-5 h-5 text-emerald-600 rounded">
+                                <i class="fas fa-store text-emerald-600 mr-2"></i>
+                                <a href="shop.html" class="text-sm font-medium text-emerald-600 hover:text-emerald-700">北京农资有限公司</a>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <span class="text-xs text-gray-500">4.7分 | 48小时发货</span>
+                                <button class="text-xs text-gray-600 hover:text-red-500">
+                                    <i class="fas fa-trash-alt mr-1"></i>清空该店商品
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 店铺商品列表 -->
+                        <div class="space-y-0">
+                            <div class="border-b last:border-b-0 p-4 hover:bg-gray-50 transition">
+                                <div class="flex items-start space-x-4">
+                                    <input type="checkbox" class="mt-4 w-5 h-5 text-emerald-600 rounded">
+                                    <div class="w-24 h-24 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-spray-can text-3xl text-gray-400"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-800 mb-2">高效杀菌剂 广谱防护</h4>
+                                        <p class="text-sm text-gray-500 mb-2">规格：500ml/瓶</p>
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <span class="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded">快速配送</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center border rounded">
+                                                <button class="px-3 py-1 hover:bg-gray-100">-</button>
+                                                <input type="number" value="1" class="w-12 text-center border-x py-1 focus:outline-none text-sm">
+                                                <button class="px-3 py-1 hover:bg-gray-100">+</button>
+                                            </div>
+                                            <div class="flex items-center space-x-4">
+                                                <span class="text-red-500 font-bold">¥68.00</span>
+                                                <button class="text-gray-400 hover:text-red-500">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between mt-6 pt-6 border-t">
+                        <div class="flex items-center space-x-4">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="checkbox" checked class="w-5 h-5 text-emerald-600 rounded">
+                                <span class="text-sm text-gray-600">全选</span>
+                            </label>
+                            <button class="text-sm text-gray-600 hover:text-red-500">
+                                <i class="fas fa-trash-alt mr-1"></i>删除选中
+                            </button>
+                            <button class="text-sm text-gray-600 hover:text-emerald-600">
+                                <i class="fas fa-trash-alt mr-1"></i>清空购物车
+                            </button>
+                        </div>
+                        <div class="flex items-center space-x-6">
+                            <div class="text-sm text-gray-600">
+                                已选商品：<span class="text-emerald-600 font-bold">2</span> 件
+                            </div>
+                            <div class="text-sm text-gray-600">
+                                合计：<span class="text-red-500 font-bold text-xl">¥218.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-md p-6 sticky top-6">
+                    <h3 class="font-bold text-gray-800 mb-6">订单信息</h3>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-600">商品金额</span>
+                            <span class="text-gray-800">¥218.00</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-600">运费</span>
+                            <span class="text-emerald-600">¥0.00</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-600">优惠</span>
+                            <span class="text-red-500">-¥10.00</span>
+                        </div>
+                        <div class="border-t pt-4 flex items-center justify-between">
+                            <span class="font-bold text-gray-800">应付金额</span>
+                            <span class="text-red-500 font-bold text-2xl">¥208.00</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm text-gray-600">优惠券</span>
+                            <span class="text-sm text-emerald-600 cursor-pointer">选择优惠券</span>
+                        </div>
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-red-600">满100减10优惠券</p>
+                                    <p class="text-xs text-gray-500">有效期至2024-12-31</p>
+                                </div>
+                                <i class="fas fa-check-circle text-emerald-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <button class="w-full bg-emerald-600 text-white py-3 rounded-lg font-medium hover:bg-emerald-700 transition" onclick="window.location.href='confirm-order.html'">
+                        提交订单
+                    </button>
+
+                    <div class="mt-4 p-4 bg-yellow-50 rounded-lg">
+                        <div class="flex items-start space-x-2">
+                            <i class="fas fa-shield-alt text-yellow-600 mt-1"></i>
+                            <div>
+                                <p class="text-sm font-medium text-yellow-800">售后保障</p>
+                                <p class="text-xs text-yellow-700">7天无理由退换 · 正品保证 · 假一赔十</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mt-6">
+            <h3 class="font-bold text-gray-800 mb-4">猜你喜欢</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="border rounded-lg p-3 hover:shadow-md transition cursor-pointer">
+                    <div class="bg-gray-200 h-24 rounded flex items-center justify-center mb-2">
+                        <i class="fas fa-seedling text-2xl text-gray-400"></i>
+                    </div>
+                    <h4 class="text-xs font-medium text-gray-800 line-clamp-2">杂交玉米种子</h4>
+                    <p class="text-red-500 font-bold text-sm mt-1">¥68.00</p>
+                </div>
+                <div class="border rounded-lg p-3 hover:shadow-md transition cursor-pointer">
+                    <div class="bg-gray-200 h-24 rounded flex items-center justify-center mb-2">
+                        <i class="fas fa-leaf text-2xl text-gray-400"></i>
+                    </div>
+                    <h4 class="text-xs font-medium text-gray-800 line-clamp-2">有机生物肥</h4>
+                    <p class="text-red-500 font-bold text-sm mt-1">¥89.00</p>
+                </div>
+                <div class="border rounded-lg p-3 hover:shadow-md transition cursor-pointer">
+                    <div class="bg-gray-200 h-24 rounded flex items-center justify-center mb-2">
+                        <i class="fas fa-spray-can text-2xl text-gray-400"></i>
+                    </div>
+                    <h4 class="text-xs font-medium text-gray-800 line-clamp-2">高效杀虫剂</h4>
+                    <p class="text-red-500 font-bold text-sm mt-1">¥75.00</p>
+                </div>
+                <div class="border rounded-lg p-3 hover:shadow-md transition cursor-pointer">
+                    <div class="bg-gray-200 h-24 rounded flex items-center justify-center mb-2">
+                        <i class="fas fa-tractor text-2xl text-gray-400"></i>
+                    </div>
+                    <h4 class="text-xs font-medium text-gray-800 line-clamp-2">小型手扶拖拉机</h4>
+                    <p class="text-red-500 font-bold text-sm mt-1">¥3,280.00</p>
+                </div>
+                <div class="border rounded-lg p-3 hover:shadow-md transition cursor-pointer">
+                    <div class="bg-gray-200 h-24 rounded flex items-center justify-center mb-2">
+                        <i class="fas fa-flask text-2xl text-gray-400"></i>
+                    </div>
+                    <h4 class="text-xs font-medium text-gray-800 line-clamp-2">水溶性肥料</h4>
+                    <p class="text-red-500 font-bold text-sm mt-1">¥156.00</p>
+                </div>
+                <div class="border rounded-lg p-3 hover:shadow-md transition cursor-pointer">
+                    <div class="bg-gray-200 h-24 rounded flex items-center justify-center mb-2">
+                        <i class="fas fa-bug text-2xl text-gray-400"></i>
+                    </div>
+                    <h4 class="text-xs font-medium text-gray-800 line-clamp-2">生物农药</h4>
+                    <p class="text-red-500 font-bold text-sm mt-1">¥92.00</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 页面加载时检查本地存储中的区域信息，并更新店铺信息
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedRegionId = localStorage.getItem('selectedRegionId');
+            console.log('购物车页面加载时获取的区域ID:', selectedRegionId);
+            if (selectedRegionId) {
+                updateShopInfoInCart(parseInt(selectedRegionId));
+            }
+        });
+        
+        // 更新购物车中的店铺信息
+        function updateShopInfoInCart(regionId) {
+            console.log('开始更新购物车店铺信息，区域ID:', regionId);
+            // 根据区域ID获取对应的本地服务商信息
+            const regionShopMap = {
+                1: { // 曹县地址
+                    shops: [
+                        {
+                            originalName: '山东农化科技有限公司',
+                            newName: '曹县农业科技有限公司',
+                            newUrl: 'shop.html',
+                            rating: '4.9',
+                            deliveryTime: '24小时发货'
+                        },
+                        {
+                            originalName: '北京农资有限公司',
+                            newName: '曹县农业科技有限公司',
+                            newUrl: 'shop.html',
+                            rating: '4.9',
+                            deliveryTime: '24小时发货'
+                        }
+                    ]
+                },
+                2: { // 济南地址
+                    shops: [
+                        {
+                            originalName: '山东农化科技有限公司',
+                            newName: '济南农资配送中心',
+                            newUrl: 'shop.html',
+                            rating: '4.8',
+                            deliveryTime: '48小时发货'
+                        },
+                        {
+                            originalName: '北京农资有限公司',
+                            newName: '济南农资配送中心',
+                            newUrl: 'shop.html',
+                            rating: '4.8',
+                            deliveryTime: '48小时发货'
+                        }
+                    ]
+                },
+                3: { // 北京地址
+                    shops: [
+                        {
+                            originalName: '山东农化科技有限公司',
+                            newName: '北京绿色农业发展有限公司',
+                            newUrl: 'shop.html',
+                            rating: '4.7',
+                            deliveryTime: '72小时发货'
+                        },
+                        {
+                            originalName: '北京农资有限公司',
+                            newName: '北京绿色农业发展有限公司',
+                            newUrl: 'shop.html',
+                            rating: '4.7',
+                            deliveryTime: '72小时发货'
+                        }
+                    ]
+                }
+            };
+            
+            const regionInfo = regionShopMap[regionId];
+            console.log('区域信息:', regionInfo);
+            if (regionInfo && regionInfo.shops) {
+                regionInfo.shops.forEach(shop => {
+                    console.log('处理店铺信息:', shop);
+                    // 查找对应的店铺元素
+                    const shopContainers = document.querySelectorAll('.border.rounded-lg.overflow-hidden');
+                    console.log('找到的店铺容器数量:', shopContainers.length);
+                    shopContainers.forEach(container => {
+                        const shopNameElement = container.querySelector('.text-sm.font-medium.text-emerald-600');
+                        if (shopNameElement) {
+                            console.log('店铺名称元素内容:', shopNameElement.textContent.trim());
+                            if (shopNameElement.textContent.trim() === shop.originalName) {
+                                console.log('找到匹配的店铺，更新信息');
+                                // 更新店铺名称和链接
+                                shopNameElement.textContent = shop.newName;
+                                shopNameElement.href = shop.newUrl;
+                                
+                                // 更新店铺评分和配送信息
+                                const shopInfoElement = container.querySelector('.text-xs.text-gray-500');
+                                if (shopInfoElement) {
+                                    shopInfoElement.textContent = `${shop.rating}分 | ${shop.deliveryTime}`;
+                                }
+                            }
+                        }
+                    });
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>

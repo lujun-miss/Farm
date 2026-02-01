@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扫码录入 - 发布商品</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 厂家端样式 */
+        .vendor-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        
+        /* 导航样式 */
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+        
+        /* 按钮样式 */
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* 扫码区域样式 */
+        #scan-area {
+            border: 2px dashed #3b82f6;
+            border-radius: 1rem;
+            background-color: #f0f9ff;
+            transition: all 0.3s ease;
+        }
+        
+        #scan-area:hover {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+        
+        #camera-preview {
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 顶部导航 -->
+    <header class="bg-white shadow-md px-6 py-4">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="text-xl font-bold text-gray-800">欢迎回来，山东种业集团</h2>
+                <p class="text-sm text-gray-600">今天是 2024年1月15日 星期一</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="relative p-2 text-gray-600 hover:text-blue-600 transition">
+                    <i class="fas fa-bell text-xl"></i>
+                    <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
+                </button>
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-blue-600"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-800">张经理</p>
+                        <p class="text-xs text-gray-600">厂家管理员</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 侧边导航 -->
+    <aside class="w-64 bg-blue-800 text-white flex-shrink-0 fixed left-0 top-0 h-screen">
+        <div class="p-4 border-b border-blue-700">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
+                <i class="fas fa-leaf text-2xl"></i>
+                <div>
+                    <h1 class="text-lg font-bold">农资商城</h1>
+                    <p class="text-xs text-blue-200">厂家管理后台</p>
+                </div>
+            </div>
+        </div>
+        <nav class="p-4">
+            <ul class="space-y-2">
+                <li>
+                    <a href="index.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="products.html" class="flex items-center space-x-3 px-4 py-3 bg-blue-700 rounded-lg">
+                        <i class="fas fa-boxes"></i>
+                        <span>商品管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="orders.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>订单管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="inventory.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-warehouse"></i>
+                        <span>库存管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="finance.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span>财务管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="analytics.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-chart-line"></i>
+                        <span>数据统计</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-cog"></i>
+                        <span>系统设置</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="absolute bottom-0 w-64 p-4 border-t border-blue-700">
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>退出登录</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <div class="container mx-auto px-4 py-8 ml-64">
+        <div class="flex flex-col md:flex-row gap-6">
+
+            <!-- 主内容区 -->
+            <main class="flex-1">
+                <!-- 页面标题 -->
+                <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">扫码录入商品</h2>
+                            <p class="text-gray-500 mt-1">扫描商品条码，系统自动识别并填充商品信息</p>
+                        </div>
+                        <a href="product-publish.html" class="btn-primary px-4 py-2 rounded-lg text-white flex items-center space-x-2 hover:no-underline">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>返回发布页面</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 扫码区域 -->
+                <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-6 text-center">扫码区域</h3>
+                        
+                        <!-- 扫码区域 -->
+                        <div id="scan-area" class="p-8 text-center mb-6">
+                            <div id="camera-preview" class="w-full max-w-md mx-auto aspect-square bg-gray-900 flex items-center justify-center">
+                                <div id="scan-placeholder" class="text-center">
+                                    <i class="fas fa-camera text-4xl text-blue-500 mb-4"></i>
+                                    <h4 class="text-lg font-medium text-gray-600 mb-2">点击开始扫码</h4>
+                                    <p class="text-sm text-gray-500">系统需要访问您的摄像头</p>
+                                </div>
+                                <!-- 实际摄像头预览将在这里显示 -->
+                            </div>
+                            
+                            <button type="button" onclick="startScanning()" 
+                                    class="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">
+                                <i class="fas fa-play mr-2"></i>开始扫码
+                            </button>
+                            
+                            <button type="button" onclick="stopScanning()" 
+                                    class="mt-6 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200 hidden">
+                                <i class="fas fa-stop mr-2"></i>停止扫码
+                            </button>
+                        </div>
+                        
+                        <!-- 扫码结果 -->
+                        <div id="scan-result" class="bg-green-50 border border-green-200 rounded-lg p-4 hidden">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-green-500 text-xl mt-1"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <h4 class="text-lg font-medium text-green-800">扫码成功！</h4>
+                                    <div id="scan-details" class="mt-2 text-sm text-green-700">
+                                        <!-- 扫码结果将在这里显示 -->
+                                    </div>
+                                    <button type="button" onclick="fillProductForm()" 
+                                            class="mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200">
+                                        <i class="fas fa-fill-drip mr-2"></i>填充商品表单
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 扫码说明 -->
+                <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">扫码说明</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center p-4 bg-blue-50 rounded-lg">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-camera text-blue-600 text-xl"></i>
+                            </div>
+                            <h4 class="font-medium text-gray-800 mb-2">准备扫码</h4>
+                            <p class="text-sm text-gray-600">确保商品条码清晰可见，光线充足</p>
+                        </div>
+                        
+                        <div class="text-center p-4 bg-blue-50 rounded-lg">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-qrcode text-blue-600 text-xl"></i>
+                            </div>
+                            <h4 class="font-medium text-gray-800 mb-2">对准条码</h4>
+                            <p class="text-sm text-gray-600">将条码对准摄像头中央，保持适当距离</p>
+                        </div>
+                        
+                        <div class="text-center p-4 bg-blue-50 rounded-lg">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-check text-blue-600 text-xl"></i>
+                            </div>
+                            <h4 class="font-medium text-gray-800 mb-2">自动识别</h4>
+                            <p class="text-sm text-gray-600">系统自动识别条码信息并填充表单</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // 模拟扫码功能
+        function startScanning() {
+            const scanPlaceholder = document.getElementById('scan-placeholder');
+            const startButton = document.querySelector('button[onclick="startScanning()"]');
+            const stopButton = document.querySelector('button[onclick="stopScanning()"]');
+            
+            // 隐藏开始按钮，显示停止按钮
+            startButton.classList.add('hidden');
+            stopButton.classList.remove('hidden');
+            
+            // 模拟摄像头激活
+            scanPlaceholder.innerHTML = `
+                <i class="fas fa-spinner fa-spin text-4xl text-blue-500 mb-4"></i>
+                <h4 class="text-lg font-medium text-gray-600 mb-2">摄像头已激活</h4>
+                <p class="text-sm text-gray-500">请将商品条码对准摄像头</p>
+            `;
+            
+            // 模拟扫码成功
+            setTimeout(() => {
+                showScanResult();
+            }, 3000);
+        }
+        
+        function stopScanning() {
+            const scanPlaceholder = document.getElementById('scan-placeholder');
+            const startButton = document.querySelector('button[onclick="startScanning()"]');
+            const stopButton = document.querySelector('button[onclick="stopScanning()"]');
+            const scanResult = document.getElementById('scan-result');
+            
+            // 显示开始按钮，隐藏停止按钮
+            startButton.classList.remove('hidden');
+            stopButton.classList.add('hidden');
+            
+            // 恢复初始状态
+            scanPlaceholder.innerHTML = `
+                <i class="fas fa-camera text-4xl text-blue-500 mb-4"></i>
+                <h4 class="text-lg font-medium text-gray-600 mb-2">点击开始扫码</h4>
+                <p class="text-sm text-gray-500">系统需要访问您的摄像头</p>
+            `;
+            
+            // 隐藏扫码结果
+            scanResult.classList.add('hidden');
+        }
+        
+        function showScanResult() {
+            const scanResult = document.getElementById('scan-result');
+            const scanDetails = document.getElementById('scan-details');
+            
+            // 填充模拟的扫码结果
+            scanDetails.innerHTML = `
+                <div class="mb-2"><strong>商品条码:</strong> 6901234567890</div>
+                <div class="mb-2"><strong>商品名称:</strong> 高效复合肥</div>
+                <div class="mb-2"><strong>品牌:</strong> 丰收牌</div>
+                <div class="mb-2"><strong>规格:</strong> 50kg/袋</div>
+                <div><strong>生产厂家:</strong> 山东丰收化肥有限公司</div>
+            `;
+            
+            // 显示扫码结果
+            scanResult.classList.remove('hidden');
+        }
+        
+        function fillProductForm() {
+            // 模拟填充表单并跳转到发布页面
+            alert('商品信息已成功识别！\n\n系统将跳转到商品发布页面并自动填充已识别的信息。');
+            window.location.href = 'product-publish.html?barcode=6901234567890&name=高效复合肥&brand=丰收牌&spec=50kg/袋&manufacturer=山东丰收化肥有限公司';
+        }
+    </script>
+</body>
+</html>

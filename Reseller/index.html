@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代理后台 - 农资商城</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="flex flex-col min-h-screen">
+        <header class="bg-gradient-to-r from-emerald-600 to-emerald-800 text-white shadow-lg">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='../index.html'">
+                        <i class="fas fa-user-tie text-3xl"></i>
+                        <h1 class="text-2xl font-bold">农资商城代理后台</h1>
+                    </div>
+                    <nav class="flex items-center space-x-4">
+                        <a href="../index.html" class="flex items-center space-x-2 hover:text-emerald-200 transition">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>返回主导航</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex flex-1">
+            <aside class="w-64 bg-white shadow-lg">
+                <nav class="p-4">
+                    <ul class="space-y-2">
+                        <li>
+                            <button onclick="loadPage('dashboard.html')" class="nav-btn w-full text-left px-4 py-3 rounded-lg flex items-center space-x-3 hover:bg-emerald-50 transition active">
+                                <i class="fas fa-tachometer-alt text-emerald-600"></i>
+                                <span>管理首页</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadPage('apply.html')" class="nav-btn w-full text-left px-4 py-3 rounded-lg flex items-center space-x-3 hover:bg-emerald-50 transition">
+                                <i class="fas fa-handshake text-blue-600"></i>
+                                <span>代理申请</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadPage('#')" class="nav-btn w-full text-left px-4 py-3 rounded-lg flex items-center space-x-3 hover:bg-emerald-50 transition">
+                                <i class="fas fa-store text-purple-600"></i>
+                                <span>代理店铺</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadPage('store-decoration.html')" class="nav-btn w-full text-left px-4 py-3 rounded-lg flex items-center space-x-3 hover:bg-emerald-50 transition">
+                                <i class="fas fa-palette text-pink-600"></i>
+                                <span>店铺装修</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadPage('#')" class="nav-btn w-full text-left px-4 py-3 rounded-lg flex items-center space-x-3 hover:bg-emerald-50 transition">
+                                <i class="fas fa-user-friends text-orange-600"></i>
+                                <span>客户管理</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadPage('#')" class="nav-btn w-full text-left px-4 py-3 rounded-lg flex items-center space-x-3 hover:bg-emerald-50 transition">
+                                <i class="fas fa-clipboard-list text-pink-600"></i>
+                                <span>订单管理</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadPage('#')" class="nav-btn w-full text-left px-4 py-3 rounded-lg flex items-center space-x-3 hover:bg-emerald-50 transition">
+                                <i class="fas fa-wallet text-teal-600"></i>
+                                <span>佣金收益</span>
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="mt-8 pt-4 border-t">
+                        <h3 class="text-sm font-medium text-gray-500 mb-3 px-4">快速入口</h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="dashboard.html" target="_blank" class="w-full text-left px-4 py-2 rounded-lg flex items-center space-x-3 hover:bg-emerald-50 transition text-sm">
+                                    <i class="fas fa-external-link-alt text-gray-400"></i>
+                                    <span>新窗口打开管理首页</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="apply.html" target="_blank" class="w-full text-left px-4 py-2 rounded-lg flex items-center space-x-3 hover:bg-emerald-50 transition text-sm">
+                                    <i class="fas fa-external-link-alt text-gray-400"></i>
+                                    <span>新窗口打开申请页面</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </aside>
+
+            <main class="flex-1 p-6">
+                <div class="bg-white rounded-lg shadow-lg h-full">
+                    <iframe id="content-frame" src="dashboard.html" class="w-full h-full border-0 rounded-lg" frameborder="0"></iframe>
+                </div>
+            </main>
+        </div>
+
+        <footer class="bg-white border-t">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex items-center justify-between text-sm text-gray-600">
+                    <div class="flex items-center space-x-4">
+                        <span><i class="fas fa-leaf text-emerald-600 mr-1"></i> 农资商城农资电商平台</span>
+                        <span>|</span>
+                        <span>厂家直营 + 全民代理</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span><i class="fas fa-phone mr-1"></i> 客服热线：400-XXX-XXXX</span>
+                        <span><i class="fas fa-envelope mr-1"></i> 联系我们</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function loadPage(url) {
+            if (url === '#') {
+                alert('该功能页面正在开发中，敬请期待！');
+                return;
+            }
+            document.getElementById('content-frame').src = url;
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-emerald-100', 'text-emerald-700');
+            });
+            
+            event.target.closest('.nav-btn').classList.add('active', 'bg-emerald-100', 'text-emerald-700');
+        }
+    </script>
+</body>
+</html>

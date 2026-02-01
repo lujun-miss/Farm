@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平台运营后台 - 农资商城</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-emerald-800 text-white flex-shrink-0">
+            <div class="p-4 border-b border-emerald-700">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
+                    <i class="fas fa-leaf text-2xl"></i>
+                    <div>
+                        <h1 class="text-lg font-bold">农资商城</h1>
+                        <p class="text-xs text-emerald-200">平台运营后台</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="p-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 px-4 py-3 bg-emerald-700 rounded-lg">
+                            <i class="fas fa-home"></i>
+                            <span>首页</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-industry"></i>
+                            <span>厂家管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-users"></i>
+                            <span>代理管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-boxes"></i>
+                            <span>商品管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>订单管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-user-shield"></i>
+                            <span>用户管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-chart-line"></i>
+                            <span>数据统计</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-bell"></i>
+                            <span>系统通知</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-cog"></i>
+                            <span>系统设置</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="absolute bottom-0 w-64 p-4 border-t border-emerald-700">
+                <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>退出登录</span>
+                </a>
+            </div>
+        </aside>
+
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <header class="bg-white shadow-md px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">欢迎回来，平台管理员</h2>
+                        <p class="text-sm text-gray-600">曹州农化农资电商平台运营管理系统</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <button class="flex items-center space-x-2 text-gray-600 hover:text-emerald-600">
+                                <i class="fas fa-bell"></i>
+                                <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">8</span>
+                            </button>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user-shield text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-800">管理员</p>
+                                <p class="text-xs text-gray-600">超级管理员</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex-1 overflow-y-auto p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">今日订单</p>
+                                <p class="text-3xl font-bold text-gray-800 mt-2">528</p>
+                                <p class="text-sm text-emerald-600 mt-1">
+                                    <i class="fas fa-arrow-up mr-1"></i>18% 较昨日
+                                </p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-shopping-cart text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">今日销售额</p>
+                                <p class="text-3xl font-bold text-gray-800 mt-2">¥128,680</p>
+                                <p class="text-sm text-emerald-600 mt-1">
+                                    <i class="fas fa-arrow-up mr-1"></i>22% 较昨日
+                                </p>
+                            </div>
+                            <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-dollar-sign text-emerald-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">入驻厂家</p>
+                                <p class="text-3xl font-bold text-gray-800 mt-2">156</p>
+                                <p class="text-sm text-emerald-600 mt-1">
+                                    <i class="fas fa-arrow-up mr-1"></i>5% 较上月
+                                </p>
+                            </div>
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-industry text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">代理总数</p>
+                                <p class="text-3xl font-bold text-gray-800 mt-2">2,458</p>
+                                <p class="text-sm text-emerald-600 mt-1">
+                                    <i class="fas fa-arrow-up mr-1"></i>12% 较上月
+                                </p>
+                            </div>
+                            <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-users text-orange-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-gray-800">销售趋势</h3>
+                            <select class="border rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <option>近7天</option>
+                                <option>近30天</option>
+                                <option>近90天</option>
+                            </select>
+                        </div>
+                        <div class="h-64 flex items-end justify-between space-x-2">
+                            <div class="flex-1 flex flex-col items-center">
+                                <div class="w-full bg-emerald-500 rounded-t" style="height: 55%"></div>
+                                <span class="text-xs text-gray-600 mt-2">周一</span>
+                            </div>
+                            <div class="flex-1 flex flex-col items-center">
+                                <div class="w-full bg-emerald-500 rounded-t" style="height: 70%"></div>
+                                <span class="text-xs text-gray-600 mt-2">周二</span>
+                            </div>
+                            <div class="flex-1 flex flex-col items-center">
+                                <div class="w-full bg-emerald-500 rounded-t" style="height: 50%"></div>
+                                <span class="text-xs text-gray-600 mt-2">周三</span>
+                            </div>
+                            <div class="flex-1 flex flex-col items-center">
+                                <div class="w-full bg-emerald-500 rounded-t" style="height: 85%"></div>
+                                <span class="text-xs text-gray-600 mt-2">周四</span>
+                            </div>
+                            <div class="flex-1 flex flex-col items-center">
+                                <div class="w-full bg-emerald-500 rounded-t" style="height: 65%"></div>
+                                <span class="text-xs text-gray-600 mt-2">周五</span>
+                            </div>
+                            <div class="flex-1 flex flex-col items-center">
+                                <div class="w-full bg-emerald-500 rounded-t" style="height: 80%"></div>
+                                <span class="text-xs text-gray-600 mt-2">周六</span>
+                            </div>
+                            <div class="flex-1 flex flex-col items-center">
+                                <div class="w-full bg-emerald-600 rounded-t" style="height: 95%"></div>
+                                <span class="text-xs text-gray-600 mt-2">周日</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-gray-800">业务分布</h3>
+                            <select class="border rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <option>本月</option>
+                                <option>上月</option>
+                            </select>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-600">厂家直营</span>
+                                    <span class="text-sm font-medium text-gray-800">65%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-emerald-500 h-2 rounded-full" style="width: 65%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-600">代理销售</span>
+                                    <span class="text-sm font-medium text-gray-800">35%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 35%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-600">种子</span>
+                                    <span class="text-sm font-medium text-gray-800">40%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-orange-500 h-2 rounded-full" style="width: 40%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-600">化肥</span>
+                                    <span class="text-sm font-medium text-gray-800">35%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 35%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-600">农药</span>
+                                    <span class="text-sm font-medium text-gray-800">25%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-red-500 h-2 rounded-full" style="width: 25%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-gray-800">待审核申请</h3>
+                            <a href="#" class="text-emerald-600 text-sm hover:text-emerald-700">查看全部</a>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-industry text-emerald-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-gray-800">山东绿源农业科技有限公司</p>
+                                        <p class="text-xs text-gray-600">厂家入驻申请 · 2024-01-14</p>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-1 bg-emerald-500 text-white text-sm rounded hover:bg-emerald-600">通过</button>
+                                    <button class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">拒绝</button>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-users text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-gray-800">李四</p>
+                                        <p class="text-xs text-gray-600">代理申请 · 2024-01-14</p>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-1 bg-emerald-500 text-white text-sm rounded hover:bg-emerald-600">通过</button>
+                                    <button class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">拒绝</button>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-industry text-orange-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-gray-800">河南丰收种业有限公司</p>
+                                        <p class="text-xs text-gray-600">厂家入驻申请 · 2024-01-13</p>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-1 bg-emerald-500 text-white text-sm rounded hover:bg-emerald-600">通过</button>
+                                    <button class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">拒绝</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-gray-800">系统通知</h3>
+                            <a href="#" class="text-emerald-600 text-sm hover:text-emerald-700">查看全部</a>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3 p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-exclamation-triangle text-red-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-800">库存预警</p>
+                                    <p class="text-xs text-gray-600 mt-1">山东农化科技有限公司的"优质玉米种子"库存不足，请及时补货</p>
+                                    <p class="text-xs text-gray-400 mt-2">2024-01-15 10:30</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-info-circle text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-800">新用户注册</p>
+                                    <p class="text-xs text-gray-600 mt-1">今日新增用户128人，其中代理申请15人</p>
+                                    <p class="text-xs text-gray-400 mt-2">2024-01-15 09:15</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-check-circle text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-800">订单完成</p>
+                                    <p class="text-xs text-gray-600 mt-1">今日已完成订单256笔，销售额¥45,680</p>
+                                    <p class="text-xs text-gray-400 mt-2">2024-01-15 08:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-gray-800">热门厂家</h3>
+                            <a href="#" class="text-emerald-600 text-sm hover:text-emerald-700">查看全部</a>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3 p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-industry text-emerald-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800">山东农化科技</p>
+                                    <p class="text-xs text-gray-600">销售额：¥456,800</p>
+                                </div>
+                                <span class="text-emerald-600 font-bold">1</span>
+                            </div>
+                            <div class="flex items-center space-x-3 p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-industry text-blue-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800">河南绿源农业</p>
+                                    <p class="text-xs text-gray-600">销售额：¥386,500</p>
+                                </div>
+                                <span class="text-emerald-600 font-bold">2</span>
+                            </div>
+                            <div class="flex items-center space-x-3 p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-industry text-orange-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800">河北丰收种业</p>
+                                    <p class="text-xs text-gray-600">销售额：¥298,200</p>
+                                </div>
+                                <span class="text-emerald-600 font-bold">3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-gray-800">金牌代理</h3>
+                            <a href="#" class="text-emerald-600 text-sm hover:text-emerald-700">查看全部</a>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3 p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-purple-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800">张代理</p>
+                                    <p class="text-xs text-gray-600">销售额：¥128,600</p>
+                                </div>
+                                <span class="text-emerald-600 font-bold">1</span>
+                            </div>
+                            <div class="flex items-center space-x-3 p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-emerald-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800">李代理</p>
+                                    <p class="text-xs text-gray-600">销售额：¥98,400</p>
+                                </div>
+                                <span class="text-emerald-600 font-bold">2</span>
+                            </div>
+                            <div class="flex items-center space-x-3 p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-blue-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800">王代理</p>
+                                    <p class="text-xs text-gray-600">销售额：¥76,800</p>
+                                </div>
+                                <span class="text-emerald-600 font-bold">3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-gray-800">热销商品</h3>
+                            <a href="#" class="text-emerald-600 text-sm hover:text-emerald-700">查看全部</a>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3 p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-seedling text-orange-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800">优质玉米种子</p>
+                                    <p class="text-xs text-gray-600">销量：1,523件</p>
+                                </div>
+                                <span class="text-emerald-600 font-bold">1</span>
+                            </div>
+                            <div class="flex items-center space-x-3 p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-flask text-emerald-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800">复合肥料15-15-15</p>
+                                    <p class="text-xs text-gray-600">销量：1,286件</p>
+                                </div>
+                                <span class="text-emerald-600 font-bold">2</span>
+                            </div>
+                            <div class="flex items-center space-x-3 p-4 border rounded-lg hover:shadow-md transition">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-spray-can text-blue-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800">高效杀菌剂</p>
+                                    <p class="text-xs text-gray-600">销量：998件</p>
+                                </div>
+                                <span class="text-emerald-600 font-bold">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

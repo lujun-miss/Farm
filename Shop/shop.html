@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山东农化科技有限公司 - 农资商城</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 店铺头部 */
+        .shop-header {
+            background: linear-gradient(135deg, #10b981 0%, #065f46 100%);
+        }
+        
+        /* 店铺信息卡片 */
+        .shop-info-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-50%);
+        }
+        
+        /* 产品卡片 */
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 服务保障 */
+        .service-item {
+            transition: all 0.3s ease;
+        }
+        .service-item:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* 按钮样式 */
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 导航栏 -->
+    <header class="bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-lg relative">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center space-x-3">
+                    <button id="mobile-menu-btn" class="md:hidden text-white hover:text-emerald-200 transition">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                    <i class="fas fa-leaf text-2xl md:text-3xl"></i>
+                    <div class="cursor-pointer" onclick="window.location.href='index.html'">
+                        <h1 class="text-xl md:text-2xl font-bold">农资商城</h1>
+                        <p class="text-xs text-emerald-100 hidden sm:block">专业农资电商平台</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3 md:space-x-6">
+                    <!-- 地址选择 -->
+                    <div class="dropdown">
+                        <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                            <i class="fas fa-map-marker-alt text-lg"></i>
+                            <span class="hidden sm:inline">山东省菏泽市</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <div class="px-4 py-3 bg-gray-50 border-b">
+                                <span class="text-sm font-medium text-gray-700">当前地址</span>
+                            </div>
+                            <div class="p-2">
+                                <div class="flex items-center justify-between px-3 py-2 hover:bg-emerald-50 rounded-lg cursor-pointer">
+                                    <span class="text-sm">山东省菏泽市</span>
+                                    <i class="fas fa-check text-emerald-600"></i>
+                                </div>
+                                <div class="flex items-center justify-between px-3 py-2 hover:bg-emerald-50 rounded-lg cursor-pointer">
+                                    <span class="text-sm">山东省济南市</span>
+                                </div>
+                                <div class="flex items-center justify-between px-3 py-2 hover:bg-emerald-50 rounded-lg cursor-pointer">
+                                    <span class="text-sm">江苏省南京市</span>
+                                </div>
+                            </div>
+                            <div class="border-t p-3">
+                                <button class="w-full text-sm text-emerald-600 font-medium hover:text-emerald-800">
+                                    <i class="fas fa-plus mr-2"></i>添加新地址
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span class="hidden sm:inline">购物车</span>
+                        <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">3</span>
+                    </a>
+                    <!-- 我的农资下拉菜单 -->
+                    <div class="dropdown">
+                        <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                            <i class="fas fa-user text-lg"></i>
+                            <span class="hidden sm:inline">我的农资</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="user-center.html" class="block py-1 px-4 text-sm">买家中心</a>
+                            <a href="seller-choice.html" class="block py-1 px-4 text-sm">卖家中心</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 登录按钮 -->
+                    <a href="login.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-sign-in-alt text-lg"></i>
+                        <span class="hidden sm:inline">登录</span>
+                    </a>
+                    
+                    <!-- 免费注册按钮 -->
+                    <a href="register.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-user-plus text-lg"></i>
+                        <span class="hidden sm:inline">注册</span>
+                    </a>
+                </div>
+            </div>
+            <style>
+                /* 确保导航栏容器不会限制下拉菜单显示 */
+                header {
+                    overflow: visible !important;
+                    position: relative;
+                    z-index: 9999;
+                }
+                
+                .container {
+                    overflow: visible !important;
+                }
+                
+                .dropdown {
+                    position: relative;
+                    z-index: 9999;
+                    display: inline-block;
+                }
+                
+                .dropdown-menu {
+                    display: none;
+                    background: white;
+                    border-radius: 0.5rem;
+                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                    padding: 0.5rem 0;
+                    margin: 0;
+                    min-width: 150px;
+                    z-index: 9999;
+                    /* 关键：使用fixed定位完全脱离文档流 */
+                    position: fixed;
+                }
+                
+                /* 二级下拉菜单样式 */
+                .group .dropdown-menu {
+                    position: absolute;
+                    left: 100%;
+                    top: 0;
+                    margin-left: 0.5rem;
+                }
+                
+                .group:hover .dropdown-menu {
+                    display: block;
+                }
+                
+                .dropdown:hover .dropdown-menu {
+                    display: block;
+                }
+                
+                .dropdown-menu a {
+                    display: block;
+                    padding: 0.5rem 1rem;
+                    color: gray;
+                    text-decoration: none;
+                    white-space: nowrap;
+                }
+                
+                .dropdown-menu a:hover {
+                    background-color: #f0fdf4;
+                    color: #15803d;
+                }
+            </style>
+        </div>
+    </header>
+
+    <!-- 店铺头部横幅 -->
+    <section class="bg-white border-b">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between py-4">
+                <!-- 左侧店铺信息 -->
+                <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-emerald-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-industry text-3xl md:text-4xl text-emerald-600"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h1 class="text-xl md:text-2xl font-bold text-gray-900">山东农化科技有限公司</h1>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">诚信通</span>
+                        </div>
+                        <div class="flex items-center space-x-4 mt-2">
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star-half-alt text-yellow-400 text-sm"></i>
+                                <span class="text-sm text-gray-600 ml-1">4.8</span>
+                            </div>
+                            <div class="text-sm text-gray-600">24小时发货</div>
+                            <div class="text-sm text-gray-600">已认证企业</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 右侧操作按钮 -->
+                <div class="flex flex-wrap items-center space-x-3">
+                    <button class="flex items-center px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition text-sm font-medium">
+                        <i class="fas fa-heart mr-2"></i>关注
+                    </button>
+                    <button class="flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition text-sm font-medium">
+                        <i class="fas fa-share-alt mr-2"></i>分享
+                    </button>
+                    <button class="btn-primary px-6 py-2 text-white font-medium rounded-lg shadow-md">
+                        <i class="fas fa-headset mr-2"></i>联系客服
+                    </button>
+                </div>
+            </div>
+            
+
+        </div>
+    </section>
+    
+    <!-- 搜索区域 -->
+    <section class="container mx-auto px-4 py-6">
+        <div class="mb-6">
+            <div class="relative max-w-2xl mx-auto">
+                <input type="text" placeholder="搜索店铺内产品..." 
+                       class="w-full px-5 py-3 pl-12 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition">
+                <button class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-emerald-600 transition">
+                    <i class="fas fa-search text-lg"></i>
+                </button>
+                <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-emerald-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-emerald-700 transition">
+                    搜索
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 轮播图区域 -->
+    <section class="bg-gray-50 py-6">
+        <div class="container mx-auto px-4">
+            <div class="relative bg-white rounded-lg overflow-hidden shadow-md">
+
+                <div class="relative" style="height: 300px; md:height: 400px;">
+                    <img src="https://picsum.photos/1200/400?seed=50" alt="产品轮播图" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent flex items-center">
+                        <div class="px-8 max-w-md">
+                            <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">有机复合肥</h2>
+                            <p class="text-white/90 text-sm md:text-base mb-4">优质有机复合肥，提高作物产量，改善土壤结构</p>
+                            <div class="flex space-x-3">
+                                <span class="bg-emerald-600 text-white text-xs px-3 py-1 rounded-full">可喷淋</span>
+                                <span class="bg-emerald-600 text-white text-xs px-3 py-1 rounded-full">可灌根</span>
+                                <span class="bg-emerald-600 text-white text-xs px-3 py-1 rounded-full">肥效持久</span>
+                            </div>
+                            <button class="mt-6 px-6 py-3 bg-emerald-600 text-white rounded-full text-sm font-medium hover:bg-emerald-700 transition">
+                                了解详情
+                            </button>
+                        </div>
+                    </div>
+                    <!-- 轮播控制按钮 -->
+                    <button class="absolute left-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center text-gray-800 hover:bg-white transition">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center text-gray-800 hover:bg-white transition">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+
+    <!-- 产品列表 -->
+    <section class="container mx-auto px-4 py-6">
+        <h3 class="text-xl font-bold text-gray-900 mb-6">商品列表</h3>
+        <div class="flex flex-col md:flex-row gap-6">
+            <!-- 左侧分类导航 -->
+            <div class="w-full md:w-64 bg-white rounded-lg shadow-md p-4">
+                <div class="mb-4">
+                    <h4 class="font-medium text-gray-800 mb-2 px-2">产品分类</h4>
+                    <ul class="space-y-1">
+                        <li>
+                            <button class="w-full text-left px-3 py-2 bg-orange-100 text-orange-800 rounded-md font-medium">
+                                全部宝贝
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left px-3 py-2 hover:bg-emerald-50 rounded-md flex justify-between items-center">
+                                <span>杀虫剂</span>
+                                <i class="fas fa-chevron-down text-xs text-gray-500"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left px-3 py-2 hover:bg-emerald-50 rounded-md flex justify-between items-center">
+                                <span>杀菌剂</span>
+                                <i class="fas fa-chevron-down text-xs text-gray-500"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left px-3 py-2 hover:bg-emerald-50 rounded-md">
+                                营养剂
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left px-3 py-2 hover:bg-emerald-50 rounded-md">
+                                除草剂
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left px-3 py-2 hover:bg-emerald-50 rounded-md">
+                                叶面肥
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left px-3 py-2 hover:bg-emerald-50 rounded-md">
+                                杀螨剂
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 右侧产品列表 -->
+            <div class="flex-1">
+                <!-- 筛选条件 -->
+                <div class="bg-white rounded-lg shadow-md p-3 mb-6">
+                    <div class="flex items-center space-x-2">
+                        <button class="px-5 py-2 bg-orange-100 text-orange-800 rounded-lg text-sm font-medium">综合</button>
+                        <button class="px-5 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm">销量</button>
+                        <button class="px-5 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm">新品</button>
+                        <button class="px-5 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm flex items-center">
+                            价格
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 产品网格 -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            <!-- 产品1 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="window.location.href='product-detail.html'">
+                <img src="https://picsum.photos/400/300?seed=20" alt="有机复合肥" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h4 class="font-medium text-gray-900 line-clamp-2">有机复合肥 50kg/包</h4>
+                    <div class="flex items-center justify-between mt-3">
+                        <span class="text-red-600 font-bold">¥299.00</span>
+                        <span class="text-xs text-gray-500">销量：1,234</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 产品2 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
+                <img src="https://picsum.photos/400/300?seed=24" alt="高氮复合肥" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h4 class="font-medium text-gray-900 line-clamp-2">高氮复合肥 40kg/包</h4>
+                    <div class="flex items-center justify-between mt-3">
+                        <span class="text-red-600 font-bold">¥259.00</span>
+                        <span class="text-xs text-gray-500">销量：856</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 产品3 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
+                <img src="https://picsum.photos/400/300?seed=25" alt="磷钾肥" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h4 class="font-medium text-gray-900 line-clamp-2">磷钾肥 50kg/包</h4>
+                    <div class="flex items-center justify-between mt-3">
+                        <span class="text-red-600 font-bold">¥289.00</span>
+                        <span class="text-xs text-gray-500">销量：723</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 产品4 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
+                <img src="https://picsum.photos/400/300?seed=26" alt="生物有机肥" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h4 class="font-medium text-gray-900 line-clamp-2">生物有机肥 40kg/包</h4>
+                    <div class="flex items-center justify-between mt-3">
+                        <span class="text-red-600 font-bold">¥319.00</span>
+                        <span class="text-xs text-gray-500">销量：645</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 产品5 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
+                <img src="https://picsum.photos/400/300?seed=27" alt="微生物菌剂" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h4 class="font-medium text-gray-900 line-clamp-2">微生物菌剂 10kg/包</h4>
+                    <div class="flex items-center justify-between mt-3">
+                        <span class="text-red-600 font-bold">¥189.00</span>
+                        <span class="text-xs text-gray-500">销量：512</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 产品6 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
+                <img src="https://picsum.photos/400/300?seed=30" alt="农药登记证产品" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h4 class="font-medium text-gray-900 line-clamp-2">高效低毒农药 500ml/瓶</h4>
+                    <div class="flex items-center justify-between mt-3">
+                        <span class="text-red-600 font-bold">¥89.00</span>
+                        <span class="text-xs text-gray-500">销量：423</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 产品7 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
+                <img src="https://picsum.photos/400/300?seed=31" alt="小麦种子" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h4 class="font-medium text-gray-900 line-clamp-2">优质小麦种子 5kg/袋</h4>
+                    <div class="flex items-center justify-between mt-3">
+                        <span class="text-red-600 font-bold">¥129.00</span>
+                        <span class="text-xs text-gray-500">销量：389</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 产品8 -->
+            <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
+                <img src="https://picsum.photos/400/300?seed=32" alt="玉米种子" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h4 class="font-medium text-gray-900 line-clamp-2">高产玉米种子 5kg/袋</h4>
+                    <div class="flex items-center justify-between mt-3">
+                        <span class="text-red-600 font-bold">¥149.00</span>
+                        <span class="text-xs text-gray-500">销量：356</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 分页 -->
+    <section class="container mx-auto px-4 py-8">
+        <div class="flex items-center justify-center space-x-2">
+            <button class="px-4 py-2 border border-gray-300 text-gray-500 rounded-lg disabled cursor-not-allowed">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="px-4 py-2 bg-orange-500 text-white rounded-lg font-medium">1</button>
+            <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">2</button>
+            <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">3</button>
+            <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">4</button>
+            <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">5</button>
+            <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-white border-t mt-12">
+        <div class="container mx-auto px-4 py-6">
+            <div class="text-center text-sm text-gray-600">
+                <p>© 2024 曹州农化 版权所有 | 联系我们：400-123-4567</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 地址切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const addressDropdown = document.querySelector('.dropdown:has(.fa-map-marker-alt)');
+            const addressItems = addressDropdown.querySelectorAll('.dropdown-menu .cursor-pointer');
+            const currentAddressDisplay = addressDropdown.querySelector('span.hidden.sm\:inline');
+            
+            addressItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 更新当前地址显示
+                    const newAddress = this.querySelector('span').textContent;
+                    currentAddressDisplay.textContent = newAddress;
+                    
+                    // 更新选择状态
+                    addressItems.forEach(i => {
+                        i.querySelector('.fa-check')?.remove();
+                    });
+                    
+                    if (!this.querySelector('.fa-check')) {
+                        const checkIcon = document.createElement('i');
+                        checkIcon.className = 'fas fa-check text-emerald-600';
+                        this.appendChild(checkIcon);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

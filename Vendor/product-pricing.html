@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品定价 - 厂家管理后台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 厂家端样式 */
+        .vendor-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        
+        /* 导航样式 */
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+        
+        /* 表格样式 */
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #e5e7eb;
+        }
+        
+        /* 操作按钮样式 */
+        .action-btn {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+        
+        /* 价格保护提示样式 */
+        .price-protection {
+            background-color: #f0fdf4;
+            border-left: 4px solid #22c55e;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 侧边导航 -->
+    <aside class="w-64 bg-blue-800 text-white flex-shrink-0 fixed left-0 top-0 h-screen">
+        <div class="p-4 border-b border-blue-700">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
+                <i class="fas fa-leaf text-2xl"></i>
+                <div>
+                    <h1 class="text-lg font-bold">农资商城</h1>
+                    <p class="text-xs text-blue-200">厂家管理后台</p>
+                </div>
+            </div>
+        </div>
+        <nav class="p-4">
+            <ul class="space-y-2">
+                <li>
+                    <a href="index.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="products.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-boxes"></i>
+                        <span>商品管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="product-pricing.html" class="flex items-center space-x-3 px-4 py-3 bg-blue-700 rounded-lg">
+                        <i class="fas fa-tag"></i>
+                        <span>商品定价</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="orders.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>订单管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="inventory.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-warehouse"></i>
+                        <span>库存管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="finance.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span>财务管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="analytics.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-chart-line"></i>
+                        <span>数据统计</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-cog"></i>
+                        <span>系统设置</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="absolute bottom-0 w-64 p-4 border-t border-blue-700">
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>退出登录</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- 顶部导航 -->
+    <header class="bg-white shadow-md px-6 py-4 ml-64">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="text-xl font-bold text-gray-800">商品定价</h2>
+                <p class="text-sm text-gray-600">管理商品价格和上下架状态</p>
+            </div>
+            <!-- 隐藏新增商品和产品库选择按钮 -->
+            <div class="hidden">
+                <button onclick="window.location.href='product-publish.html'" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+                    <i class="fas fa-plus mr-2"></i>新增商品
+                </button>
+                <button onclick="window.location.href='product-publish-library.html'" class="px-4 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700">
+                    <i class="fas fa-database mr-2"></i>产品库选择
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <div class="container mx-auto px-4 py-8 ml-64">
+        <div class="flex flex-col md:flex-row gap-6">
+            <!-- 主内容区 -->
+            <main class="flex-1">
+                <!-- 搜索筛选区域 -->
+                <div class="border p-4 mb-4">
+                    <div class="flex flex-wrap items-center gap-4">
+                        <!-- 商品名称 -->
+                        <div class="flex items-center space-x-2">
+                            <label for="product-name" class="text-sm font-medium text-gray-700">商品名称:</label>
+                            <input 
+                                type="text" 
+                                id="product-name" 
+                                placeholder="请输入" 
+                                class="w-40 px-2 py-1 border border-gray-300 rounded"
+                            >
+                        </div>
+                        
+                        <!-- 商品条码 -->
+                        <div class="flex items-center space-x-2">
+                            <label for="product-barcode" class="text-sm font-medium text-gray-700">商品条码:</label>
+                            <input 
+                                type="text" 
+                                id="product-barcode" 
+                                placeholder="请输入" 
+                                class="w-40 px-2 py-1 border border-gray-300 rounded"
+                            >
+                        </div>
+                        
+                        <!-- 商品类别 -->
+                        <div class="flex items-center space-x-2">
+                            <label for="product-category" class="text-sm font-medium text-gray-700">商品类别:</label>
+                            <select 
+                                id="product-category" 
+                                class="w-32 px-2 py-1 border border-gray-300 rounded"
+                            >
+                                <option value="">全部</option>
+                                <option value="fertilizer">化肥</option>
+                                <option value="pesticide">农药</option>
+                                <option value="seed">种子</option>
+                                <option value="tools">农具</option>
+                            </select>
+                        </div>
+                        
+                        <!-- 产地 -->
+                        <div class="flex items-center space-x-2">
+                            <label for="product-origin" class="text-sm font-medium text-gray-700">产地:</label>
+                            <input 
+                                type="text" 
+                                id="product-origin" 
+                                placeholder="请输入" 
+                                class="w-32 px-2 py-1 border border-gray-300 rounded"
+                            >
+                        </div>
+                        
+                        <!-- 状态 -->
+                        <div class="flex items-center space-x-2">
+                            <label class="text-sm font-medium text-gray-700">状态:</label>
+                            <label class="flex items-center space-x-1 text-sm">
+                                <input type="radio" name="status" value="all" checked class="text-blue-600 focus:ring-blue-500">
+                                <span>全部</span>
+                            </label>
+                            <label class="flex items-center space-x-1 text-sm">
+                                <input type="radio" name="status" value="online" class="text-blue-600 focus:ring-blue-500">
+                                <span>在售</span>
+                            </label>
+                            <label class="flex items-center space-x-1 text-sm">
+                                <input type="radio" name="status" value="offline" class="text-blue-600 focus:ring-blue-500">
+                                <span>未上架</span>
+                            </label>
+                        </div>
+                        
+                        <!-- 库存状况 -->
+                        <div class="flex items-center space-x-2">
+                            <label for="inventory-alert" class="text-sm font-medium text-gray-700">库存状况:</label>
+                            <select 
+                                id="inventory-alert" 
+                                class="w-24 px-2 py-1 border border-gray-300 rounded"
+                            >
+                                <option value="">全部</option>
+                                <option value="alert">缺货</option>
+                            </select>
+                        </div>
+                        
+                        <!-- 操作按钮 -->
+                        <button onclick="searchProducts()" class="px-3 py-1 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 text-sm">
+                            查询
+                        </button>
+                        <button onclick="resetFilters()" class="px-3 py-1 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 text-sm">
+                            重置
+                        </button>
+                        <button onclick="window.location.href='product-pricing-detail.html'" class="px-3 py-1 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 text-sm">
+                            添加商品
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 商品定价表格 -->
+                <div class="border mb-4">
+                    <!-- 批量操作按钮 -->
+                    <div class="flex items-center space-x-3 p-3 border-b">
+                        <button onclick="window.location.href='product-pricing-detail.html'" class="px-3 py-1 bg-gray-200 text-gray-800 rounded text-sm hover:bg-gray-300">
+                            批量上架
+                        </button>
+                        <button onclick="batchOffline()" class="px-3 py-1 bg-gray-200 text-gray-800 rounded text-sm hover:bg-gray-300">
+                            批量下架
+                        </button>
+                        <button onclick="batchDistributeToSubordinates()" class="px-3 py-1 bg-gray-200 text-gray-800 rounded text-sm hover:bg-gray-300">
+                            铺货到下级
+                        </button>
+                    </div>
+
+                    <!-- 商品表格 -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">序号</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <input type="checkbox" id="select-all" class="text-blue-600 focus:ring-blue-500"> 全选
+                                    </th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">商品编码</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">商品名称</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">品牌</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">商品条形码</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">类别</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">规格单位</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">建议零售价</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">含税零售价</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">含佣金价</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">含税经销价</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">可销库存</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
+                                </tr>
+                            </thead>
+                            <tbody id="product-pricing-table">
+                                <!-- 表格内容将通过JavaScript动态生成 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 价格保护提示 -->
+                <div class="bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-shield-alt text-green-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-green-700">
+                                <strong class="font-medium">开启价格保护：</strong>
+                                自动隔离所有价格低于商品定价XX%的用户当前区域的商品。
+                            </p>
+                            <div class="mt-2 text-sm text-green-600 space-y-1">
+                                <p>用户当前区域：山东省济南市历下区</p>
+                                <p>隔离情况：已为您在该区域开启价格保护</p>
+                                <p>隔离规则：零售价-10%</p>
+                                <p>本店基准价：90元</p>
+                                <p>上海卖家C价：80元</p>
+                                <p>上海卖家B价：100元</p>
+                                <p>最近统计到河南用户价格：100元(源自本地卖家A)</p>
+                                <p>您的商品价格已更新为100元，防止被上海卖家C的低价竞争。</p>
+                                <p>商品列表A类商品因报价低于100元的本地基准低价，被系统自动隔离了。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 添加商品模态框 -->
+    <div id="add-product-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 max-w-4xl shadow-lg rounded-lg bg-white">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">添加商品</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- 可售区域选择 -->
+            <div class="mb-6">
+                <h4 class="text-md font-medium text-gray-700 mb-3">选择可售区域</h4>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="beijing" class="text-blue-600 focus:ring-blue-500" checked>
+                        <span class="text-sm text-gray-700">北京市</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="tianjin" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">天津市</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="hebei" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">河北省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="shanxi" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">山西省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="neimenggu" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">内蒙古自治区</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="liaoning" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">辽宁省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="jilin" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">吉林省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="heilongjiang" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">黑龙江省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="shanghai" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">上海市</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="jiangsu" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">江苏省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="zhejiang" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">浙江省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="anhui" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">安徽省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="fujian" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">福建省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="jiangxi" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">江西省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="shandong" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">山东省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="henan" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">河南省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="hubei" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">湖北省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="hunan" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">湖南省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="guangdong" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">广东省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="guangxi" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">广西壮族自治区</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="hainan" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">海南省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="chongqing" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">重庆市</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="sichuan" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">四川省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="guizhou" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">贵州省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="yunnan" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">云南省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="xizang" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">西藏自治区</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="shanxi2" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">陕西省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="gansu" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">甘肃省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="qinghai" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">青海省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="ningxia" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">宁夏回族自治区</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="xinjiang" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">新疆维吾尔自治区</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="xianggang" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">香港特别行政区</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="aomen" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">澳门特别行政区</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="taiwan" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">台湾省</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- 商品选择 -->
+            <div class="mb-6">
+                <h4 class="text-md font-medium text-gray-700 mb-3">选择商品</h4>
+                <div class="border rounded-lg p-3 mb-3">
+                    <div class="flex items-center space-x-2">
+                        <input type="text" placeholder="搜索商品名称、条码或编号" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-y-auto max-h-60 border rounded-lg">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <input type="checkbox">
+                                </th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">商品名称</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">品牌</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">规格</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-3 py-2">
+                                    <input type="checkbox">
+                                </td>
+                                <td class="px-3 py-2 text-sm text-gray-800">高效复合肥</td>
+                                <td class="px-3 py-2 text-sm text-gray-600">丰收牌</td>
+                                <td class="px-3 py-2 text-sm text-gray-600">12kg</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-3 py-2">
+                                    <input type="checkbox">
+                                </td>
+                                <td class="px-3 py-2 text-sm text-gray-800">高效复合肥</td>
+                                <td class="px-3 py-2 text-sm text-gray-600">丰收牌</td>
+                                <td class="px-3 py-2 text-sm text-gray-600">27L</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-3 py-2">
+                                    <input type="checkbox">
+                                </td>
+                                <td class="px-3 py-2 text-sm text-gray-800">杀虫剂</td>
+                                <td class="px-3 py-2 text-sm text-gray-600">绿保</td>
+                                <td class="px-3 py-2 text-sm text-gray-600">10ml</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-3 py-2">
+                                    <input type="checkbox">
+                                </td>
+                                <td class="px-3 py-2 text-sm text-gray-800">杀虫剂</td>
+                                <td class="px-3 py-2 text-sm text-gray-600">绿保</td>
+                                <td class="px-3 py-2 text-sm text-gray-600">100ml</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-3 py-2">
+                                    <input type="checkbox">
+                                </td>
+                                <td class="px-3 py-2 text-sm text-gray-800">杀虫剂</td>
+                                <td class="px-3 py-2 text-sm text-gray-600">绿保</td>
+                                <td class="px-3 py-2 text-sm text-gray-600">1L</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- 操作按钮 -->
+            <div class="flex items-center justify-end space-x-3">
+                <button onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">
+                    取消
+                </button>
+                <button onclick="confirmAddProducts()" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+                    确认添加
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 商品定价模态框 -->
+    <div id="pricing-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-10 mx-auto p-5 border w-11/12 md:w-2/3 lg:w-1/2 max-w-3xl shadow-lg rounded-lg bg-white">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">商品定价</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- 基础信息 -->
+            <div class="mb-6 p-4 border rounded-lg">
+                <h4 class="text-md font-medium text-gray-700 mb-3">基础信息</h4>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">编号:</label>
+                        <div class="text-gray-800">NY0001</div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">商品名称:</label>
+                        <div class="text-gray-800">敌杀死 25g/L 高效氯氟氰菊酯 微乳剂</div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">类别:</label>
+                        <div class="text-gray-800">农药</div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">品牌:</label>
+                        <div class="text-gray-800">敌杀死</div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">生产厂家:</label>
+                        <div class="text-gray-800">曹州农化</div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">登记证号:</label>
+                        <div class="text-gray-800">PD001</div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">毒性:</label>
+                        <div class="text-gray-800">无毒</div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">剂型:</label>
+                        <div class="text-gray-800">微乳剂</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 规格定价 -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="text-md font-medium text-gray-700">规格定价</h4>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm">
+                        <i class="fas fa-plus mr-1"></i>添加规格
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">销售单位</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">建议零售价</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">含税零售定价</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">含税代理定价</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">含税经销报价</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2">
+                                    <div class="flex space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 text-xs">编辑</button>
+                                        <button class="text-blue-600 hover:text-blue-800 text-xs">删除</button>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-2">
+                                    <select class="px-2 py-1 border rounded text-sm">
+                                        <option>ml</option>
+                                        <option>l</option>
+                                        <option>kg</option>
+                                    </select>
+                                </td>
+                                <td class="px-4 py-2">
+                                    <div class="text-gray-800">2</div>
+                                </td>
+                                <td class="px-4 py-2">
+                                    <input type="number" class="px-2 py-1 border rounded text-sm w-full" placeholder="请输入">
+                                </td>
+                                <td class="px-4 py-2">
+                                    <input type="number" class="px-2 py-1 border rounded text-sm w-full" placeholder="请输入">
+                                </td>
+                                <td class="px-4 py-2">
+                                    <input type="number" class="px-2 py-1 border rounded text-sm w-full" placeholder="请输入">
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2">
+                                    <div class="flex space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 text-xs">编辑</button>
+                                        <button class="text-blue-600 hover:text-blue-800 text-xs">删除</button>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-2">
+                                    <select class="px-2 py-1 border rounded text-sm">
+                                        <option>ml</option>
+                                        <option>l</option>
+                                        <option>kg</option>
+                                    </select>
+                                </td>
+                                <td class="px-4 py-2">
+                                    <div class="text-gray-800">5</div>
+                                </td>
+                                <td class="px-4 py-2">
+                                    <input type="number" class="px-2 py-1 border rounded text-sm w-full" placeholder="请输入">
+                                </td>
+                                <td class="px-4 py-2">
+                                    <input type="number" class="px-2 py-1 border rounded text-sm w-full" placeholder="请输入">
+                                </td>
+                                <td class="px-4 py-2">
+                                    <input type="number" class="px-2 py-1 border rounded text-sm w-full" placeholder="请输入">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- 操作按钮 -->
+            <div class="flex items-center justify-end space-x-3 pt-3 border-t border-gray-200">
+                <button onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">
+                    返回
+                </button>
+                <button onclick="savePricing()" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+                    提交
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 修改可售区域模态框 -->
+    <div id="sellable-regions-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-10 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 max-w-4xl shadow-lg rounded-lg bg-white">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">修改可售区域</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- 商品信息 -->
+            <div class="mb-6 p-4 border rounded-lg">
+                <h4 class="text-md font-medium text-gray-700 mb-3">商品信息</h4>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">商品名称:</label>
+                        <div class="text-gray-800" id="modal-product-name">高效复合肥</div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">规格:</label>
+                        <div class="text-gray-800" id="modal-product-spec">50kg/袋</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 可售区域选择 -->
+            <div class="mb-6">
+                <h4 class="text-md font-medium text-gray-700 mb-3">选择可售区域</h4>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="beijing" class="text-blue-600 focus:ring-blue-500" checked>
+                        <span class="text-sm text-gray-700">北京市</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="tianjin" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">天津市</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="hebei" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">河北省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="shanxi" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">山西省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="neimenggu" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">内蒙古自治区</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="liaoning" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">辽宁省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="jilin" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">吉林省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="heilongjiang" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">黑龙江省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="shanghai" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">上海市</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="jiangsu" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">江苏省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="zhejiang" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">浙江省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="anhui" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">安徽省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="fujian" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">福建省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="jiangxi" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">江西省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="shandong" class="text-blue-600 focus:ring-blue-500" checked>
+                        <span class="text-sm text-gray-700">山东省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="henan" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">河南省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="hubei" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">湖北省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="hunan" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">湖南省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="guangdong" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">广东省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="guangxi" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">广西壮族自治区</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="hainan" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">海南省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="chongqing" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">重庆市</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="sichuan" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">四川省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="guizhou" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">贵州省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="yunnan" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">云南省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="xizang" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">西藏自治区</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="shanxi2" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">陕西省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="gansu" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">甘肃省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="qinghai" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">青海省</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="ningxia" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">宁夏回族自治区</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" value="xinjiang" class="text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">新疆维吾尔自治区</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- 操作按钮 -->
+            <div class="flex items-center justify-end space-x-3 pt-3 border-t border-gray-200">
+                <button onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">
+                    取消
+                </button>
+                <button onclick="saveSellableRegions()" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+                    保存修改
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 铺货到下级模态框 -->
+    <div id="distribute-to-subordinates-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-10 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 max-w-4xl shadow-lg rounded-lg bg-white">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">铺货到下级</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- 已选商品信息 -->
+            <div class="mb-6 p-4 border rounded-lg">
+                <h4 class="text-md font-medium text-gray-700 mb-3">已选商品</h4>
+                <div class="grid grid-cols-1 gap-2" id="selected-products-info">
+                    <!-- 已选商品将在这里显示 -->
+                </div>
+            </div>
+            
+            <!-- 下级经销商/代理选择 -->
+            <div class="mb-6">
+                <h4 class="text-md font-medium text-gray-700 mb-3">选择下级经销商/代理</h4>
+                <div class="overflow-y-auto max-h-80 border rounded-lg">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <input type="checkbox" id="select-all-subordinates">
+                                </th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">名称</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">类型</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">地区</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subordinates-list">
+                            <!-- 下级经销商/代理列表将在这里显示 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- 操作按钮 -->
+            <div class="flex items-center justify-end space-x-3 pt-3 border-t border-gray-200">
+                <button onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">
+                    取消
+                </button>
+                <button onclick="saveDistribution()" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+                    确认铺货
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟商品数据（支持多规格）
+        const mockProducts = [
+            {
+                id: 1,
+                code: 'GY001',
+                name: '高效复合肥',
+                brand: '丰收牌',
+                barcode: '6901234567898',
+                category: '化肥',
+                status: 'offline',
+                specifications: [
+                    {
+                        id: 101,
+                        spec: '12ml',
+                        retailPrice: 12,
+                        myPrice: '',
+                        commissionPrice: '',
+                        taxPrice: '',
+                        inventory: 1000
+                    },
+                    {
+                        id: 102,
+                        spec: '15ml',
+                        retailPrice: 15,
+                        myPrice: '',
+                        commissionPrice: '',
+                        taxPrice: '',
+                        inventory: 800
+                    },
+                    {
+                        id: 103,
+                        spec: '27L',
+                        retailPrice: 27,
+                        myPrice: '',
+                        commissionPrice: '',
+                        taxPrice: '',
+                        inventory: 500
+                    }
+                ]
+            },
+            {
+                id: 2,
+                code: 'CD001',
+                name: '除草剂',
+                brand: '草无踪',
+                barcode: '6912345678901',
+                category: '农药',
+                status: 'offline',
+                specifications: [
+                    {
+                        id: 201,
+                        spec: '100ml',
+                        retailPrice: 30,
+                        myPrice: '',
+                        commissionPrice: '',
+                        taxPrice: '',
+                        inventory: 700
+                    }
+                ]
+            }
+        ];
+
+        // 模拟下级经销商/代理数据
+        const mockSubordinates = [
+            {
+                id: 1,
+                name: '山东农资经销商',
+                type: '经销商',
+                region: '山东省',
+                status: 'active'
+            },
+            {
+                id: 2,
+                name: '河北农资代理',
+                type: '代理',
+                region: '河北省',
+                status: 'active'
+            },
+            {
+                id: 3,
+                name: '河南农业合作社',
+                type: '经销商',
+                region: '河南省',
+                status: 'active'
+            },
+            {
+                id: 4,
+                name: '安徽农资公司',
+                type: '代理',
+                region: '安徽省',
+                status: 'inactive'
+            },
+            {
+                id: 5,
+                name: '江苏农业服务中心',
+                type: '经销商',
+                region: '江苏省',
+                status: 'active'
+            }
+        ];
+
+        // 页面状态
+        let currentPage = 1;
+        const pageSize = 10;
+        let filteredProducts = [...mockProducts];
+        let selectedProducts = new Set();
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable();
+            setupEventListeners();
+        });
+
+        // 处理复选框点击事件
+        function handleCheckboxClick(productId, isChecked) {
+            if (isChecked) {
+                selectedProducts.add(productId);
+            } else {
+                selectedProducts.delete(productId);
+            }
+            
+            // 更新全选状态
+            updateSelectAll();
+            
+            console.log('复选框点击后选中商品:', Array.from(selectedProducts));
+            console.log('选中商品数量:', selectedProducts.size);
+        }
+
+        // 设置事件监听器
+        function setupEventListeners() {
+            // 全选/取消全选
+            document.getElementById('select-all').addEventListener('change', function() {
+                const isChecked = this.checked;
+                const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+                
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = isChecked;
+                    const productId = parseInt(checkbox.value);
+                    if (isChecked) {
+                        selectedProducts.add(productId);
+                    } else {
+                        selectedProducts.delete(productId);
+                    }
+                });
+                
+                console.log('全选操作后选中商品:', Array.from(selectedProducts));
+                console.log('选中商品数量:', selectedProducts.size);
+            });
+
+            // 单行选择 - 使用事件委托确保动态生成的checkbox也能触发
+            document.addEventListener('change', function(e) {
+                if (e.target.type === 'checkbox' && e.target.closest('tbody')) {
+                    const productId = parseInt(e.target.value);
+                    if (e.target.checked) {
+                        selectedProducts.add(productId);
+                    } else {
+                        selectedProducts.delete(productId);
+                    }
+                    
+                    // 更新全选状态
+                    updateSelectAll();
+                    
+                    console.log('事件委托捕获复选框变化后选中商品:', Array.from(selectedProducts));
+                    console.log('选中商品数量:', selectedProducts.size);
+                }
+            });
+        }
+
+        // 更新全选状态
+        function updateSelectAll() {
+            const selectAllCheckbox = document.getElementById('select-all');
+            const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+            const checkedCount = document.querySelectorAll('tbody input[type="checkbox"]:checked').length;
+            
+            selectAllCheckbox.checked = checkedCount === checkboxes.length && checkboxes.length > 0;
+            selectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
+        }
+
+        // 渲染表格
+        function renderTable() {
+            const tableBody = document.getElementById('product-pricing-table');
+            const startIndex = (currentPage - 1) * pageSize;
+            const endIndex = startIndex + pageSize;
+            const pageProducts = filteredProducts.slice(startIndex, endIndex);
+            
+            tableBody.innerHTML = '';
+            
+            pageProducts.forEach((product, index) => {
+                // 为每个规格创建一行
+                product.specifications.forEach((spec, specIndex) => {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-gray-50';
+                    
+                    // 设置状态文本和样式
+                    let statusText, statusClass;
+                    if (product.status === 'online') {
+                        statusText = '在售';
+                        statusClass = 'bg-green-100 text-green-800';
+                    } else {
+                        statusText = '未上架';
+                        statusClass = 'bg-gray-100 text-gray-800';
+                    }
+                    
+                    // 只在第一个规格行显示商品基本信息
+                    const showBasicInfo = specIndex === 0;
+                    
+                    // 为复选框添加点击事件处理，确保点击时能正确更新selectedProducts
+                    const checkboxHtml = showBasicInfo ? `
+                        <input type="checkbox" value="${product.id}" class="text-blue-600 focus:ring-blue-500" ${selectedProducts.has(product.id) ? 'checked' : ''} 
+                               onclick="handleCheckboxClick(${product.id}, this.checked)">
+                    ` : '';
+                    
+                    row.innerHTML = `
+                        <td class="px-3 py-2 text-sm text-gray-600">${showBasicInfo ? startIndex + index + 1 : ''}</td>
+                        <td class="px-3 py-2">
+                            ${checkboxHtml}
+                        </td>
+                        <td class="px-3 py-2">
+                            ${showBasicInfo ? `
+                                <div class="flex space-x-2">
+                                    <a href="javascript:void(0)" onclick="toggleStatus(${product.id}, '${product.status}')" class="text-blue-600 hover:underline text-sm">
+                                        ${product.status === 'online' ? '下架' : '上架'}
+                                    </a>
+                                    <a href="javascript:void(0)" onclick="editPrice(${product.id})" class="text-blue-600 hover:underline text-sm">
+                                        定价
+                                    </a>
+                                    <a href="javascript:void(0)" onclick="editSellableRegions(${product.id})" class="text-blue-600 hover:underline text-sm">
+                                        可销售区域
+                                    </a>
+                                    <a href="javascript:void(0)" onclick="setPrice(${product.id})" class="text-blue-600 hover:underline text-sm">
+                                        开启价格保护
+                                    </a>
+                                </div>
+                            ` : ''}
+                        </td>
+                        <td class="px-3 py-2 text-sm text-gray-800">${showBasicInfo ? product.code : ''}</td>
+                        <td class="px-3 py-2 text-sm text-gray-800">${showBasicInfo ? product.name : ''}</td>
+                        <td class="px-3 py-2 text-sm text-gray-600">${showBasicInfo ? product.brand : ''}</td>
+                        <td class="px-3 py-2 text-sm text-gray-600">${showBasicInfo ? product.barcode : ''}</td>
+                        <td class="px-3 py-2 text-sm text-gray-600">${showBasicInfo ? product.category : ''}</td>
+                        <td class="px-3 py-2 text-sm text-gray-600">${spec.spec}</td>
+                        <td class="px-3 py-2 text-sm text-gray-600">${spec.retailPrice}</td>
+                        <td class="px-3 py-2">
+                            <input type="number" value="${spec.myPrice}" step="0.01" min="0" 
+                                   onchange="updatePrice(${product.id}, ${spec.id}, this.value)" 
+                                   class="w-20 px-2 py-1 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </td>
+                        <td class="px-3 py-2 text-sm text-gray-600">${spec.commissionPrice || ''}</td>
+                        <td class="px-3 py-2 text-sm text-gray-600">${spec.taxPrice || ''}</td>
+                        <td class="px-3 py-2 text-sm text-gray-600">${spec.inventory}</td>
+                        <td class="px-3 py-2">
+                            ${showBasicInfo ? `<span class="px-2 py-1 rounded text-xs font-medium ${statusClass}">${statusText}</span>` : ''}
+                        </td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+            });
+            
+            // 更新分页信息
+            document.getElementById('total-count').textContent = `共 ${filteredProducts.length} 个商品`;
+            document.getElementById('current-page').textContent = currentPage;
+            
+            // 更新分页按钮状态
+            document.getElementById('prev-page').disabled = currentPage === 1;
+            document.getElementById('next-page').disabled = endIndex >= filteredProducts.length;
+        }
+
+        // 处理状态选择变化
+        function handleStatusChange(status) {
+            // 状态选择框变化时的处理逻辑
+            searchProducts();
+        }
+        
+        // 搜索商品
+        function searchProducts() {
+            const name = document.getElementById('product-name').value.toLowerCase();
+            const barcode = document.getElementById('product-barcode').value.toLowerCase();
+            const category = document.getElementById('product-category').value;
+            const origin = document.getElementById('product-origin').value.toLowerCase();
+            const status = document.getElementById('status-select').value;
+            const inventoryAlert = document.getElementById('inventory-alert').value;
+            
+            filteredProducts = mockProducts.filter(product => {
+                let match = true;
+                
+                // 商品名称筛选
+                if (name && !product.name.toLowerCase().includes(name)) {
+                    match = false;
+                }
+                
+                // 商品条码筛选
+                if (barcode && !product.barcode.includes(barcode)) {
+                    match = false;
+                }
+                
+                // 商品类别筛选
+                if (category && product.category !== category) {
+                    match = false;
+                }
+                
+                // 产地筛选
+                if (origin && !product.brand.toLowerCase().includes(origin)) {
+                    match = false;
+                }
+                
+                // 状态筛选
+                if (status !== 'all' && product.status !== status) {
+                    match = false;
+                }
+                
+                // 库存筛选
+                if (inventoryAlert === 'alert' && product.inventory > 0) {
+                    match = false;
+                }
+                
+                return match;
+            });
+            
+            currentPage = 1;
+            renderTable();
+        }
+        
+        // 重置筛选条件
+        function resetFilters() {
+            document.getElementById('product-name').value = '';
+            document.getElementById('product-barcode').value = '';
+            document.getElementById('product-category').value = '';
+            document.getElementById('product-origin').value = '';
+            document.getElementById('status-select').value = 'all';
+            document.getElementById('inventory-alert').value = '';
+            
+            filteredProducts = [...mockProducts];
+            currentPage = 1;
+            renderTable();
+        }
+
+        // 切换商品状态
+        function toggleStatus(productId, currentStatus) {
+            const newStatus = currentStatus === 'online' ? 'offline' : 'online';
+            
+            // 更新数据
+            const product = mockProducts.find(p => p.id === productId);
+            if (product) {
+                product.status = newStatus;
+            }
+            
+            // 更新过滤后的数据
+            const filteredIndex = filteredProducts.findIndex(p => p.id === productId);
+            if (filteredIndex !== -1) {
+                filteredProducts[filteredIndex].status = newStatus;
+            }
+            
+            renderTable();
+            
+            alert(`商品已${newStatus === 'online' ? '上架' : '下架'}`);
+        }
+
+        // 编辑价格
+        function editPrice(productId) {
+            const product = mockProducts.find(p => p.id === productId);
+            if (product) {
+                const newPrice = prompt(`请输入新价格（当前价格：${product.myPrice.toFixed(2)}）：`, product.myPrice);
+                if (newPrice !== null) {
+                    const price = parseFloat(newPrice);
+                    if (!isNaN(price) && price > 0) {
+                        updatePrice(productId, price);
+                    } else {
+                        alert('请输入有效的价格');
+                    }
+                }
+            }
+        }
+
+        // 更新价格
+        function updatePrice(productId, price) {
+            const numPrice = parseFloat(price);
+            if (isNaN(numPrice) || numPrice <= 0) {
+                alert('请输入有效的价格');
+                return;
+            }
+            
+            // 更新数据
+            const product = mockProducts.find(p => p.id === productId);
+            if (product) {
+                product.myPrice = numPrice;
+                // 简单模拟佣金价和含税价的计算
+                product.commissionPrice = numPrice * 1.05;
+                product.taxPrice = numPrice * 0.95;
+            }
+            
+            // 更新过滤后的数据
+            const filteredIndex = filteredProducts.findIndex(p => p.id === productId);
+            if (filteredIndex !== -1) {
+                filteredProducts[filteredIndex].myPrice = numPrice;
+                filteredProducts[filteredIndex].commissionPrice = numPrice * 1.05;
+                filteredProducts[filteredIndex].taxPrice = numPrice * 0.95;
+            }
+            
+            renderTable();
+        }
+
+        // 设置价格保护
+        function setPrice(productId) {
+            alert('价格保护功能已启用');
+        }
+
+        // 批量上架
+        function batchOnline() {
+            if (selectedProducts.size === 0) {
+                alert('请选择要上架的商品');
+                return;
+            }
+            
+            // 更新数据
+            mockProducts.forEach(product => {
+                if (selectedProducts.has(product.id)) {
+                    product.status = 'online';
+                }
+            });
+            
+            // 更新过滤后的数据
+            filteredProducts.forEach(product => {
+                if (selectedProducts.has(product.id)) {
+                    product.status = 'online';
+                }
+            });
+            
+            renderTable();
+            selectedProducts.clear();
+            updateSelectAll();
+            
+            alert(`已成功上架 ${selectedProducts.size} 个商品`);
+        }
+
+        // 批量下架
+        function batchOffline() {
+            if (selectedProducts.size === 0) {
+                alert('请选择要下架的商品');
+                return;
+            }
+            
+            // 更新数据
+            mockProducts.forEach(product => {
+                if (selectedProducts.has(product.id)) {
+                    product.status = 'offline';
+                }
+            });
+            
+            // 更新过滤后的数据
+            filteredProducts.forEach(product => {
+                if (selectedProducts.has(product.id)) {
+                    product.status = 'offline';
+                }
+            });
+            
+            renderTable();
+            selectedProducts.clear();
+            updateSelectAll();
+            
+            alert(`已成功下架 ${selectedProducts.size} 个商品`);
+        }
+
+        // 铺货到下级
+        function batchDistributeToSubordinates() {
+            console.log('点击铺货按钮时选中商品:', Array.from(selectedProducts));
+            console.log('选中商品数量:', selectedProducts.size);
+            
+            if (selectedProducts.size === 0) {
+                alert('请先选择要铺货的商品');
+                return;
+            }
+
+            // 显示已选商品
+            const selectedProductsInfo = document.getElementById('selected-products-info');
+            selectedProductsInfo.innerHTML = '';
+
+            selectedProducts.forEach(productId => {
+                const product = mockProducts.find(p => p.id === productId);
+                if (product) {
+                    const productItem = document.createElement('div');
+                    productItem.className = 'p-2 border rounded bg-gray-50';
+                    productItem.innerHTML = `
+                        <div class="font-medium">${product.name}</div>
+                        <div class="text-sm text-gray-600">编码: ${product.code} | 类别: ${product.category}</div>
+                    `;
+                    selectedProductsInfo.appendChild(productItem);
+                }
+            });
+
+            // 渲染下级经销商/代理列表
+            renderSubordinatesList();
+
+            // 打开模态框
+            document.getElementById('distribute-to-subordinates-modal').classList.remove('hidden');
+        }
+
+        // 渲染下级经销商/代理列表
+        function renderSubordinatesList() {
+            const subordinatesList = document.getElementById('subordinates-list');
+            subordinatesList.innerHTML = '';
+
+            mockSubordinates.forEach(subordinate => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50';
+
+                const statusClass = subordinate.status === 'active' 
+                    ? 'bg-green-100 text-green-800' 
+                    : 'bg-gray-100 text-gray-800';
+
+                row.innerHTML = `
+                    <td class="px-3 py-2">
+                        <input type="checkbox" value="${subordinate.id}" class="text-blue-600 focus:ring-blue-500">
+                    </td>
+                    <td class="px-3 py-2 text-sm text-gray-800">${subordinate.name}</td>
+                    <td class="px-3 py-2 text-sm text-gray-600">${subordinate.type}</td>
+                    <td class="px-3 py-2 text-sm text-gray-600">${subordinate.region}</td>
+                    <td class="px-3 py-2">
+                        <span class="px-2 py-1 rounded text-xs font-medium ${statusClass}">
+                            ${subordinate.status === 'active' ? '活跃' : '非活跃'}
+                        </span>
+                    </td>
+                `;
+
+                subordinatesList.appendChild(row);
+            });
+
+            // 添加全选功能
+            document.getElementById('select-all-subordinates').addEventListener('change', function() {
+                const isChecked = this.checked;
+                const checkboxes = document.querySelectorAll('#subordinates-list input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = isChecked;
+                });
+            });
+        }
+
+        // 保存铺货操作
+        function saveDistribution() {
+            const selectedSubordinates = [];
+            const checkboxes = document.querySelectorAll('#subordinates-list input[type="checkbox"]:checked');
+            
+            checkboxes.forEach(checkbox => {
+                selectedSubordinates.push(parseInt(checkbox.value));
+            });
+
+            if (selectedSubordinates.length === 0) {
+                alert('请选择要铺货的下级经销商/代理');
+                return;
+            }
+
+            // 模拟铺货操作
+            alert(`已成功向 ${selectedSubordinates.length} 个下级经销商/代理铺货`);
+            document.getElementById('distribute-to-subordinates-modal').classList.add('hidden');
+        }
+
+        // 打开商品选择模态框
+        function openProductSelectionModal() {
+            document.getElementById('add-product-modal').classList.remove('hidden');
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            document.getElementById('add-product-modal').classList.add('hidden');
+            document.getElementById('pricing-modal').classList.add('hidden');
+            document.getElementById('sellable-regions-modal').classList.add('hidden');
+            document.getElementById('distribute-to-subordinates-modal').classList.add('hidden');
+        }
+        
+        // 编辑可售区域
+        function editSellableRegions(productId) {
+            const product = mockProducts.find(p => p.id === productId);
+            if (product) {
+                // 填充商品信息
+                document.getElementById('modal-product-name').textContent = product.name;
+                document.getElementById('modal-product-spec').textContent = product.specification;
+                
+                // 显示模态框
+                document.getElementById('sellable-regions-modal').classList.remove('hidden');
+            }
+        }
+        
+        // 保存可售区域修改
+        function saveSellableRegions() {
+            // 获取选中的区域
+            const checkboxes = document.querySelectorAll('#sellable-regions-modal input[type="checkbox"]:checked');
+            const selectedRegions = Array.from(checkboxes).map(checkbox => checkbox.value);
+            
+            // 这里可以添加保存逻辑
+            console.log('选中的可售区域:', selectedRegions);
+            
+            // 关闭模态框
+            closeModal();
+            
+            alert('可售区域修改已保存');
+        }
+
+        // 确认选择商品，进入定价页面
+        function confirmAddProducts() {
+            // 获取选中的商品
+            const checkboxes = document.querySelectorAll('#add-product-modal input[type="checkbox"]:checked');
+            const selectedProductIds = Array.from(checkboxes).map(checkbox => checkbox.value);
+            
+            // 模拟选择一个商品（根据需求只选择一个）
+            if (selectedProductIds.length > 0) {
+                // 关闭商品选择模态框
+                document.getElementById('add-product-modal').classList.add('hidden');
+                
+                // 跳转到独立的定价页面
+                window.location.href = 'product-pricing-detail.html';
+            } else {
+                alert('请选择一个商品');
+            }
+        }
+
+        // 保存定价并返回列表
+        function savePricing() {
+            // 模拟保存定价
+            alert('定价已保存');
+            
+            // 关闭定价模态框
+            document.getElementById('pricing-modal').classList.add('hidden');
+            
+            // 刷新商品列表（可选）
+            renderTable();
+        }
+
+        // 改变页码
+        function changePage(direction) {
+            currentPage += direction;
+            renderTable();
+        }
+    </script>
+</body>
+</html>

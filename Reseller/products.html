@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品管理 - 代理后台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-emerald-800 text-white flex-shrink-0">
+            <div class="p-4 border-b border-emerald-700">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-leaf text-2xl"></i>
+                    <div>
+                        <h1 class="text-lg font-bold">农资商城</h1>
+                        <p class="text-xs text-emerald-200">代理管理后台</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="p-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-home"></i>
+                            <span>首页</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="products.html" class="flex items-center space-x-3 px-4 py-3 bg-emerald-700 rounded-lg">
+                            <i class="fas fa-boxes"></i>
+                            <span>商品管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="orders.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>订单管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="finance.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>财务管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="analytics.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-chart-line"></i>
+                            <span>数据统计</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-cog"></i>
+                            <span>系统设置</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="absolute bottom-0 w-64 p-4 border-t border-emerald-700">
+                <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>退出登录</span>
+                </a>
+            </div>
+        </aside>
+
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <header class="bg-white shadow-md px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">商品管理</h2>
+                        <p class="text-sm text-gray-600">管理您的代理商品</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="px-4 py-2 bg-emerald-600 text-white rounded text-sm hover:bg-emerald-700">
+                            <i class="fas fa-plus mr-2"></i>添加商品
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex-1 overflow-y-auto p-6">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center space-x-4">
+                            <input type="text" placeholder="搜索商品名称..." class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 w-64">
+                            <select class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <option>全部状态</option>
+                                <option>已上架</option>
+                                <option>已下架</option>
+                                <option>库存不足</option>
+                            </select>
+                            <select class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <option>全部分类</option>
+                                <option>种子</option>
+                                <option>化肥</option>
+                                <option>农药</option>
+                                <option>农具</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-4 py-2 border rounded text-sm hover:bg-gray-50">
+                                <i class="fas fa-th-large mr-2"></i>网格
+                            </button>
+                            <button class="px-4 py-2 border rounded text-sm hover:bg-gray-50">
+                                <i class="fas fa-list mr-2"></i>列表
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <div class="border rounded-lg p-4 hover:shadow-md transition">
+                            <div class="relative mb-4">
+                                <div class="w-full h-40 bg-gray-200 rounded flex items-center justify-center">
+                                    <i class="fas fa-seedling text-4xl text-gray-400"></i>
+                                </div>
+                                <span class="absolute top-2 right-2 px-2 py-1 bg-emerald-500 text-white text-xs rounded">已上架</span>
+                            </div>
+                            <h4 class="font-medium text-gray-800 mb-2 line-clamp-1">杂交玉米种子 超高产</h4>
+                            <p class="text-sm text-gray-600 mb-2">山东种业集团</p>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="text-red-500 font-bold">¥68.00</p>
+                                <p class="text-sm text-gray-600">库存: 500</p>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm text-gray-600">销量: 156</p>
+                                <div class="flex space-x-2">
+                                    <button class="text-xs px-2 py-1 border rounded hover:bg-gray-50">编辑</button>
+                                    <button class="text-xs px-2 py-1 border rounded hover:bg-gray-50">下架</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-4 hover:shadow-md transition">
+                            <div class="relative mb-4">
+                                <div class="w-full h-40 bg-gray-200 rounded flex items-center justify-center">
+                                    <i class="fas fa-flask text-4xl text-gray-400"></i>
+                                </div>
+                                <span class="absolute top-2 right-2 px-2 py-1 bg-emerald-500 text-white text-xs rounded">已上架</span>
+                            </div>
+                            <h4 class="font-medium text-gray-800 mb-2 line-clamp-1">有机复合肥 50kg</h4>
+                            <p class="text-sm text-gray-600 mb-2">山东农化科技</p>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="text-red-500 font-bold">¥80.00</p>
+                                <p class="text-sm text-gray-600">库存: 300</p>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm text-gray-600">销量: 98</p>
+                                <div class="flex space-x-2">
+                                    <button class="text-xs px-2 py-1 border rounded hover:bg-gray-50">编辑</button>
+                                    <button class="text-xs px-2 py-1 border rounded hover:bg-gray-50">下架</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-4 hover:shadow-md transition">
+                            <div class="relative mb-4">
+                                <div class="w-full h-40 bg-gray-200 rounded flex items-center justify-center">
+                                    <i class="fas fa-spray-can text-4xl text-gray-400"></i>
+                                </div>
+                                <span class="absolute top-2 right-2 px-2 py-1 bg-orange-500 text-white text-xs rounded">库存不足</span>
+                            </div>
+                            <h4 class="font-medium text-gray-800 mb-2 line-clamp-1">高效杀虫剂 500ml</h4>
+                            <p class="text-sm text-gray-600 mb-2">山东农药厂</p>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="text-red-500 font-bold">¥45.00</p>
+                                <p class="text-sm text-red-600">库存: 5</p>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm text-gray-600">销量: 234</p>
+                                <div class="flex space-x-2">
+                                    <button class="text-xs px-2 py-1 border rounded hover:bg-gray-50">编辑</button>
+                                    <button class="text-xs px-2 py-1 border rounded hover:bg-gray-50">补货</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-4 hover:shadow-md transition">
+                            <div class="relative mb-4">
+                                <div class="w-full h-40 bg-gray-200 rounded flex items-center justify-center">
+                                    <i class="fas fa-tractor text-4xl text-gray-400"></i>
+                                </div>
+                                <span class="absolute top-2 right-2 px-2 py-1 bg-gray-500 text-white text-xs rounded">已下架</span>
+                            </div>
+                            <h4 class="font-medium text-gray-800 mb-2 line-clamp-1">小型农用拖拉机</h4>
+                            <p class="text-sm text-gray-600 mb-2">山东农机厂</p>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="text-red-500 font-bold">¥15,800.00</p>
+                                <p class="text-sm text-gray-600">库存: 10</p>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm text-gray-600">销量: 2</p>
+                                <div class="flex space-x-2">
+                                    <button class="text-xs px-2 py-1 border rounded hover:bg-gray-50">编辑</button>
+                                    <button class="text-xs px-2 py-1 bg-emerald-500 text-white rounded hover:bg-emerald-600">上架</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-4 hover:shadow-md transition">
+                            <div class="relative mb-4">
+                                <div class="w-full h-40 bg-gray-200 rounded flex items-center justify-center">
+                                    <i class="fas fa-leaf text-4xl text-gray-400"></i>
+                                </div>
+                                <span class="absolute top-2 right-2 px-2 py-1 bg-emerald-500 text-white text-xs rounded">已上架</span>
+                            </div>
+                            <h4 class="font-medium text-gray-800 mb-2 line-clamp-1">小麦种子 优质品种</h4>
+                            <p class="text-sm text-gray-600 mb-2">山东种业集团</p>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="text-red-500 font-bold">¥55.00</p>
+                                <p class="text-sm text-gray-600">库存: 450</p>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm text-gray-600">销量: 87</p>
+                                <div class="flex space-x-2">
+                                    <button class="text-xs px-2 py-1 border rounded hover:bg-gray-50">编辑</button>
+                                    <button class="text-xs px-2 py-1 border rounded hover:bg-gray-50">下架</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-4 hover:shadow-md transition">
+                            <div class="relative mb-4">
+                                <div class="w-full h-40 bg-gray-200 rounded flex items-center justify-center">
+                                    <i class="fas fa-tint text-4xl text-gray-400"></i>
+                                </div>
+                                <span class="absolute top-2 right-2 px-2 py-1 bg-emerald-500 text-white text-xs rounded">已上架</span>
+                            </div>
+                            <h4 class="font-medium text-gray-800 mb-2 line-clamp-1">液体肥料 20L</h4>
+                            <p class="text-sm text-gray-600 mb-2">山东农化科技</p>
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="text-red-500 font-bold">¥120.00</p>
+                                <p class="text-sm text-gray-600">库存: 200</p>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm text-gray-600">销量: 45</p>
+                                <div class="flex space-x-2">
+                                    <button class="text-xs px-2 py-1 border rounded hover:bg-gray-50">编辑</button>
+                                    <button class="text-xs px-2 py-1 border rounded hover:bg-gray-50">下架</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between mt-6">
+                        <p class="text-sm text-gray-600">共 6 个商品</p>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-4 py-2 border rounded text-sm hover:bg-gray-50">上一页</button>
+                            <button class="px-4 py-2 bg-emerald-600 text-white rounded text-sm">1</button>
+                            <button class="px-4 py-2 border rounded text-sm hover:bg-gray-50">2</button>
+                            <button class="px-4 py-2 border rounded text-sm hover:bg-gray-50">3</button>
+                            <button class="px-4 py-2 border rounded text-sm hover:bg-gray-50">下一页</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

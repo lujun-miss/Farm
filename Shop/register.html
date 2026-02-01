@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册 - 农资商城</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .register-container {
+            background: linear-gradient(135deg, #10b981 0%, #065f46 100%);
+        }
+        .register-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .input-group:focus-within label {
+            color: #10b981;
+        }
+        .input-group:focus-within i {
+            color: #10b981;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <header class="bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-lg relative">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center space-x-3">
+                    <button id="mobile-menu-btn" class="md:hidden text-white hover:text-emerald-200 transition">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                    <i class="fas fa-leaf text-2xl md:text-3xl"></i>
+                    <div class="cursor-pointer" onclick="window.location.href='index.html'">
+                        <h1 class="text-xl md:text-2xl font-bold">农资商城</h1>
+                        <p class="text-xs text-emerald-100 hidden sm:block">专业农资电商平台</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3 md:space-x-6">
+                    <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span class="hidden sm:inline">购物车</span>
+                        <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">3</span>
+                    </a>
+                    <!-- 我的农资下拉菜单 -->
+                    <div class="dropdown">
+                        <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                            <i class="fas fa-user text-lg"></i>
+                            <span class="hidden sm:inline">我的农资</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="block py-1 px-4 text-sm" onclick="window.location.href='user-center.html'">买家中心</a>
+                            <a href="#" class="block py-1 px-4 text-sm" onclick="window.location.href='seller-choice.html'">卖家中心</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 登录按钮 -->
+                    <a href="login.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-sign-in-alt text-lg"></i>
+                        <span class="hidden sm:inline">登录</span>
+                    </a>
+                    
+                    <!-- 免费注册按钮 -->
+                    <a href="register.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-user-plus text-lg"></i>
+                        <span class="hidden sm:inline">注册</span>
+                    </a>
+                </div>
+            </div>
+            <style>
+                /* 确保导航栏容器不会限制下拉菜单显示 */
+                header {
+                    overflow: visible !important;
+                    position: relative;
+                    z-index: 9999;
+                }
+                
+                nav {
+                    overflow: visible !important;
+                    z-index: 9999;
+                }
+                
+                .container {
+                    overflow: visible !important;
+                }
+                
+                .dropdown {
+                    position: relative;
+                    z-index: 9999;
+                    display: inline-block;
+                }
+                
+                .dropdown-menu {
+                    display: none;
+                    background: white;
+                    border-radius: 0.5rem;
+                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                    padding: 0.5rem 0;
+                    margin: 0;
+                    min-width: 150px;
+                    z-index: 9999;
+                    position: fixed;
+                }
+                
+                /* 二级下拉菜单样式 */
+                .group .dropdown-menu {
+                    position: absolute;
+                    left: 100%;
+                    top: 0;
+                    margin-left: 0.5rem;
+                }
+                
+                .group:hover .dropdown-menu {
+                    display: block;
+                }
+                
+                .dropdown:hover .dropdown-menu {
+                    display: block;
+                }
+                
+                .dropdown-menu a {
+                    display: block;
+                    padding: 0.5rem 1rem;
+                    color: gray;
+                    text-decoration: none;
+                    white-space: nowrap;
+                }
+                
+                .dropdown-menu a:hover {
+                    background-color: #f0fdf4;
+                    color: #15803d;
+                }
+            </style>
+        </div>
+    </header>
+    
+    <div class="flex items-center justify-center py-8">
+        <div class="w-full max-w-2xl px-4">
+            <div class="bg-white rounded-2xl shadow-2xl p-8">
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#10b981] mb-4">
+                        <i class="fas fa-seedling text-3xl text-white"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-[#065f46]">注册账户</h1>
+                    <p class="text-gray-600 mt-2">创建您的账户，开启农资电商之旅</p>
+                </div>
+
+            <form id="registerForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">用户名 *</label>
+                        <div class="relative">
+                            <i class="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="username" name="username" required
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10b981] focus:border-transparent transition-all"
+                                placeholder="请输入用户名">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">邮箱 *</label>
+                        <div class="relative">
+                            <i class="fas fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="email" id="email" name="email" required
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10b981] focus:border-transparent transition-all"
+                                placeholder="请输入邮箱">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">密码 *</label>
+                        <div class="relative">
+                            <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="password" id="password" name="password" required
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10b981] focus:border-transparent transition-all"
+                                placeholder="请输入密码">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">确认密码 *</label>
+                        <div class="relative">
+                            <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10b981] focus:border-transparent transition-all"
+                                placeholder="请再次输入密码">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">手机号 *</label>
+                        <div class="relative">
+                            <i class="fas fa-phone absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="tel" id="phone" name="phone" required
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10b981] focus:border-transparent transition-all"
+                                placeholder="请输入手机号">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">验证码 *</label>
+                        <div class="relative">
+                            <i class="fas fa-shield-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="verifyCode" name="verifyCode" required
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10b981] focus:border-transparent transition-all"
+                                placeholder="请输入验证码">
+                            <button type="button" id="getVerifyCode" class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-emerald-600 hover:text-emerald-800 font-medium">
+                                获取验证码
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center">
+                    <input type="checkbox" id="agree" name="agree" required class="w-4 h-4 text-[#10b981] border-gray-300 rounded focus:ring-[#10b981]">
+                    <label for="agree" class="ml-2 text-sm text-gray-600">
+                        我已阅读并同意 <a href="#" class="text-[#10b981] hover:underline">用户协议</a> 和 <a href="#" class="text-[#10b981] hover:underline">隐私政策</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-primary w-full py-3 text-white font-semibold rounded-lg shadow-md">
+                    立即注册
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-gray-600">
+                    已有账号？
+                    <a href="login.html" class="text-[#10b981] font-semibold hover:underline">立即登录</a>
+                </p>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <p class="text-sm text-gray-500 text-center mb-4">其他身份注册</p>
+                <div class="grid grid-cols-1 gap-4">
+                    <a href="../Vendor/apply.html" class="flex items-center justify-center space-x-2 py-3 px-4 border-2 border-emerald-200 rounded-lg hover:bg-emerald-50 transition">
+                        <i class="fas fa-industry text-emerald-600"></i>
+                        <span class="text-sm font-medium text-emerald-700">厂家入驻</span>
+                    </a>
+                </div>
+                <p class="text-xs text-gray-400 text-center mt-4">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    代理申请请从商品详情页进入
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-6 text-center text-white text-sm">
+            <p>© 2024 曹州农化 版权所有</p>
+        </div>
+    </div>
+
+    <script>
+        const registerForm = document.getElementById('registerForm');
+        const getVerifyCodeBtn = document.getElementById('getVerifyCode');
+
+        getVerifyCodeBtn.addEventListener('click', function() {
+            const phone = document.getElementById('phone').value;
+            if (!phone) {
+                alert('请先输入手机号');
+                return;
+            }
+            if (!/^1[3-9]\d{9}$/.test(phone)) {
+                alert('请输入正确的手机号');
+                return;
+            }
+            alert('验证码已发送到您的手机');
+            let countdown = 60;
+            getVerifyCodeBtn.disabled = true;
+            getVerifyCodeBtn.textContent = `${countdown}秒后重新获取`;
+            const timer = setInterval(() => {
+                countdown--;
+                if (countdown <= 0) {
+                    clearInterval(timer);
+                    getVerifyCodeBtn.disabled = false;
+                    getVerifyCodeBtn.textContent = '获取验证码';
+                } else {
+                    getVerifyCodeBtn.textContent = `${countdown}秒后重新获取`;
+                }
+            }, 1000);
+        });
+
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('两次输入的密码不一致！');
+                return;
+            }
+
+            const formData = {
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                password: password,
+                phone: document.getElementById('phone').value,
+                verifyCode: document.getElementById('verifyCode').value
+            };
+
+            console.log('注册信息：', formData);
+            alert('注册成功！即将跳转到登录页面');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

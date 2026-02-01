@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商城端 - 农资商城</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="flex flex-col min-h-screen">
+
+
+
+
+        <!-- 导航栏 -->
+        <header class="bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-lg relative">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between py-4">
+                    <div class="flex items-center space-x-3">
+                        <button id="mobile-menu-btn" class="md:hidden text-white hover:text-emerald-200 transition">
+                            <i class="fas fa-bars text-2xl"></i>
+                        </button>
+                        <i class="fas fa-leaf text-2xl md:text-3xl"></i>
+                        <div class="cursor-pointer" onclick="window.location.reload()">
+                            <h1 class="text-xl md:text-2xl font-bold">农资商城</h1>
+                            <p class="text-xs text-emerald-100 hidden sm:block">专业农资电商平台</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3 md:space-x-6">
+
+                        <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                            <i class="fas fa-shopping-cart text-lg"></i>
+                            <span class="hidden sm:inline">购物车</span>
+                            <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">3</span>
+                        </a>
+                        <!-- 我的农资下拉菜单 -->
+                        <div class="dropdown">
+                            <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                                <i class="fas fa-user text-lg"></i>
+                                <span class="hidden sm:inline">我的农资</span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="#" class="block py-1 px-4 text-sm" onclick="window.location.href='user-center.html'">买家中心</a>
+                                <a href="#" class="block py-1 px-4 text-sm" onclick="window.location.href='seller-choice.html'">卖家中心</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 登录按钮 -->
+                        <a href="login.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                            <i class="fas fa-sign-in-alt text-lg"></i>
+                            <span class="hidden sm:inline">登录</span>
+                        </a>
+                        
+                        <!-- 免费注册按钮 -->
+                        <a href="register.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                            <i class="fas fa-user-plus text-lg"></i>
+                            <span class="hidden sm:inline">注册</span>
+                        </a>
+                    </div>
+                </div>
+                <style>
+                    /* 确保导航栏容器不会限制下拉菜单显示 */
+                    header {
+                        overflow: visible !important;
+                        position: relative;
+                        z-index: 9999;
+                    }
+                    
+                    nav {
+                        overflow: visible !important;
+                        z-index: 9999;
+                    }
+                    
+                    .container {
+                        overflow: visible !important;
+                    }
+                    
+                    .dropdown {
+                        position: relative;
+                        z-index: 9999;
+                        display: inline-block;
+                    }
+                    
+                    .dropdown-menu {
+                        display: none;
+                        background: white;
+                        border-radius: 0.5rem;
+                        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                        padding: 0.5rem 0;
+                        margin: 0;
+                        min-width: 150px;
+                        z-index: 9999;
+                        /* 关键：使用fixed定位完全脱离文档流 */
+                        position: fixed;
+                    }
+                    
+                    /* 二级下拉菜单样式 */
+                    .group .dropdown-menu {
+                        position: absolute;
+                        left: 100%;
+                        top: 0;
+                        margin-left: 0.5rem;
+                    }
+                    
+                    .group:hover .dropdown-menu {
+                        display: block;
+                    }
+                    
+                    .dropdown:hover .dropdown-menu {
+                        display: block;
+                    }
+                    
+                    .dropdown-menu a {
+                        display: block;
+                        padding: 0.5rem 1rem;
+                        color: gray;
+                        text-decoration: none;
+                        white-space: nowrap;
+                    }
+                    
+                    .dropdown-menu a:hover {
+                        background-color: #f0fdf4;
+                        color: #15803d;
+                    }
+                    .mobile-menu {
+                        display: none;
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        right: 0;
+                        background: linear-gradient(to right, #059669, #16a34a);
+                        padding: 1rem;
+                        z-index: 1000;
+                    }
+                    .mobile-menu.open {
+                        display: block;
+                    }
+                    .search-input {
+                        width: 100%;
+                        max-width: 200px;
+                    }
+                    .mobile-dropdown-menu {
+                        display: none;
+                        padding-left: 1rem;
+                        margin-top: 0.5rem;
+                        border-left: 2px solid #dcfce7;
+                    }
+                    .mobile-dropdown-menu.show {
+                        display: block;
+                    }
+                    .mobile-dropdown-toggle {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+                    .mobile-dropdown-toggle::after {
+                        content: '▼';
+                        font-size: 0.75rem;
+                        color: inherit;
+                    }
+                    .mobile-dropdown-toggle.active::after {
+                        content: '▲';
+                    }
+                </style>
+
+
+            </div>
+        </header>
+
+        <script>
+            // 移动端菜单切换
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('open');
+            });
+
+            // 移动端下拉菜单
+            document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    this.classList.toggle('active');
+                    const dropdownMenu = this.nextElementSibling;
+                    dropdownMenu.classList.toggle('show');
+                });
+            });
+            
+            // 修复桌面端下拉菜单位置（使用fixed定位时的动态定位）
+            document.addEventListener('DOMContentLoaded', function() {
+                const dropdowns = document.querySelectorAll('.dropdown');
+                
+                dropdowns.forEach(dropdown => {
+                    const menu = dropdown.querySelector('.dropdown-menu');
+                    
+                    // 鼠标悬停时动态计算位置
+                    dropdown.addEventListener('mouseenter', function() {
+                        if (menu) {
+                            const rect = dropdown.getBoundingClientRect();
+                            
+                            // 设置下拉菜单的位置
+                            menu.style.left = rect.left + 'px';
+                            menu.style.top = (rect.bottom + window.scrollY) + 'px';
+                        }
+                    });
+                    
+                    // 窗口大小变化时重新计算位置
+                    window.addEventListener('resize', function() {
+                        if (menu && menu.style.display === 'block') {
+                            const rect = dropdown.getBoundingClientRect();
+                            menu.style.left = rect.left + 'px';
+                            menu.style.top = (rect.bottom + window.scrollY) + 'px';
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <main class="flex-1 p-4 md:p-6 main-content">
+            <div class="bg-white rounded-lg shadow-lg h-full min-h-[700px]">
+                <iframe id="content-frame" src="home.html" class="w-full h-full min-h-[700px] border-0 rounded-lg" frameborder="0"></iframe>
+            </div>
+        </main>
+
+        <footer class="bg-white border-t">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex items-center justify-between text-sm text-gray-600 footer-content">
+                    <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+                        <span><i class="fas fa-leaf text-emerald-600 mr-1"></i> 曹州农化农资电商平台</span>
+                        <span class="hidden md:inline">|</span>
+                        <span>厂家直营 + 全民代理</span>
+                    </div>
+                    <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+                        <span><i class="fas fa-phone mr-1"></i> 客服热线：400-XXX-XXXX</span>
+                        <span class="hidden md:inline">|</span>
+                        <span><i class="fas fa-envelope mr-1"></i> 联系我们</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+</body>
+</html>

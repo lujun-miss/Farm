@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卖家中心 - 农资商城</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .role-card {
+            transition: all 0.3s ease;
+        }
+        .role-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        .role-icon {
+            transition: all 0.3s ease;
+        }
+        .role-card:hover .role-icon {
+            transform: scale(1.1);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
+        }
+        .btn-enter {
+            transition: all 0.3s ease;
+        }
+        .btn-enter:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <header class="bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
+                    <i class="fas fa-leaf text-3xl"></i>
+                    <div>
+                        <h1 class="text-2xl font-bold">农资商城</h1>
+                        <p class="text-xs text-emerald-100">专业农资电商平台</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="login.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-user"></i>
+                        <span>登录</span>
+                    </a>
+                    <a href="register.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-user-plus"></i>
+                        <span>注册</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-2xl font-bold text-gray-800 text-center mb-2">欢迎来到卖家中心</h2>
+        <p class="text-gray-600 text-center mb-8">请选择您的身份，进入对应的管理后台</p>
+
+        <div class="max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="role-card bg-white rounded-2xl shadow-lg p-8 cursor-pointer" onclick="window.location.href='../Vendor/index.html'">
+                    <div class="text-center">
+                        <div class="role-icon w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-industry text-4xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">我是厂家</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            农资生产厂家，负责产品生产、品牌管理、库存控制，为代理商提供优质货源
+                        </p>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center justify-center text-sm text-gray-600">
+                                <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                                <span>产品入驻与管理</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-gray-600">
+                                <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                                <span>库存与供应链管理</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-gray-600">
+                                <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                                <span>订单处理与发货</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-gray-600">
+                                <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                                <span>品牌推广与营销</span>
+                            </div>
+                        </div>
+                        <button class="btn-enter w-full py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-medium hover:from-blue-600 hover:to-blue-700">
+                            <i class="fas fa-arrow-right mr-2"></i>进入厂家后台
+                        </button>
+                    </div>
+                </div>
+
+                <div class="role-card bg-white rounded-2xl shadow-lg p-8 cursor-pointer" onclick="window.location.href='../Reseller/dashboard.html'">
+                    <div class="text-center">
+                        <div class="role-icon w-24 h-24 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-store text-4xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">我是代理商</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            区域经销商，负责商品销售、客户服务、订单管理，为终端农户提供优质服务
+                        </p>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center justify-center text-sm text-gray-600">
+                                <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                                <span>代理商品管理</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-gray-600">
+                                <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                                <span>订单处理与配送</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-gray-600">
+                                <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                                <span>财务管理与提现</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-gray-600">
+                                <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                                <span>数据统计与分析</span>
+                            </div>
+                        </div>
+                        <button class="btn-enter w-full py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg font-medium hover:from-emerald-600 hover:to-emerald-700">
+                            <i class="fas fa-arrow-right mr-2"></i>进入代理后台
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <div class="bg-white rounded-xl shadow-md p-6 max-w-2xl mx-auto">
+                    <h4 class="text-lg font-bold text-gray-800 mb-4">
+                        <i class="fas fa-question-circle text-emerald-500 mr-2"></i>不确定如何选择？
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-industry text-blue-600 text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-800">选择"我是厂家"</p>
+                                <p class="text-sm text-gray-600">如果您是农资产品的生产厂家，需要管理产品生产、库存和品牌</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-store text-emerald-600 text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-800">选择"我是代理商"</p>
+                                <p class="text-sm text-gray-600">如果您是区域经销商，需要管理商品销售和客户服务</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <p class="text-gray-600">
+                    <i class="fas fa-phone mr-2"></i>如有疑问，请联系客服：<span class="text-emerald-600 font-medium">400-888-8888</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

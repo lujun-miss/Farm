@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>曹州农化 - 专业农资电商平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .nav-item.active {
+            background-color: #10b981;
+            color: white;
+        }
+        .nav-item:hover {
+            background-color: #059669;
+            color: white;
+        }
+        iframe {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+        .terminal-section {
+            display: none;
+        }
+        .terminal-section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-6">
+        <header class="bg-gradient-to-r from-emerald-600 to-green-600 text-white rounded-lg shadow-lg p-6 mb-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-leaf text-4xl"></i>
+                    <div class="cursor-pointer" onclick="window.location.reload()">
+                        <h1 class="text-3xl font-bold">曹州农化</h1>
+                        <p class="text-emerald-100">专业农资电商平台 - 厂家直营 + 全民代理</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm text-emerald-100">四端系统架构</p>
+                    <p class="text-lg font-semibold">商城端 | 平台端 | 代理端 | 厂家端</p>
+                </div>
+            </div>
+        </header>
+
+        <nav class="bg-white rounded-lg shadow-md p-4 mb-6">
+            <div class="flex flex-wrap gap-2">
+                <a href="Shop/index.html" target="_blank" class="nav-item active px-6 py-3 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>商城端</span>
+                </a>
+                <a href="admin/index.html" target="_blank" class="nav-item px-6 py-3 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2">
+                    <i class="fas fa-cog"></i>
+                    <span>平台运营端</span>
+                </a>
+                <a href="Reseller/index.html" target="_blank" class="nav-item px-6 py-3 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2">
+                    <i class="fas fa-user-tie"></i>
+                    <span>代理后台</span>
+                </a>
+                <a href="Vendor/index.html" target="_blank" class="nav-item px-6 py-3 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2">
+                    <i class="fas fa-industry"></i>
+                    <span>厂家后台</span>
+                </a>
+            </div>
+        </nav>
+
+        <div id="shop-section" class="terminal-section active">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-shopping-cart text-emerald-600 mr-3"></i>
+                    商城端 - 面向终端用户（农民、合作社）
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-emerald-50 p-4 rounded-lg border-2 border-emerald-200">
+                        <h3 class="font-semibold text-emerald-800 mb-2">核心功能</h3>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 商品浏览与搜索</li>
+                            <li>• 在线下单购买</li>
+                            <li>• 订单追踪管理</li>
+                            <li>• 农技知识学习</li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
+                        <h3 class="font-semibold text-blue-800 mb-2">特色功能</h3>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 基于地理位置推荐</li>
+                            <li>• 区域保护商品展示</li>
+                            <li>• 作物周期相关推荐</li>
+                            <li>• 病虫害预警推送</li>
+                        </ul>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
+                        <h3 class="font-semibold text-purple-800 mb-2">用户角色</h3>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 普通农户</li>
+                            <li>• 农业合作社</li>
+                            <li>• 批量采购客户</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">首页</h3>
+                    <iframe src="shop/home.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">商品列表页</h3>
+                    <iframe src="shop/products.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">商品详情页</h3>
+                    <iframe src="shop/product-detail.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">购物车</h3>
+                    <iframe src="shop/cart.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">个人中心</h3>
+                    <iframe src="shop/user-center.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">厂家入驻申请</h3>
+                    <iframe src="shop/vendor-apply.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">代理申请</h3>
+                    <iframe src="shop/reseller-apply.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div id="admin-section" class="terminal-section">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-cog text-emerald-600 mr-3"></i>
+                    平台运营端 - 平台方管理后台
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-emerald-50 p-4 rounded-lg border-2 border-emerald-200">
+                        <h3 class="font-semibold text-emerald-800 mb-2">核心功能</h3>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 厂家入驻审核</li>
+                            <li>• 代理申请审核</li>
+                            <li>• 商品审核管理</li>
+                            <li>• 订单监控处理</li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
+                        <h3 class="font-semibold text-blue-800 mb-2">数据管理</h3>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 平台数据分析</li>
+                            <li>• 用户行为分析</li>
+                            <li>• 销售数据统计</li>
+                            <li>• 财务结算管理</li>
+                        </ul>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
+                        <h3 class="font-semibold text-purple-800 mb-2">系统管理</h3>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 用户权限管理</li>
+                            <li>• 系统配置管理</li>
+                            <li>• 日志监控</li>
+                            <li>• 消息推送</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">管理首页</h3>
+                    <iframe src="admin/dashboard.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">厂家审核</h3>
+                    <iframe src="admin/vendor-audit.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">代理审核</h3>
+                    <iframe src="admin/reseller-audit.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">订单管理</h3>
+                    <iframe src="admin/orders.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div id="reseller-section" class="terminal-section">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-user-tie text-emerald-600 mr-3"></i>
+                    代理后台 - 代理商管理界面
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-emerald-50 p-4 rounded-lg border-2 border-emerald-200">
+                        <h3 class="font-semibold text-emerald-800 mb-2">核心功能</h3>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 代理店铺管理</li>
+                            <li>• 商品同步上架</li>
+                            <li>• 订单处理发货</li>
+                            <li>• 客户关系管理</li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
+                        <h3 class="font-semibold text-blue-800 mb-2">业绩管理</h3>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 销售数据统计</li>
+                            <li>• 佣金结算查询</li>
+                            <li>• 下级代理管理</li>
+                            <li>• 区域销售分析</li>
+                        </ul>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
+                        <h3 class="font-semibold text-purple-800 mb-2">营销工具</h3>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 促销活动设置</li>
+                            <li>• 客户优惠券发放</li>
+                            <li>• 店铺装修</li>
+                            <li>• 数据分析</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">代理首页</h3>
+                    <iframe src="reseller/dashboard.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">商品管理</h3>
+                    <iframe src="reseller/products.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">订单管理</h3>
+                    <iframe src="reseller/orders.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">业绩统计</h3>
+                    <iframe src="reseller/performance.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div id="vendor-section" class="terminal-section">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-industry text-emerald-600 mr-3"></i>
+                    厂家后台 - 厂家店铺管理系统
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-emerald-50 p-4 rounded-lg border-2 border-emerald-200">
+                        <h3 class="font-semibold text-emerald-800 mb-2">核心功能</h3>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 官方店铺管理</li>
+                            <li>• 商品发布管理</li>
+                            <li>• 库存管理</li>
+                            <li>• 订单处理发货</li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
+                        <h3 class="font-semibold text-blue-800 mb-2">代理管理</h3>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 代理政策设置</li>
+                            <li>• 代理申请审核</li>
+                            <li>• 代理网络管理</li>
+                            <li>• 代理业绩统计</li>
+                        </ul>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
+                        <h3 class="font-semibold text-purple-800 mb-2">数据分析</h3>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 销售数据分析</li>
+                            <li>• 商品销量排行</li>
+                            <li>• 区域销售分析</li>
+                            <li>• 代理业绩对比</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">厂家首页</h3>
+                    <iframe src="vendor/dashboard.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">商品管理</h3>
+                    <iframe src="vendor/products.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">代理管理</h3>
+                    <iframe src="vendor/resellers.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3">销售数据</h3>
+                    <iframe src="vendor/sales.html" class="w-full h-96" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-8 bg-white rounded-lg shadow-md p-6 text-center text-gray-600">
+            <p class="mb-2">曹州农化 - 专业农资电商平台</p>
+            <p class="text-sm">厂家直营 + 全民代理 | 绿色农业 | 科技兴农</p>
+        </footer>
+    </div>
+
+    <script>
+        function showSection(section) {
+            document.querySelectorAll('.terminal-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            document.getElementById(section + '-section').classList.add('active');
+            event.target.closest('.nav-item').classList.add('active');
+        }
+    </script>
+</body>
+</html>

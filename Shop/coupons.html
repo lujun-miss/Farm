@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>优惠券 - 农资商城</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <header class="bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-lg relative">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center space-x-3">
+                    <button id="mobile-menu-btn" class="md:hidden text-white hover:text-emerald-200 transition">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                    <i class="fas fa-leaf text-2xl md:text-3xl"></i>
+                    <div class="cursor-pointer" onclick="window.location.href='index.html'">
+                        <h1 class="text-xl md:text-2xl font-bold">农资商城</h1>
+                        <p class="text-xs text-emerald-100 hidden sm:block">专业农资电商平台</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3 md:space-x-6">
+                    <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span class="hidden sm:inline">购物车</span>
+                        <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">3</span>
+                    </a>
+                    <!-- 我的农资下拉菜单 -->
+                    <div class="dropdown">
+                        <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                            <i class="fas fa-user text-lg"></i>
+                            <span class="hidden sm:inline">张三</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="block py-1 px-4 text-sm" onclick="window.location.href='user-center.html'">买家中心</a>
+                            <a href="#" class="block py-1 px-4 text-sm" onclick="window.location.href='seller-choice.html'">卖家中心</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 登录按钮 -->
+                    <a href="login.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-sign-in-alt text-lg"></i>
+                        <span class="hidden sm:inline">登录</span>
+                    </a>
+                    
+                    <!-- 免费注册按钮 -->
+                    <a href="register.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-user-plus text-lg"></i>
+                        <span class="hidden sm:inline">注册</span>
+                    </a>
+                </div>
+            </div>
+            <style>
+                /* 确保导航栏容器不会限制下拉菜单显示 */
+                header {
+                    overflow: visible !important;
+                    position: relative;
+                    z-index: 9999;
+                }
+                
+                nav {
+                    overflow: visible !important;
+                    z-index: 9999;
+                }
+                
+                .container {
+                    overflow: visible !important;
+                }
+                
+                .dropdown {
+                    position: relative;
+                    z-index: 9999;
+                    display: inline-block;
+                }
+                
+                .dropdown-menu {
+                    display: none;
+                    background: white;
+                    border-radius: 0.5rem;
+                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                    padding: 0.5rem 0;
+                    margin: 0;
+                    min-width: 150px;
+                    z-index: 9999;
+                    /* 关键：使用fixed定位完全脱离文档流 */
+                    position: fixed;
+                }
+                
+                /* 二级下拉菜单样式 */
+                .group .dropdown-menu {
+                    position: absolute;
+                    left: 100%;
+                    top: 0;
+                    margin-left: 0.5rem;
+                }
+                
+                .group:hover .dropdown-menu {
+                    display: block;
+                }
+                
+                /* 使下拉菜单在悬停时显示 */
+                .dropdown:hover .dropdown-menu {
+                    display: block;
+                }
+                
+                /* 下拉菜单项样式 */
+                .dropdown-menu a {
+                    color: #374151;
+                    text-decoration: none;
+                    transition: all 0.2s ease;
+                }
+                
+                .dropdown-menu a:hover {
+                    background-color: #f3f4f6;
+                    color: #059669;
+                }
+            </style>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <aside class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-2xl text-emerald-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800">张三</h3>
+                            <p class="text-sm text-gray-600">普通用户</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <p class="text-xl font-bold text-emerald-600">12</p>
+                            <p class="text-xs text-gray-600">订单</p>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold text-emerald-600">5</p>
+                            <p class="text-xs text-gray-600">收藏</p>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold text-emerald-600">2</p>
+                            <p class="text-xs text-gray-600">优惠券</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <nav class="space-y-1">
+                        <a href="user-center.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-home"></i>
+                            <span class="font-medium">个人中心</span>
+                        </a>
+                        <a href="my-orders.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-list-alt"></i>
+                            <span>我的订单</span>
+                        </a>
+                        <a href="my-favorites.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-heart"></i>
+                            <span>我的收藏</span>
+                        </a>
+                        <a href="address.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>收货地址</span>
+                        </a>
+                        <a href="#" class="flex items-center space-x-3 px-4 py-3 bg-emerald-50 text-emerald-600 rounded-lg">
+                            <i class="fas fa-ticket-alt"></i>
+                            <span>优惠券</span>
+                        </a>
+                        <a href="my-agent.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-user-tie"></i>
+                            <span>代理信息</span>
+                        </a>
+                        <a href="settings.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-cog"></i>
+                            <span>账户设置</span>
+                        </a>
+                        <a href="#" class="flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>退出登录</span>
+                        </a>
+                    </nav>
+                </div>
+            </aside>
+
+            <div class="lg:col-span-3">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">我的优惠券</h2>
+                        <div class="flex space-x-2">
+                            <button class="px-4 py-2 bg-emerald-600 text-white rounded text-sm hover:bg-emerald-700">可用</button>
+                            <button class="px-4 py-2 border rounded text-sm hover:bg-gray-50">已使用</button>
+                            <button class="px-4 py-2 border rounded text-sm hover:bg-gray-50">已过期</button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gradient-to-r from-red-500 to-orange-500 text-white p-4 rounded-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-3xl font-bold">¥10</p>
+                                    <p class="text-sm">满100可用</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm">有效期至</p>
+                                    <p class="text-sm">2024-12-31</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs">适用于：全品类商品</span>
+                                <button class="px-4 py-1 bg-white text-red-500 rounded text-sm hover:bg-red-50">立即使用</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white p-4 rounded-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-3xl font-bold">¥25</p>
+                                    <p class="text-sm">满200可用</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm">有效期至</p>
+                                    <p class="text-sm">2024-12-31</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs">适用于：种子类商品</span>
+                                <button class="px-4 py-1 bg-white text-blue-500 rounded text-sm hover:bg-blue-50">立即使用</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-3xl font-bold">¥50</p>
+                                    <p class="text-sm">满500可用</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm">有效期至</p>
+                                    <p class="text-sm">2024-12-31</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs">适用于：化肥类商品</span>
+                                <button class="px-4 py-1 bg-white text-purple-500 rounded text-sm hover:bg-purple-50">立即使用</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white p-4 rounded-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-3xl font-bold">¥20</p>
+                                    <p class="text-sm">满150可用</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm">有效期至</p>
+                                    <p class="text-sm">2024-12-31</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs">适用于：农药类商品</span>
+                                <button class="px-4 py-1 bg-white text-emerald-500 rounded text-sm hover:bg-emerald-50">立即使用</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布商品 - 代理管理后台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 代理端样式 */
+        .reseller-header {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        /* 导航样式 */
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+        
+        /* 卡片样式 */
+        .publish-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .publish-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: #10b981;
+        }
+        
+        /* 按钮样式 */
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        /* 步骤指示器 */
+        .step-item {
+            position: relative;
+        }
+        .step-item::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: calc(100% - 10px);
+            width: calc(100% + 20px);
+            height: 2px;
+            background-color: #e2e8f0;
+            z-index: 1;
+        }
+        .step-item:last-child::after {
+            display: none;
+        }
+        .step-item.active .step-number {
+            background-color: #10b981;
+            color: white;
+        }
+        .step-item.active::after {
+            background-color: #10b981;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-emerald-800 text-white flex-shrink-0">
+            <div class="p-4 border-b border-emerald-700">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-leaf text-2xl"></i>
+                    <div>
+                        <h1 class="text-lg font-bold">农资商城</h1>
+                        <p class="text-xs text-emerald-200">代理管理后台</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="p-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-home"></i>
+                            <span>首页</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="products.html" class="flex items-center space-x-3 px-4 py-3 bg-emerald-700 rounded-lg">
+                            <i class="fas fa-boxes"></i>
+                            <span>商品管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="orders.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>订单管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="finance.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>财务管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="analytics.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-chart-line"></i>
+                            <span>数据统计</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                            <i class="fas fa-cog"></i>
+                            <span>系统设置</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="absolute bottom-0 w-64 p-4 border-t border-emerald-700">
+                <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-emerald-700 rounded-lg transition">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>退出登录</span>
+                </a>
+            </div>
+        </aside>
+
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <header class="bg-white shadow-md px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">发布商品</h2>
+                        <p class="text-sm text-gray-600">发布您的代理商品</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="px-4 py-2 bg-emerald-600 text-white rounded text-sm hover:bg-emerald-700">
+                            <i class="fas fa-save mr-2"></i>保存草稿
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex-1 overflow-y-auto p-6">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-800">发布商品</h2>
+                            <p class="text-sm text-gray-600 mt-1">选择一种发布方式，快速上架您的商品</p>
+                        </div>
+                        <a href="products.html" class="btn-primary px-4 py-2 rounded-lg text-white flex items-center space-x-2 hover:no-underline">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>返回商品列表</span>
+                        </a>
+                    </div>
+
+                    <!-- 发布方式选择 -->
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <!-- 手动录入 -->
+                        <button onclick="showPublishMethod('manual')" class="btn-primary flex items-center space-x-3 px-6 py-4 rounded-xl shadow-md text-white hover:no-underline transition-all hover:shadow-lg">
+                            <div class="bg-white bg-opacity-20 w-12 h-12 rounded-full flex items-center justify-center">
+                                <i class="fas fa-keyboard text-xl"></i>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="font-semibold text-lg">手动录入</h3>
+                                <p class="text-sm text-white text-opacity-90">完整填写商品信息</p>
+                            </div>
+                        </button>
+                        
+                        <!-- 扫码录入 -->
+                        <button onclick="showPublishMethod('scan')" class="btn-primary flex items-center space-x-3 px-6 py-4 rounded-xl shadow-md text-white hover:no-underline transition-all hover:shadow-lg">
+                            <div class="bg-white bg-opacity-20 w-12 h-12 rounded-full flex items-center justify-center">
+                                <i class="fas fa-qrcode text-xl"></i>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="font-semibold text-lg">扫码录入</h3>
+                                <p class="text-sm text-white text-opacity-90">扫描商品条码</p>
+                            </div>
+                        </button>
+                        
+                        <!-- 拷贝商品 -->
+                        <button onclick="showPublishMethod('copy')" class="btn-primary flex items-center space-x-3 px-6 py-4 rounded-xl shadow-md text-white hover:no-underline transition-all hover:shadow-lg">
+                            <div class="bg-white bg-opacity-20 w-12 h-12 rounded-full flex items-center justify-center">
+                                <i class="fas fa-copy text-xl"></i>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="font-semibold text-lg">拷贝商品</h3>
+                                <p class="text-sm text-white text-opacity-90">引用已有商品</p>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- 商品库搜索 -->
+                    <div class="bg-emerald-50 rounded-xl shadow-md p-6 mb-8 mt-8">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">从平台库调取商品</h3>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div class="flex-1">
+                                <input type="text" id="platform-search" placeholder="搜索平台库商品（支持商品名称、品牌、规格等）" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="searchPlatformProducts()" class="btn-primary px-4 py-2 rounded-lg text-white">
+                                    <i class="fas fa-search mr-2"></i>搜索
+                                </button>
+                                <button onclick="showPlatformLibrary()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                    <i class="fas fa-th-large mr-2"></i>平台库
+                                </button>
+                            </div>
+                        </div>
+                        <!-- 搜索结果区域 -->
+                        <div id="search-results" class="mt-4 hidden bg-white rounded-lg shadow-md p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-sm font-medium text-gray-800">搜索结果</h4>
+                                <span class="text-xs text-gray-500">共找到 <span id="result-count">0</span> 条记录</span>
+                            </div>
+                            <div id="results-list" class="space-y-3 max-h-60 overflow-y-auto">
+                                <!-- 搜索结果将动态加载 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 发布表单区域 -->
+                    <div id="publish-form-container" class="mt-8 bg-white rounded-xl shadow-md p-6 hidden">
+                        <!-- 步骤指示器 -->
+                        <div class="flex items-center justify-between mb-8" id="step-indicator">
+                            <div class="step-item active text-center flex-1">
+                                <div class="step-number w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto mb-2">1</div>
+                                <div class="text-sm font-medium text-gray-800">商品信息</div>
+                            </div>
+                            <div class="step-item text-center flex-1">
+                                <div class="step-number w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center mx-auto mb-2">2</div>
+                                <div class="text-sm font-medium text-gray-600">包装规格</div>
+                            </div>
+                            <div class="step-item text-center flex-1">
+                                <div class="step-number w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center mx-auto mb-2">3</div>
+                                <div class="text-sm font-medium text-gray-600">价格库存</div>
+                            </div>
+                            <div class="step-item text-center flex-1">
+                                <div class="step-number w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center mx-auto mb-2">4</div>
+                                <div class="text-sm font-medium text-gray-600">资质图片</div>
+                            </div>
+                        </div>
+
+                        <!-- 表单内容 -->
+                        <div id="form-content">
+                            <!-- 商品信息表单 -->
+                            <div id="form-step-1" class="space-y-6">
+                                <h3 class="text-xl font-semibold text-gray-800">商品信息</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <!-- 基础信息 -->
+                                    <div class="md:col-span-3">
+                                        <div class="bg-gray-50 rounded-lg p-4">
+                                            <h4 class="text-sm font-medium text-gray-800 mb-3">基础信息</h4>
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                <div>
+                                                    <label for="product-category" class="block text-sm font-medium text-gray-700 mb-1">商品类别 <span class="text-red-500">*</span></label>
+                                                    <select id="product-category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                        <option value="">请选择商品类别</option>
+                                                        <option value="fertilizer">化肥</option>
+                                                        <option value="pesticide">农药</option>
+                                                        <option value="seed">种子</option>
+                                                        <option value="tools">农具</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label for="product-name" class="block text-sm font-medium text-gray-700 mb-1">商品名称 <span class="text-red-500">*</span></label>
+                                                    <input type="text" id="product-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="请输入商品名称">
+                                                </div>
+                                                <div>
+                                                    <label for="product-brand" class="block text-sm font-medium text-gray-700 mb-1">品牌 <span class="text-red-500">*</span></label>
+                                                    <select id="product-brand" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                        <option value="">请选择品牌</option>
+                                                        <option value="brand1">品牌一</option>
+                                                        <option value="brand2">品牌二</option>
+                                                        <option value="brand3">品牌三</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label for="manufacturer" class="block text-sm font-medium text-gray-700 mb-1">生产厂家 <span class="text-red-500">*</span></label>
+                                                    <select id="manufacturer" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                        <option value="">请选择生产厂家</option>
+                                                        <option value="manufacturer1">山东农化科技</option>
+                                                        <option value="manufacturer2">山东农药厂</option>
+                                                        <option value="manufacturer3">山东种业集团</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label for="product-origin" class="block text-sm font-medium text-gray-700 mb-1">产地 <span class="text-red-500">*</span></label>
+                                                    <input type="text" id="product-origin" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="请输入产地">
+                                                </div>
+                                                <div>
+                                                    <label for="product-model" class="block text-sm font-medium text-gray-700 mb-1">剂型</label>
+                                                    <select id="product-model" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                        <option value="">请选择剂型</option>
+                                                        <option value="liquid">液体</option>
+                                                        <option value="powder">粉剂</option>
+                                                        <option value="granule">颗粒</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 规格信息 -->
+                                    <div class="md:col-span-3">
+                                        <div class="bg-gray-50 rounded-lg p-4">
+                                            <h4 class="text-sm font-medium text-gray-800 mb-3">规格信息</h4>
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                <div>
+                                                    <label for="base-unit" class="block text-sm font-medium text-gray-700 mb-1">基础单位</label>
+                                                    <select id="base-unit" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                        <option value="">请选择单位</option>
+                                                        <option value="kg">kg</option>
+                                                        <option value="g">g</option>
+                                                        <option value="l">l</option>
+                                                        <option value="ml">ml</option>
+                                                        <option value="袋">袋</option>
+                                                        <option value="瓶">瓶</option>
+                                                    </select>
+                                                </div>
+                                                <div class="flex gap-2">
+                                                    <div class="flex-1">
+                                                        <label for="base-spec" class="block text-sm font-medium text-gray-700 mb-1">基础规格</label>
+                                                        <input type="number" id="base-spec" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="请输入规格值">
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <label for="spec-unit" class="block text-sm font-medium text-gray-700 mb-1">规格单位</label>
+                                                        <select id="spec-unit" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                            <option value="">请选择</option>
+                                                            <option value="ml/瓶">ml/瓶</option>
+                                                            <option value="g/袋">g/袋</option>
+                                                            <option value="kg/袋">kg/袋</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label for="shelf-life" class="block text-sm font-medium text-gray-700 mb-1">保质期 <span class="text-red-500">*</span></label>
+                                                    <div class="flex gap-2">
+                                                        <input type="number" id="shelf-life" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="天数">
+                                                        <span class="flex items-center text-gray-500">天</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 其他信息 -->
+                                    <div class="md:col-span-3">
+                                        <div class="bg-gray-50 rounded-lg p-4">
+                                            <h4 class="text-sm font-medium text-gray-800 mb-3">其他信息</h4>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <label for="active-ingredient" class="block text-sm font-medium text-gray-700 mb-1">有效成分</label>
+                                                    <input type="text" id="active-ingredient" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="请输入有效成分">
+                                                </div>
+                                                <div>
+                                                    <label for="content" class="block text-sm font-medium text-gray-700 mb-1">含量</label>
+                                                    <input type="text" id="content" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="请输入含量">
+                                                </div>
+                                                <div>
+                                                    <label for="target-crops" class="block text-sm font-medium text-gray-700 mb-1">使用作物</label>
+                                                    <input type="text" id="target-crops" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="请输入使用作物">
+                                                </div>
+                                                <div>
+                                                    <label for="control-objects" class="block text-sm font-medium text-gray-700 mb-1">防治对象</label>
+                                                    <input type="text" id="control-objects" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="请输入防治对象">
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">
+                                                <label for="usage-method" class="block text-sm font-medium text-gray-700 mb-1">使用方法</label>
+                                                <textarea id="usage-method" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="请输入使用方法"></textarea>
+                                            </div>
+                                            <div class="mt-4">
+                                                <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">注意事项</label>
+                                                <textarea id="notes" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="请输入注意事项"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 商品描述 -->
+                                    <div class="md:col-span-3">
+                                        <div class="bg-gray-50 rounded-lg p-4">
+                                            <h4 class="text-sm font-medium text-gray-800 mb-3">商品描述</h4>
+                                            <div class="flex gap-2 mb-3">
+                                                <label class="inline-flex items-center">
+                                                    <input type="radio" name="description-type" value="text" checked class="form-radio h-4 w-4 text-emerald-600">
+                                                    <span class="ml-2 text-sm text-gray-700">文字说明</span>
+                                                </label>
+                                                <label class="inline-flex items-center">
+                                                    <input type="radio" name="description-type" value="image" class="form-radio h-4 w-4 text-emerald-600">
+                                                    <span class="ml-2 text-sm text-gray-700">图片详情</span>
+                                                </label>
+                                            </div>
+                                            <!-- 文字说明 -->
+                                            <div id="text-description" class="">
+                                                <div class="flex items-center justify-between mb-1">
+                                                    <label for="product-description" class="block text-sm font-medium text-gray-700">商品描述</label>
+                                                    <span id="description-count" class="text-xs text-gray-500">0/300</span>
+                                                </div>
+                                                <textarea id="product-description" rows="4" maxlength="300" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="请输入商品描述（最多300字）"></textarea>
+                                            </div>
+                                            <!-- 图片详情 -->
+                                            <div id="image-description" class="hidden">
+                                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+                                                    <div class="text-gray-500 mb-3">
+                                                        <i class="fas fa-image text-3xl mb-2"></i>
+                                                        <p class="text-sm">上传商品详情图片</p>
+                                                        <p class="text-xs text-gray-400">支持JPG、PNG格式，建议宽度800像素</p>
+                                                    </div>
+                                                    <input type="file" id="detail-image" class="hidden" accept="image/*">
+                                                    <button type="button" onclick="document.getElementById('detail-image').click()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                                        <i class="fas fa-upload mr-2"></i>选择图片
+                                                    </button>
+                                                    <div id="detail-image-preview" class="mt-3 hidden">
+                                                        <img src="" alt="详情图片预览" class="max-w-full max-h-60 mx-auto rounded-lg">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 唯一性检查提示 -->
+                                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                                    <div class="flex">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm text-yellow-700">
+                                                <strong class="font-medium">温馨提示：</strong>
+                                                系统将根据「商品名称+品牌+规格+生产厂家」判断商品唯一性，避免重复创建。
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between space-x-4 pt-4">
+                                    <div></div>
+                                    <div class="flex gap-2">
+                                        <button type="button" onclick="saveDraft()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                            <i class="fas fa-save mr-2"></i>保存草稿
+                                        </button>
+                                        <button type="button" onclick="checkProductUniqueness()" class="btn-primary px-4 py-2 rounded-lg text-white">
+                                            <i class="fas fa-chevron-right mr-2"></i>下一步
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 包装规格表单 -->
+                            <div id="form-step-2" class="space-y-6 hidden">
+                                <h3 class="text-xl font-semibold text-gray-800">包装规格</h3>
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h4 class="text-sm font-medium text-gray-800">包装规格列表</h4>
+                                        <button type="button" onclick="addPackagingSpec()" class="px-3 py-1 bg-green-100 text-green-800 rounded-lg text-sm hover:bg-green-200">
+                                            <i class="fas fa-plus mr-1"></i>添加规格
+                                        </button>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mb-4">请为不同包装规格分别创建条目，例如：10ml/瓶、100ml/瓶</p>
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full bg-white">
+                                            <thead>
+                                                <tr class="bg-gray-50 border-b">
+                                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">包装类型</th>
+                                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">包装规格</th>
+                                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">商品条码</th>
+                                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">规格毛重(kg)</th>
+                                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">规格体积</th>
+                                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">建议零售价</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="packaging-specs">
+                                                <!-- 基础包装规格 -->
+                                                <tr class="border-b">
+                                                    <td class="px-4 py-2 whitespace-nowrap">
+                                                        <div class="flex gap-2">
+                                                            <button type="button" class="text-emerald-600 hover:text-emerald-800 text-xs">编辑</button>
+                                                            <button type="button" class="text-red-600 hover:text-red-800 text-xs" disabled>删除</button>
+                                                            <span class="text-xs text-gray-500">基础包装</span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-4 py-2 whitespace-nowrap">
+                                                        <input type="text" placeholder="瓶" class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                    </td>
+                                                    <td class="px-4 py-2 whitespace-nowrap">
+                                                        <div class="flex gap-1">
+                                                            <input type="text" placeholder="10" class="w-20 px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                            <input type="text" placeholder="ml" class="w-16 px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-4 py-2 whitespace-nowrap">
+                                                        <input type="text" placeholder="扫码或手动输入" class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                        <p class="text-xs text-gray-500 mt-1">使用扫描枪扫描条码，可手动输入，可系统自动生成</p>
+                                                    </td>
+                                                    <td class="px-4 py-2 whitespace-nowrap">
+                                                        <input type="number" step="0.001" placeholder="0.1" class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                    </td>
+                                                    <td class="px-4 py-2 whitespace-nowrap">
+                                                        <input type="text" placeholder="0.1x0.1x0.1" class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                    </td>
+                                                    <td class="px-4 py-2 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <span class="text-gray-500 mr-1">¥</span>
+                                                            <input type="number" step="0.01" placeholder="10" class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between space-x-4 pt-4">
+                                    <button type="button" onclick="prevStep()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                        <i class="fas fa-chevron-left mr-2"></i>上一步
+                                    </button>
+                                    <button type="button" onclick="nextStep()" class="btn-primary px-4 py-2 rounded-lg text-white">
+                                        <i class="fas fa-chevron-right mr-2"></i>下一步
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 价格库存表单 -->
+                            <div id="form-step-3" class="space-y-6 hidden">
+                                <h3 class="text-xl font-semibold text-gray-800">价格库存</h3>
+                                <!-- 价格设置 -->
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <h4 class="text-sm font-medium text-gray-800 mb-3">价格设置</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                        <div>
+                                            <label for="retail-price" class="block text-sm font-medium text-gray-700 mb-1">建议零售价</label>
+                                            <div class="flex items-center">
+                                                <span class="text-gray-500 mr-1">¥</span>
+                                                <input type="number" step="0.01" id="retail-price" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="0.00">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="wholesale-price" class="block text-sm font-medium text-gray-700 mb-1">批发价</label>
+                                            <div class="flex items-center">
+                                                <span class="text-gray-500 mr-1">¥</span>
+                                                <input type="number" step="0.01" id="wholesale-price" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="0.00">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="agent-price" class="block text-sm font-medium text-gray-700 mb-1">代理价</label>
+                                            <div class="flex items-center">
+                                                <span class="text-gray-500 mr-1">¥</span>
+                                                <input type="number" step="0.01" id="agent-price" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="0.00">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="tax-rate" class="block text-sm font-medium text-gray-700 mb-1">税率(%)</label>
+                                            <input type="number" step="0.01" id="tax-rate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="0.00">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 库存设置 -->
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <h4 class="text-sm font-medium text-gray-800 mb-3">库存设置</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                        <div>
+                                            <label for="total-stock" class="block text-sm font-medium text-gray-700 mb-1">总库存</label>
+                                            <input type="number" id="total-stock" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="0">
+                                        </div>
+                                        <div>
+                                            <label for="safety-stock" class="block text-sm font-medium text-gray-700 mb-1">安全库存</label>
+                                            <input type="number" id="safety-stock" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="0">
+                                        </div>
+                                        <div>
+                                            <label for="min-order" class="block text-sm font-medium text-gray-700 mb-1">最小起订量</label>
+                                            <input type="number" id="min-order" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="1">
+                                        </div>
+                                        <div>
+                                            <label for="max-order" class="block text-sm font-medium text-gray-700 mb-1">最大限购量</label>
+                                            <input type="number" id="max-order" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="不限">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between space-x-4 pt-4">
+                                    <button type="button" onclick="prevStep()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                        <i class="fas fa-chevron-left mr-2"></i>上一步
+                                    </button>
+                                    <button type="button" onclick="nextStep()" class="btn-primary px-4 py-2 rounded-lg text-white">
+                                        <i class="fas fa-chevron-right mr-2"></i>下一步
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 资质图片表单 -->
+                            <div id="form-step-4" class="space-y-6 hidden">
+                                <h3 class="text-xl font-semibold text-gray-800">资质图片</h3>
+
+                                <!-- 商品图片 -->
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <h4 class="text-sm font-medium text-gray-800 mb-3">商品图片</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <!-- 主图 -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">主图 <span class="text-red-500">*</span></label>
+                                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-emerald-500 transition">
+                                                <div id="main-image-preview" class="mb-2">
+                                                    <img src="" alt="主图预览" class="w-full max-h-40 mx-auto rounded-lg object-contain hidden">
+                                                    <div id="main-image-placeholder" class="py-6">
+                                                        <i class="fas fa-image text-3xl text-gray-400 mb-2"></i>
+                                                        <p class="text-sm text-gray-500">点击上传主图</p>
+                                                    </div>
+                                                </div>
+                                                <input type="file" id="main-image" class="hidden" accept="image/*">
+                                                <button type="button" onclick="document.getElementById('main-image').click()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                                    <i class="fas fa-upload mr-2"></i>选择图片
+                                                </button>
+                                                <p class="text-xs text-gray-500 mt-2">建议尺寸：800x800像素，支持JPG、PNG格式</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- 图片2 -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">图片2</label>
+                                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-emerald-500 transition">
+                                                <div id="image-2-preview" class="mb-2">
+                                                    <img src="" alt="图片2预览" class="w-full max-h-40 mx-auto rounded-lg object-contain hidden">
+                                                    <div id="image-2-placeholder" class="py-6">
+                                                        <i class="fas fa-image text-3xl text-gray-400 mb-2"></i>
+                                                        <p class="text-sm text-gray-500">点击上传图片</p>
+                                                    </div>
+                                                </div>
+                                                <input type="file" id="image-2" class="hidden" accept="image/*">
+                                                <button type="button" onclick="document.getElementById('image-2').click()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                                    <i class="fas fa-upload mr-2"></i>选择图片
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- 图片3 -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">图片3</label>
+                                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-emerald-500 transition">
+                                                <div id="image-3-preview" class="mb-2">
+                                                    <img src="" alt="图片3预览" class="w-full max-h-40 mx-auto rounded-lg object-contain hidden">
+                                                    <div id="image-3-placeholder" class="py-6">
+                                                        <i class="fas fa-image text-3xl text-gray-400 mb-2"></i>
+                                                        <p class="text-sm text-gray-500">点击上传图片</p>
+                                                    </div>
+                                                </div>
+                                                <input type="file" id="image-3" class="hidden" accept="image/*">
+                                                <button type="button" onclick="document.getElementById('image-3').click()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                                    <i class="fas fa-upload mr-2"></i>选择图片
+                                                </button>
+                                                <div class="mt-2">
+                                                    <button type="button" class="text-xs text-emerald-600 hover:text-emerald-800">
+                                                        <i class="fas fa-plus mr-1"></i>添加图片
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 资质文件 -->
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <h4 class="text-sm font-medium text-gray-800 mb-3">资质文件</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <!-- 农药登记证 -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">农药登记证 <span class="text-red-500">*</span></label>
+                                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-emerald-500 transition">
+                                                <div id="cert-1-preview" class="mb-2">
+                                                    <img src="" alt="农药登记证预览" class="w-full max-h-40 mx-auto rounded-lg object-contain hidden">
+                                                    <div id="cert-1-placeholder" class="py-6">
+                                                        <i class="fas fa-file-alt text-3xl text-gray-400 mb-2"></i>
+                                                        <p class="text-sm text-gray-500">点击上传农药登记证</p>
+                                                    </div>
+                                                </div>
+                                                <input type="file" id="cert-1" class="hidden" accept="image/*">
+                                                <button type="button" onclick="document.getElementById('cert-1').click()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                                    <i class="fas fa-upload mr-2"></i>选择图片
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- 生产许可证 -->
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">生产许可证 <span class="text-red-500">*</span></label>
+                                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-emerald-500 transition">
+                                                <div id="cert-2-preview" class="mb-2">
+                                                    <img src="" alt="生产许可证预览" class="w-full max-h-40 mx-auto rounded-lg object-contain hidden">
+                                                    <div id="cert-2-placeholder" class="py-6">
+                                                        <i class="fas fa-file-alt text-3xl text-gray-400 mb-2"></i>
+                                                        <p class="text-sm text-gray-500">点击上传生产许可证</p>
+                                                    </div>
+                                                </div>
+                                                <input type="file" id="cert-2" class="hidden" accept="image/*">
+                                                <button type="button" onclick="document.getElementById('cert-2').click()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                                    <i class="fas fa-upload mr-2"></i>选择图片
+                                                </button>
+                                                <div class="mt-2">
+                                                    <button type="button" class="text-xs text-emerald-600 hover:text-emerald-800">
+                                                        <i class="fas fa-plus mr-1"></i>添加资质
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between space-x-4 pt-4">
+                                    <button type="button" onclick="prevStep()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                        <i class="fas fa-chevron-left mr-2"></i>上一步
+                                    </button>
+                                    <div class="flex gap-2">
+                                        <button type="button" onclick="saveDraft()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                                            <i class="fas fa-save mr-2"></i>保存草稿
+                                        </button>
+                                        <button type="button" onclick="submitForReview()" class="btn-primary px-4 py-2 rounded-lg text-white">
+                                            <i class="fas fa-paper-plane mr-2"></i>提交审核
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // 发布方式选择
+        function showPublishMethod(method) {
+            // 显示表单容器
+            document.getElementById('publish-form-container').classList.remove('hidden');
+            
+            // 滚动到表单区域
+            document.getElementById('publish-form-container').scrollIntoView({ behavior: 'smooth' });
+            
+            // 根据选择的发布方式加载不同的表单内容
+            console.log('选择的发布方式:', method);
+            // 这里可以根据不同的发布方式加载不同的表单内容
+        }
+        
+        // 步骤导航
+        let currentStep = 1;
+        const totalSteps = 4;
+        
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateStepIndicator();
+                showStep(currentStep);
+            }
+        }
+        
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepIndicator();
+                showStep(currentStep);
+            }
+        }
+        
+        function updateStepIndicator() {
+            const stepItems = document.querySelectorAll('.step-item');
+            stepItems.forEach((item, index) => {
+                const stepNumber = index + 1;
+                if (stepNumber <= currentStep) {
+                    item.classList.add('active');
+                    item.querySelector('.step-number').classList.add('bg-emerald-500', 'text-white');
+                    item.querySelector('.step-number').classList.remove('bg-gray-200', 'text-gray-600');
+                    item.querySelector('.step-item > div:last-child').classList.add('text-gray-800');
+                    item.querySelector('.step-item > div:last-child').classList.remove('text-gray-600');
+                } else {
+                    item.classList.remove('active');
+                    item.querySelector('.step-number').classList.remove('bg-emerald-500', 'text-white');
+                    item.querySelector('.step-number').classList.add('bg-gray-200', 'text-gray-600');
+                    item.querySelector('.step-item > div:last-child').classList.remove('text-gray-800');
+                    item.querySelector('.step-item > div:last-child').classList.add('text-gray-600');
+                }
+            });
+        }
+        
+        function showStep(step) {
+            // 隐藏所有步骤
+            for (let i = 1; i <= totalSteps; i++) {
+                const stepElement = document.getElementById(`form-step-${i}`);
+                if (stepElement) {
+                    stepElement.classList.add('hidden');
+                }
+            }
+            
+            // 显示当前步骤
+            const currentStepElement = document.getElementById(`form-step-${step}`);
+            if (currentStepElement) {
+                currentStepElement.classList.remove('hidden');
+            }
+        }
+        
+        // 商品库搜索
+        function searchPlatformProducts() {
+            const searchText = document.getElementById('platform-search').value;
+            console.log('搜索平台库商品:', searchText);
+            
+            // 模拟搜索结果
+            const results = [
+                { id: 1, name: '有机复合肥', brand: '品牌一', spec: '50kg', manufacturer: '山东农化科技' },
+                { id: 2, name: '高效杀虫剂', brand: '品牌二', spec: '500ml', manufacturer: '山东农药厂' }
+            ];
+            
+            displaySearchResults(results);
+        }
+        
+        function displaySearchResults(results) {
+            const resultsContainer = document.getElementById('search-results');
+            const resultsList = document.getElementById('results-list');
+            const resultCount = document.getElementById('result-count');
+            
+            resultCount.textContent = results.length;
+            
+            resultsList.innerHTML = '';
+            results.forEach(result => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'flex items-center justify-between p-3 border-b hover:bg-gray-50';
+                resultItem.innerHTML = `
+                    <div>
+                        <div class="font-medium">${result.name}</div>
+                        <div class="text-sm text-gray-500">${result.brand} | ${result.spec} | ${result.manufacturer}</div>
+                    </div>
+                    <button onclick="usePlatformProduct(${result.id})" class="px-3 py-1 bg-emerald-500 text-white rounded text-sm hover:bg-emerald-600">
+                        使用此商品
+                    </button>
+                `;
+                resultsList.appendChild(resultItem);
+            });
+            
+            resultsContainer.classList.remove('hidden');
+        }
+        
+        function usePlatformProduct(productId) {
+            console.log('使用平台库商品:', productId);
+            // 这里可以根据商品ID加载商品信息到表单
+            alert('已选择该商品，相关信息将自动填充到表单中');
+        }
+        
+        function showPlatformLibrary() {
+            console.log('显示平台商品库');
+            alert('平台商品库功能将在后续版本中实现');
+        }
+        
+        // 商品唯一性校验
+        function checkProductUniqueness() {
+            const productName = document.getElementById('product-name').value;
+            const brand = document.getElementById('product-brand').value;
+            const spec = document.getElementById('base-spec').value + document.getElementById('spec-unit').value;
+            const manufacturer = document.getElementById('manufacturer').value;
+            
+            console.log('校验商品唯一性:', productName, brand, spec, manufacturer);
+            
+            // 模拟唯一性检查
+            const isUnique = true; // 假设检查结果
+            
+            if (isUnique) {
+                nextStep();
+            } else {
+                alert('已存在相同商品档案！\n商品名称：' + productName + '\n品牌：' + brand + '\n规格：' + spec + '\n生产厂家：' + manufacturer);
+            }
+        }
+        
+        // 保存草稿
+        function saveDraft() {
+            console.log('保存草稿');
+            alert('草稿已保存');
+        }
+        
+        // 提交审核
+        function submitForReview() {
+            console.log('提交审核');
+            
+            // 表单验证
+            if (!validateForm()) {
+                return;
+            }
+            
+            // 模拟提交审核
+            alert('商品信息已提交审核，请等待平台审核结果');
+            // 提交成功后跳转到商品列表
+            setTimeout(() => {
+                window.location.href = 'products.html';
+            }, 1500);
+        }
+        
+        function validateForm() {
+            // 简单的表单验证
+            const requiredFields = [
+                'product-category', 'product-name', 'product-brand', 'manufacturer',
+                'product-origin', 'shelf-life'
+            ];
+            
+            for (const fieldId of requiredFields) {
+                const field = document.getElementById(fieldId);
+                if (field && !field.value) {
+                    alert('请填写所有必填项');
+                    field.focus();
+                    return false;
+                }
+            }
+            
+            // 检查主图是否上传
+            const mainImage = document.getElementById('main-image');
+            if (!mainImage.files || mainImage.files.length === 0) {
+                alert('请上传商品主图');
+                return false;
+            }
+            
+            // 检查资质文件是否上传
+            const cert1 = document.getElementById('cert-1');
+            const cert2 = document.getElementById('cert-2');
+            if ((!cert1.files || cert1.files.length === 0) || (!cert2.files || cert2.files.length === 0)) {
+                alert('请上传所有必填的资质文件');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // 添加包装规格
+        function addPackagingSpec() {
+            const tableBody = document.getElementById('packaging-specs');
+            const newRow = document.createElement('tr');
+            newRow.className = 'border-b';
+            newRow.innerHTML = `
+                <td class="px-4 py-2 whitespace-nowrap">
+                    <div class="flex gap-2">
+                        <button type="button" class="text-emerald-600 hover:text-emerald-800 text-xs">编辑</button>
+                        <button type="button" onclick="deletePackagingSpec(this)" class="text-red-600 hover:text-red-800 text-xs">删除</button>
+                    </div>
+                </td>
+                <td class="px-4 py-2 whitespace-nowrap">
+                    <input type="text" placeholder="袋" class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                </td>
+                <td class="px-4 py-2 whitespace-nowrap">
+                    <div class="flex gap-1">
+                        <input type="text" placeholder="100" class="w-20 px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        <input type="text" placeholder="kg" class="w-16 px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                    </div>
+                </td>
+                <td class="px-4 py-2 whitespace-nowrap">
+                    <input type="text" placeholder="扫码或手动输入" class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                </td>
+                <td class="px-4 py-2 whitespace-nowrap">
+                    <input type="number" step="0.001" placeholder="1.0" class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                </td>
+                <td class="px-4 py-2 whitespace-nowrap">
+                    <input type="text" placeholder="0.5x0.5x0.5" class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                </td>
+                <td class="px-4 py-2 whitespace-nowrap">
+                    <div class="flex items-center">
+                        <span class="text-gray-500 mr-1">¥</span>
+                        <input type="number" step="0.01" placeholder="150" class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                    </div>
+                </td>
+            `;
+            tableBody.appendChild(newRow);
+        }
+        
+        function deletePackagingSpec(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
+        
+        // 图片上传预览
+        function setupImagePreviews() {
+            // 商品主图预览
+            const mainImageInput = document.getElementById('main-image');
+            const mainImagePreview = document.getElementById('main-image-preview').querySelector('img');
+            const mainImagePlaceholder = document.getElementById('main-image-placeholder');
+            
+            mainImageInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        mainImagePreview.src = event.target.result;
+                        mainImagePreview.classList.remove('hidden');
+                        mainImagePlaceholder.classList.add('hidden');
+                    };
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+            
+            // 其他图片预览
+            const imageInputs = ['image-2', 'image-3', 'cert-1', 'cert-2'];
+            imageInputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                const preview = document.getElementById(`${inputId}-preview`).querySelector('img');
+                const placeholder = document.getElementById(`${inputId}-placeholder`);
+                
+                input.addEventListener('change', function(e) {
+                    if (e.target.files && e.target.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            preview.src = event.target.result;
+                            preview.classList.remove('hidden');
+                            placeholder.classList.add('hidden');
+                        };
+                        reader.readAsDataURL(e.target.files[0]);
+                    }
+                });
+            });
+            
+            // 商品描述类型切换
+            const descriptionTypeRadios = document.querySelectorAll('input[name="description-type"]');
+            descriptionTypeRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const textDescription = document.getElementById('text-description');
+                    const imageDescription = document.getElementById('image-description');
+                    
+                    if (this.value === 'text') {
+                        textDescription.classList.remove('hidden');
+                        imageDescription.classList.add('hidden');
+                    } else {
+                        textDescription.classList.add('hidden');
+                        imageDescription.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // 商品描述字符计数
+            const productDescription = document.getElementById('product-description');
+            const descriptionCount = document.getElementById('description-count');
+            
+            if (productDescription && descriptionCount) {
+                productDescription.addEventListener('input', function() {
+                    const count = this.value.length;
+                    descriptionCount.textContent = count + '/300';
+                    
+                    if (count > 300) {
+                        descriptionCount.classList.add('text-red-500');
+                    } else {
+                        descriptionCount.classList.remove('text-red-500');
+                    }
+                });
+            }
+            
+            // 页面加载完成后初始化
+            document.addEventListener('DOMContentLoaded', function() {
+                setupImagePreviews();
+            });
+        };
+        
+        // 调用初始化函数
+        setupImagePreviews();
+    </script>
+</body>
+</html>

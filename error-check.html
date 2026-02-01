@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控制台错误检查</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .error-container {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .error {
+            color: red;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>控制台错误检查</h1>
+    <p>检查以下页面的控制台错误：</p>
+    <ul>
+        <li><a href="http://localhost:3000/Shop/index.html" target="_blank">index.html</a></li>
+        <li><a href="http://localhost:3000/Shop/home.html" target="_blank">home.html</a></li>
+        <li><a href="http://localhost:3000/Shop/product-detail.html" target="_blank">product-detail.html</a></li>
+        <li><a href="http://localhost:3000/Shop/login.html" target="_blank">login.html</a></li>
+        <li><a href="http://localhost:3000/Shop/register.html" target="_blank">register.html</a></li>
+    </ul>
+    
+    <h2>错误日志</h2>
+    <div class="error-container" id="error-log"></div>
+    
+    <script>
+        // 重写控制台方法来捕获错误
+        const originalConsoleError = console.error;
+        const originalConsoleWarn = console.warn;
+        const errorLog = document.getElementById('error-log');
+        
+        function logError(type, args) {
+            const errorElement = document.createElement('div');
+            errorElement.className = type;
+            errorElement.innerHTML = `<strong>${type.toUpperCase()}:</strong> ${Array.from(args).join(' ')}`;
+            errorLog.appendChild(errorElement);
+        }
+        
+        console.error = function(...args) {
+            logError('error', args);
+            originalConsoleError.apply(console, args);
+        };
+        
+        console.warn = function(...args) {
+            logError('warn', args);
+            originalConsoleWarn.apply(console, args);
+        };
+        
+        // 加载iframe并捕获错误
+        const iframe = document.createElement('iframe');
+        iframe.src = 'http://localhost:3000/Shop/home.html';
+        iframe.style.display = 'none';
+        iframe.onload = function() {
+            // 尝试访问iframe的控制台
+            try {
+                const iframeConsole = iframe.contentWindow.console;
+                if (iframeConsole) {
+                    iframeConsole.error = function(...args) {
+                        logError('error (iframe)', args);
+                        originalConsoleError.apply(console, args);
+                    };
+                    iframeConsole.warn = function(...args) {
+                        logError('warn (iframe)', args);
+                        originalConsoleWarn.apply(console, args);
+                    };
+                }
+            } catch (e) {
+                console.error('无法访问iframe控制台:', e);
+            }
+        };
+        document.body.appendChild(iframe);
+    </script>
+</body>
+</html>

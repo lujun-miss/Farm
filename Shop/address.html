@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>收货地址 - 农资商城</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <header class="bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-lg relative">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center space-x-3">
+                    <button id="mobile-menu-btn" class="md:hidden text-white hover:text-emerald-200 transition">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                    <i class="fas fa-leaf text-2xl md:text-3xl"></i>
+                    <div class="cursor-pointer" onclick="window.location.href='index.html'">
+                        <h1 class="text-xl md:text-2xl font-bold">农资商城</h1>
+                        <p class="text-xs text-emerald-100 hidden sm:block">专业农资电商平台</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3 md:space-x-6">
+                    <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span class="hidden sm:inline">购物车</span>
+                        <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">3</span>
+                    </a>
+                    <!-- 我的农资下拉菜单 -->
+                    <div class="dropdown">
+                        <a href="#" class="flex items-center space-x-1 hover:text-emerald-200">
+                            <i class="fas fa-user text-lg"></i>
+                            <span class="hidden sm:inline">张三</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="block py-1 px-4 text-sm" onclick="window.location.href='user-center.html'">买家中心</a>
+                            <a href="#" class="block py-1 px-4 text-sm" onclick="window.location.href='seller-choice.html'">卖家中心</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 登录按钮 -->
+                    <a href="login.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-sign-in-alt text-lg"></i>
+                        <span class="hidden sm:inline">登录</span>
+                    </a>
+                    
+                    <!-- 免费注册按钮 -->
+                    <a href="register.html" class="flex items-center space-x-1 hover:text-emerald-200">
+                        <i class="fas fa-user-plus text-lg"></i>
+                        <span class="hidden sm:inline">注册</span>
+                    </a>
+                </div>
+            </div>
+            <style>
+                /* 确保导航栏容器不会限制下拉菜单显示 */
+                header {
+                    overflow: visible !important;
+                    position: relative;
+                    z-index: 9999;
+                }
+                
+                nav {
+                    overflow: visible !important;
+                    z-index: 9999;
+                }
+                
+                .container {
+                    overflow: visible !important;
+                }
+                
+                .dropdown {
+                    position: relative;
+                    z-index: 9999;
+                    display: inline-block;
+                }
+                
+                .dropdown-menu {
+                    display: none;
+                    background: white;
+                    border-radius: 0.5rem;
+                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                    padding: 0.5rem 0;
+                    margin: 0;
+                    min-width: 150px;
+                    z-index: 9999;
+                    /* 关键：使用fixed定位完全脱离文档流 */
+                    position: fixed;
+                }
+                
+                /* 二级下拉菜单样式 */
+                .group .dropdown-menu {
+                    position: absolute;
+                    left: 100%;
+                    top: 0;
+                    margin-left: 0.5rem;
+                }
+                
+                .group:hover .dropdown-menu {
+                    display: block;
+                }
+                
+                .dropdown:hover .dropdown-menu {
+                    display: block;
+                }
+                
+                .dropdown-menu a {
+                    display: block;
+                    padding: 0.5rem 1rem;
+                    color: gray;
+                    text-decoration: none;
+                    white-space: nowrap;
+                }
+                
+                .dropdown-menu a:hover {
+                    background-color: #f0fdf4;
+                    color: #15803d;
+                }
+            </style>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <aside class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-2xl text-emerald-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800">张三</h3>
+                            <p class="text-sm text-gray-600">普通用户</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <p class="text-xl font-bold text-emerald-600">12</p>
+                            <p class="text-xs text-gray-600">订单</p>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold text-emerald-600">5</p>
+                            <p class="text-xs text-gray-600">收藏</p>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold text-emerald-600">2</p>
+                            <p class="text-xs text-gray-600">优惠券</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <nav class="space-y-1">
+                        <a href="user-center.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-home"></i>
+                            <span class="font-medium">个人中心</span>
+                        </a>
+                        <a href="my-orders.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-list-alt"></i>
+                            <span>我的订单</span>
+                        </a>
+                        <a href="my-favorites.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-heart"></i>
+                            <span>我的收藏</span>
+                        </a>
+                        <a href="#" class="flex items-center space-x-3 px-4 py-3 bg-emerald-50 text-emerald-600 rounded-lg">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>收货地址</span>
+                        </a>
+                        <a href="coupons.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-ticket-alt"></i>
+                            <span>优惠券</span>
+                        </a>
+                        <a href="my-agent.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-user-tie"></i>
+                            <span>代理信息</span>
+                        </a>
+                        <a href="settings.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-cog"></i>
+                            <span>账户设置</span>
+                        </a>
+                        <a href="#" class="flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>退出登录</span>
+                        </a>
+                    </nav>
+                </div>
+            </aside>
+
+            <div class="lg:col-span-3">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">收货地址</h2>
+                        <button class="px-4 py-2 bg-emerald-600 text-white rounded text-sm hover:bg-emerald-700">
+                            <i class="fas fa-plus mr-2"></i>新增地址
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="border rounded-lg p-4 hover:shadow-md transition">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="text-sm font-medium text-gray-800">张三</span>
+                                        <span class="text-sm text-gray-600">138****5678</span>
+                                        <span class="px-2 py-0.5 bg-emerald-100 text-emerald-600 text-xs rounded">默认</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mb-2">山东省 济南市 历下区</p>
+                                    <p class="text-sm text-gray-800">经十路123号 农资大厦A座1001室</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-1 border rounded text-sm hover:bg-gray-50">编辑</button>
+                                    <button class="px-3 py-1 border rounded text-sm text-red-600 hover:bg-red-50">删除</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-4 hover:shadow-md transition">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="text-sm font-medium text-gray-800">张三</span>
+                                        <span class="text-sm text-gray-600">139****8765</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mb-2">山东省 青岛市 市南区</p>
+                                    <p class="text-sm text-gray-800">香港中路88号 海信大厦B座502室</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-1 border rounded text-sm hover:bg-gray-50">编辑</button>
+                                    <button class="px-3 py-1 border rounded text-sm text-red-600 hover:bg-red-50">删除</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-4 hover:shadow-md transition">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="text-sm font-medium text-gray-800">李四</span>
+                                        <span class="text-sm text-gray-600">137****4321</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mb-2">山东省 潍坊市 奎文区</p>
+                                    <p class="text-sm text-gray-800">胜利东街56号 农业科技园3号楼201室</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-1 border rounded text-sm hover:bg-gray-50">编辑</button>
+                                    <button class="px-3 py-1 border rounded text-sm text-red-600 hover:bg-red-50">删除</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>库存管理 - 厂家管理后台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-blue-800 text-white flex-shrink-0">
+            <div class="p-4 border-b border-blue-700">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
+                    <i class="fas fa-leaf text-2xl"></i>
+                    <div>
+                        <h1 class="text-lg font-bold">农资商城</h1>
+                        <p class="text-xs text-blue-200">厂家管理后台</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="p-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="index.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                            <i class="fas fa-home"></i>
+                            <span>首页</span>
+                        </a>
+                    </li>
+                    <li>
+                    <a href="products.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-boxes"></i>
+                        <span>商品管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="product-pricing.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-tag"></i>
+                        <span>商品定价</span>
+                    </a>
+                </li>
+                    <li>
+                        <a href="orders.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>订单管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="inventory.html" class="flex items-center space-x-3 px-4 py-3 bg-blue-700 rounded-lg">
+                            <i class="fas fa-warehouse"></i>
+                            <span>库存管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="finance.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>财务管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="analytics.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                            <i class="fas fa-chart-line"></i>
+                            <span>数据统计</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                            <i class="fas fa-cog"></i>
+                            <span>系统设置</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="absolute bottom-0 w-64 p-4 border-t border-blue-700">
+                <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>退出登录</span>
+                </a>
+            </div>
+        </aside>
+
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <header class="bg-white shadow-md px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">库存管理</h2>
+                        <p class="text-sm text-gray-600">管理您的产品库存</p>
+                    </div>
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+                        <i class="fas fa-plus mr-2"></i>入库记录
+                    </button>
+                </div>
+            </header>
+
+            <main class="flex-1 overflow-y-auto p-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">总库存商品</p>
+                                <p class="text-2xl font-bold text-blue-600">156</p>
+                            </div>
+                            <i class="fas fa-boxes text-3xl text-blue-200"></i>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">库存充足</p>
+                                <p class="text-2xl font-bold text-green-600">148</p>
+                            </div>
+                            <i class="fas fa-check-circle text-3xl text-green-200"></i>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">库存不足</p>
+                                <p class="text-2xl font-bold text-orange-600">5</p>
+                            </div>
+                            <i class="fas fa-exclamation-circle text-3xl text-orange-200"></i>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">严重不足</p>
+                                <p class="text-2xl font-bold text-red-600">3</p>
+                            </div>
+                            <i class="fas fa-exclamation-triangle text-3xl text-red-200"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center space-x-4">
+                            <input type="text" placeholder="搜索商品名称..." class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-64">
+                            <select class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>全部状态</option>
+                                <option>库存充足</option>
+                                <option>库存不足</option>
+                                <option>严重不足</option>
+                            </select>
+                            <select class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>全部分类</option>
+                                <option>种子</option>
+                                <option>化肥</option>
+                                <option>农药</option>
+                                <option>农具</option>
+                            </select>
+                        </div>
+                        <button class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+                            <i class="fas fa-download mr-2"></i>导出库存
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">商品名称</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">分类</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">当前库存</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">预警线</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">安全库存</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">状态</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">最近入库</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="px-4 py-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                                <i class="fas fa-seedling text-gray-400"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-gray-800">杂交玉米种子 超高产</p>
+                                                <p class="text-xs text-gray-600">规格: 500g/袋</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">种子</td>
+                                    <td class="px-4 py-4 text-sm text-green-600 font-medium">500</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">100</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">50</td>
+                                    <td class="px-4 py-4">
+                                        <span class="px-2 py-1 bg-green-100 text-green-600 text-xs rounded">库存充足</span>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">2024-01-10</td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex space-x-2">
+                                            <button class="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700">入库</button>
+                                            <button class="px-3 py-1 border text-xs rounded hover:bg-gray-50">调整</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="px-4 py-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                                <i class="fas fa-flask text-gray-400"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-gray-800">有机复合肥 50kg</p>
+                                                <p class="text-xs text-gray-600">规格: 50kg/袋</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">化肥</td>
+                                    <td class="px-4 py-4 text-sm text-green-600 font-medium">300</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">80</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">40</td>
+                                    <td class="px-4 py-4">
+                                        <span class="px-2 py-1 bg-green-100 text-green-600 text-xs rounded">库存充足</span>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">2024-01-12</td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex space-x-2">
+                                            <button class="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700">入库</button>
+                                            <button class="px-3 py-1 border text-xs rounded hover:bg-gray-50">调整</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="px-4 py-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                                <i class="fas fa-spray-can text-gray-400"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-gray-800">高效杀虫剂 500ml</p>
+                                                <p class="text-xs text-gray-600">规格: 500ml/瓶</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">农药</td>
+                                    <td class="px-4 py-4 text-sm text-red-600 font-medium">5</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">50</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">25</td>
+                                    <td class="px-4 py-4">
+                                        <span class="px-2 py-1 bg-red-100 text-red-600 text-xs rounded">严重不足</span>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">2024-01-08</td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex space-x-2">
+                                            <button class="px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700">紧急补货</button>
+                                            <button class="px-3 py-1 border text-xs rounded hover:bg-gray-50">调整</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="px-4 py-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                                <i class="fas fa-leaf text-gray-400"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-gray-800">小麦种子 优质品种</p>
+                                                <p class="text-xs text-gray-600">规格: 500g/袋</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">种子</td>
+                                    <td class="px-4 py-4 text-sm text-orange-600 font-medium">25</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">50</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">25</td>
+                                    <td class="px-4 py-4">
+                                        <span class="px-2 py-1 bg-orange-100 text-orange-600 text-xs rounded">库存不足</span>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">2024-01-05</td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex space-x-2">
+                                            <button class="px-3 py-1 bg-orange-600 text-white text-xs rounded hover:bg-orange-700">补货</button>
+                                            <button class="px-3 py-1 border text-xs rounded hover:bg-gray-50">调整</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="px-4 py-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                                <i class="fas fa-tint text-gray-400"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-gray-800">液体肥料 20L</p>
+                                                <p class="text-xs text-gray-600">规格: 20L/桶</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">化肥</td>
+                                    <td class="px-4 py-4 text-sm text-orange-600 font-medium">15</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">30</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">15</td>
+                                    <td class="px-4 py-4">
+                                        <span class="px-2 py-1 bg-orange-100 text-orange-600 text-xs rounded">库存不足</span>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">2024-01-03</td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex space-x-2">
+                                            <button class="px-3 py-1 bg-orange-600 text-white text-xs rounded hover:bg-orange-700">补货</button>
+                                            <button class="px-3 py-1 border text-xs rounded hover:bg-gray-50">调整</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="px-4 py-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                                <i class="fas fa-tractor text-gray-400"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-gray-800">小型农用拖拉机</p>
+                                                <p class="text-xs text-gray-600">规格: 20马力</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">农具</td>
+                                    <td class="px-4 py-4 text-sm text-green-600 font-medium">10</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">5</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">3</td>
+                                    <td class="px-4 py-4">
+                                        <span class="px-2 py-1 bg-green-100 text-green-600 text-xs rounded">库存充足</span>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">2024-01-01</td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex space-x-2">
+                                            <button class="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700">入库</button>
+                                            <button class="px-3 py-1 border text-xs rounded hover:bg-gray-50">调整</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="flex items-center justify-between mt-6">
+                        <p class="text-sm text-gray-600">共 156 条记录</p>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-4 py-2 border rounded text-sm hover:bg-gray-50">上一页</button>
+                            <button class="px-4 py-2 bg-blue-600 text-white rounded text-sm">1</button>
+                            <button class="px-4 py-2 border rounded text-sm hover:bg-gray-50">2</button>
+                            <button class="px-4 py-2 border rounded text-sm hover:bg-gray-50">3</button>
+                            <span class="text-sm text-gray-600">...</span>
+                            <button class="px-4 py-2 border rounded text-sm hover:bg-gray-50">16</button>
+                            <button class="px-4 py-2 border rounded text-sm hover:bg-gray-50">下一页</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">最近入库记录</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                    <i class="fas fa-seedling text-gray-400"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-800">杂交玉米种子 超高产</p>
+                                    <p class="text-sm text-gray-600">入库数量: 200</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-gray-600">2024-01-10 14:30</p>
+                                <p class="text-xs text-green-600">操作人: 张三</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                    <i class="fas fa-flask text-gray-400"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-800">有机复合肥 50kg</p>
+                                    <p class="text-sm text-gray-600">入库数量: 100</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-gray-600">2024-01-12 10:15</p>
+                                <p class="text-xs text-green-600">操作人: 李四</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                    <i class="fas fa-tractor text-gray-400"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-800">小型农用拖拉机</p>
+                                    <p class="text-sm text-gray-600">入库数量: 5</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-gray-600">2024-01-01 09:00</p>
+                                <p class="text-xs text-green-600">操作人: 王五</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
