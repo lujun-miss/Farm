@@ -139,6 +139,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="product-pricing.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-tag"></i>
+                        <span>商品定价</span>
+                    </a>
+                </li>
+                <li>
                     <a href="orders.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
                         <i class="fas fa-clipboard-list"></i>
                         <span>订单管理</span>
@@ -160,6 +166,12 @@
                     <a href="analytics.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
                         <i class="fas fa-chart-line"></i>
                         <span>数据统计</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="store-decoration.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-700 rounded-lg transition">
+                        <i class="fas fa-store"></i>
+                        <span>店铺装修</span>
                     </a>
                 </li>
                 <li>
@@ -224,11 +236,18 @@
                         </h3>
                         <div class="bg-gray-50 rounded-lg p-6">
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <!-- 第一行：商品名称, 品牌, 类别 -->
+                                <!-- 第一行：所属店铺, 商品名称, 品牌 -->
+                                <!-- 所属店铺：只读字段，默认显示当前登录厂家的店铺名称 -->
+                                <div>
+                                    <label for="product-shop" class="block text-sm font-medium text-gray-700 mb-1">所属店铺 <span class="text-red-500">*</span></label>
+                                    <input type="text" id="product-shop" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed" value="山东种业集团" readonly>
+                                </div>
+                                <!-- 商品名称：商品的具体名称 -->
                                 <div>
                                     <label for="product-name" class="block text-sm font-medium text-gray-700 mb-1">商品名称 <span class="text-red-500">*</span></label>
                                     <input type="text" id="product-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="请输入商品名称">
                                 </div>
+                                <!-- 品牌：商品的品牌信息 -->
                                 <div>
                                     <label for="product-brand" class="block text-sm font-medium text-gray-700 mb-1">品牌 <span class="text-red-500">*</span></label>
                                     <select id="product-brand" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
@@ -238,6 +257,8 @@
                                         <option value="brand3">品牌三</option>
                                     </select>
                                 </div>
+                                <!-- 第二行：类别, 规格, 生产厂家 -->
+                                <!-- 类别：商品的分类 -->
                                 <div>
                                     <label for="product-category" class="block text-sm font-medium text-gray-700 mb-1">类别 <span class="text-red-500">*</span></label>
                                     <select id="product-category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
@@ -247,6 +268,16 @@
                                         <option value="seed">种子</option>
                                         <option value="tools">农具</option>
                                     </select>
+                                </div>
+                                <!-- 规格：商品的具体规格，如50kg/袋 -->
+                                <div>
+                                    <label for="product-spec" class="block text-sm font-medium text-gray-700 mb-1">规格 <span class="text-red-500">*</span></label>
+                                    <input type="text" id="product-spec" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="请输入商品规格">
+                                </div>
+                                <!-- 生产厂家：商品的生产厂家信息 -->
+                                <div>
+                                    <label for="product-manufacturer" class="block text-sm font-medium text-gray-700 mb-1">生产厂家 <span class="text-red-500">*</span></label>
+                                    <input type="text" id="product-manufacturer" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="请输入生产厂家">
                                 </div>
                                 
                                 <!-- 第二行：产地, 登记证号, 登记证有效期 -->
@@ -679,7 +710,7 @@
                             <div class="ml-3">
                                 <p class="text-sm text-yellow-700">
                                     <strong class="font-medium">温馨提示：</strong>
-                                    系统将根据「商品名称+品牌+规格+生产厂家」判断商品唯一性，避免重复创建。
+                                    系统将根据「店铺名称+商品名称+品牌+规格+生产厂家+所属类别」判断商品唯一性，避免重复创建。
                                 </p>
                             </div>
                         </div>
@@ -781,8 +812,12 @@
                 document.getElementById('registration-date-start').value = mockProduct.registrationDateStart;
                 document.getElementById('registration-date-end').value = mockProduct.registrationDateEnd;
                 document.getElementById('production-license').value = mockProduct.productionLicense;
-                document.getElementById('standard-number').value = mockProduct.standardNumber;
-                document.getElementById('product-barcode').value = mockProduct.barcode;
+                if (document.getElementById('standard-number')) {
+                    document.getElementById('standard-number').value = mockProduct.standardNumber;
+                }
+                if (document.getElementById('product-barcode')) {
+                    document.getElementById('product-barcode').value = mockProduct.barcode;
+                }
                 document.getElementById('active-ingredient').value = mockProduct.activeIngredient;
                 document.getElementById('content').value = mockProduct.content;
                 document.getElementById('target-crops').value = mockProduct.targetCrops;
@@ -975,8 +1010,12 @@
                         document.getElementById('registration-date-start').value = product.registrationDateStart;
                         document.getElementById('registration-date-end').value = product.registrationDateEnd;
                         document.getElementById('production-license').value = product.productionLicense;
-                        document.getElementById('standard-number').value = product.standardNumber;
-                        document.getElementById('product-barcode').value = product.barcode;
+                        if (document.getElementById('standard-number')) {
+                            document.getElementById('standard-number').value = product.standardNumber;
+                        }
+                        if (document.getElementById('product-barcode')) {
+                            document.getElementById('product-barcode').value = product.barcode;
+                        }
                         document.getElementById('product-code').value = 'PROD' + product.id.toString().padStart(6, '0');
                         
                         // 填充其他信息
@@ -1021,8 +1060,12 @@
                         document.getElementById('registration-date-start').value = product.registrationDateStart;
                         document.getElementById('registration-date-end').value = product.registrationDateEnd;
                         document.getElementById('production-license').value = product.productionLicense;
-                        document.getElementById('standard-number').value = product.standardNumber;
-                        document.getElementById('product-barcode').value = product.barcode;
+                        if (document.getElementById('standard-number')) {
+                            document.getElementById('standard-number').value = product.standardNumber;
+                        }
+                        if (document.getElementById('product-barcode')) {
+                            document.getElementById('product-barcode').value = product.barcode;
+                        }
                         document.getElementById('product-code').value = 'PROD' + product.id.toString().padStart(6, '0');
                         
                         // 填充其他信息
@@ -1052,7 +1095,7 @@
                 'product-name', 'product-brand', 'product-category', 'product-origin',
                 'registration-cert', 'registration-date-start', 'registration-date-end',
                 'product-toxicity', 'product-model', 'production-license',
-                'standard-number', 'product-barcode', 'product-code',
+                'product-code',
                 'base-unit', 'basic-spec', 'tax-rate', 'shelf-life',
                 'active-ingredient', 'content', 'target-crops', 'control-objects',
                 'antidote-method', 'storage-condition', 'usage-method', 'notes'
@@ -1263,27 +1306,45 @@
 
         // 商品唯一性校验
         function checkProductUniqueness() {
+            const shop = document.getElementById('product-shop').value;
             const productName = document.getElementById('product-name').value;
             const brand = document.getElementById('product-brand').value;
+            const spec = document.getElementById('product-spec').value;
+            const manufacturer = document.getElementById('product-manufacturer').value;
             const category = document.getElementById('product-category').value;
             const origin = document.getElementById('product-origin').value;
             const registrationCert = document.getElementById('registration-cert').value;
 
             // 简单的表单验证
-            if (!productName || !brand || !category || !origin || !registrationCert) {
+            if (!productName || !brand || !category || !origin || !registrationCert || !spec || !manufacturer) {
                 alert('请填写所有必填项！');
                 return;
             }
 
-            // 模拟唯一性检查
-            const isUnique = true; // 假设检查结果
+            // 模拟商品数据库
+            const existingProducts = [
+                { shop: '山东种业集团', name: '高效复合肥', brand: '品牌一', spec: '50kg/袋', manufacturer: '山东化肥厂', category: 'fertilizer' },
+                { shop: '山东种业集团', name: '杀虫剂', brand: '绿保', spec: '500ml/瓶', manufacturer: '江苏农药厂', category: 'pesticide' },
+                { shop: '山东种业集团', name: '杂交水稻种子', brand: '隆平高科', spec: '1kg/袋', manufacturer: '湖南种子公司', category: 'seed' }
+            ];
 
-            if (isUnique) {
-                // 提交表单
-                submitForReview();
-            } else {
-                alert('已存在相同商品档案！\n商品名称：' + productName + '\n品牌：' + brand);
+            // 检查商品唯一性
+            const isDuplicate = existingProducts.some(product => 
+                product.shop === shop &&
+                product.name === productName &&
+                product.brand === brand &&
+                product.spec === spec &&
+                product.manufacturer === manufacturer &&
+                product.category === category
+            );
+
+            if (isDuplicate) {
+                alert('已存在相同商品档案！');
+                return;
             }
+
+            // 提交表单
+            submitForReview();
         }
 
         // 保存草稿
@@ -1312,7 +1373,7 @@
             const requiredFields = [
                 'product-category', 'product-name', 'product-brand', 'product-origin',
                 'registration-cert', 'registration-date-start', 'registration-date-end',
-                'production-license', 'shelf-life'
+                'production-license', 'shelf-life', 'product-spec', 'product-manufacturer'
             ];
 
             for (const fieldId of requiredFields) {

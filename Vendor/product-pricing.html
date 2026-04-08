@@ -1169,12 +1169,20 @@
             });
             
             // 更新分页信息
-            document.getElementById('total-count').textContent = `共 ${filteredProducts.length} 个商品`;
-            document.getElementById('current-page').textContent = currentPage;
+            if (document.getElementById('total-count')) {
+                document.getElementById('total-count').textContent = `共 ${filteredProducts.length} 个商品`;
+            }
+            if (document.getElementById('current-page')) {
+                document.getElementById('current-page').textContent = currentPage;
+            }
             
             // 更新分页按钮状态
-            document.getElementById('prev-page').disabled = currentPage === 1;
-            document.getElementById('next-page').disabled = endIndex >= filteredProducts.length;
+            if (document.getElementById('prev-page')) {
+                document.getElementById('prev-page').disabled = currentPage === 1;
+            }
+            if (document.getElementById('next-page')) {
+                document.getElementById('next-page').disabled = endIndex >= filteredProducts.length;
+            }
         }
 
         // 处理状态选择变化
@@ -1271,7 +1279,8 @@
         function editPrice(productId) {
             const product = mockProducts.find(p => p.id === productId);
             if (product) {
-                const newPrice = prompt(`请输入新价格（当前价格：${product.myPrice.toFixed(2)}）：`, product.myPrice);
+                const currentPrice = product.myPrice ? product.myPrice.toFixed(2) : '未设置';
+                const newPrice = prompt(`请输入新价格（当前价格：${currentPrice}）：`, product.myPrice);
                 if (newPrice !== null) {
                     const price = parseFloat(newPrice);
                     if (!isNaN(price) && price > 0) {
